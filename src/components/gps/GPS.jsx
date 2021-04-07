@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {geoLookup, parcelLookup} from '../../api/api';
+import {geoLookup, parcelInfoLookup, parcelContentLookup} from '../../api/api';
 
 const GeoWebCoordinate = require("js-geo-web-coordinate");
 
@@ -10,6 +10,7 @@ const GPS = () => {
     const [coordinate, setCoordinate] = useState(initCoordinate);   //gps coordinates {lat, lon}
     const [gwCoord, setGwCoord] = useState(""); //geowebcoordinates as string
     const [rootCid, setRootCid] = useState(""); //rootCid
+    const [gwContent, SetGwContent] = useState("");
 
     //On Mount
     useEffect( ()=>{
@@ -24,26 +25,35 @@ const GPS = () => {
 
     const showPosition = (position) => {
 
-        const {latitude, longitude} = position.coords;
+        const latitude = 34.114669; 
+        const longitude = 74.869795;
+
+        //const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
 
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate
         setGwCoord(_gwCoord.toString());
         
-        getRoootCid();
+        getRoootCid(_gwCoord.toString());
     }   
 
-    const getRoootCid = async () => {
-        const _rootCid = await geoLookup();
+    const getRoootCid = async (id) => {
+        const _rootCid = await geoLookup(id);
         setRootCid(_rootCid);
-
-        getParcel('kjzl6cwe1jw147y87g1r5kxffmrzvdw9bihqergw7um43frrd9ykqet6dsu3s8s');
+        
+        let _dcid = "kjzl6cwe1jw1496nwnopkd13637zk4c46g94um9bonlaghgti5ekwsckzibd5mk";
+        getParcelInfo(_dcid);
+        getParcelContent(_dcid);
     }
 
-    const getParcel = async(_docid) => {
+    const getParcelInfo = async(_docid) => {
+        const _parcelInfo = await parcelInfoLookup(_docid);
+        console.log(_parcelInfo);
+    }
 
-        const _parcelData = await parcelLookup(_docid);
-        console.log(_parcelData);
+    const getParcelContent = async(_docid) => {
+        const _parcelData = await parcelContentLookup(_docid);
+        SetGwContent(_parcelData);
     }
 
 
@@ -56,6 +66,8 @@ const GPS = () => {
             <span>{gwCoord}</span>
             <br/>
             <span>{rootCid}</span>
+            <br/>
+            <span>{gwContent}</span>
         </div>
     );
     

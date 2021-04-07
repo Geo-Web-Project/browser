@@ -16,25 +16,41 @@ const graphClient = new ApolloClient({
 const ceramic = new CeramicClient(CERAMIC_URL)
 
 
-const LOCATION_LOOKUP_QUERY = gql`
-    query {
-            geoWebCoordinate(id: "364436565199400") {
+const LOCATION_LOOKUP_QUERY = 
+  gql`
+    query GeoWebCoordinate($id: String){
+      geoWebCoordinate(id: $id) {
+      id
+      landParcel {
+          id
+          license {
             id
-            landParcel {
-                id
-                license {
-                id
-                rootCID
-                }
-            }
+            rootCID
           }
-        }`
+        }
+      }
+    }`
 
+const PARCEL_INFO_QUERY = 
+  gql`
+    query LandParcel($id: String) {
+      landParcel(id: $id) {
+        id
+        license {
+          rootCID
+          owner
+          value
+          expirationTimestamp
+        }
+      }
+    }`
+  
 
-const geoLookup = async () => {
+const geoLookup = async (id) => {
 
     let result = await graphClient.query({
-        query: LOCATION_LOOKUP_QUERY
+        query: LOCATION_LOOKUP_QUERY,
+        variables:{id: id}
     })
    
     let rootCID = ""
@@ -49,13 +65,40 @@ const geoLookup = async () => {
     return rootCID;
 }
 
+const parcelInfoLookup = async(id) => {
 
-const parcelLookup = async(docid) => {
+  let result = await graphClient.query({
+    query: PARCEL_INFO_QUERY,
+    variables: {id: id}
+  })
+
+  return result;
+
+  let rootCID = ""
+
+  try {
+    rootCID = result['state']['content']['landParcel']['license']['rootCID'];
+  }
+  catch(e){
+      console.error(e);
+  }
+
+  return rootCID;
+}
+
+const parcelContentLookup = async(docid) => {
 
   const doc = await ceramic.loadDocument(docid)
-  //console.log(doc); 
-  return doc;
+  let parcelContent = "";
+  try {
+    parcelContent = JSON.stringify(doc['state']['content']);
+  }
+  catch(e){
+      console.error(e);
+  }
+
+  return parcelContent; 
 
 }
 
-export {geoLookup, parcelLookup};
+export {geoLookup, parcelInfoLookup, parcelContentLookup};

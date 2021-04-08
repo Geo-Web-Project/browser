@@ -4,12 +4,13 @@ import {geoLookup, parcelInfoLookup, parcelContentLookup} from '../../api/api';
 const GeoWebCoordinate = require("js-geo-web-coordinate");
 
 
-const GPS = () => {
+const GoeWebSystem = () => {
 
     const initCoordinate = {lat: 0, lon: 0}; //default lat, lon
     const [coordinate, setCoordinate] = useState(initCoordinate);   //gps coordinates {lat, lon}
     const [gwCoord, setGwCoord] = useState(""); //geowebcoordinates as string
-    const [rootCid, setRootCid] = useState(""); //rootCid
+    const [rootCId, setRootCId] = useState(""); //rootCid
+    const [gwInfo, setGwInfo] = useState("");
     const [gwContent, SetGwContent] = useState("");
 
     //On Mount
@@ -38,17 +39,19 @@ const GPS = () => {
     }   
 
     const getRoootCid = async (id) => {
-        const _rootCid = await geoLookup(id);
-        setRootCid(_rootCid);
+        const lookUpId = await geoLookup(id);
+        const {_rootCId, _parcelId} = lookUpId;
         
-        let _dcid = "kjzl6cwe1jw1496nwnopkd13637zk4c46g94um9bonlaghgti5ekwsckzibd5mk";
-        getParcelInfo(_dcid);
-        getParcelContent(_dcid);
+        setRootCId(_rootCId);
+        
+        //let _dcid = "kjzl6cwe1jw1496nwnopkd13637zk4c46g94um9bonlaghgti5ekwsckzibd5mk";
+        getParcelInfo(_parcelId);
+        getParcelContent(_rootCId);
     }
 
     const getParcelInfo = async(_docid) => {
         const _parcelInfo = await parcelInfoLookup(_docid);
-        console.log(_parcelInfo);
+        setGwInfo(_parcelInfo);
     }
 
     const getParcelContent = async(_docid) => {
@@ -59,18 +62,22 @@ const GPS = () => {
 
     return(
         <div>
-            <span>{coordinate.lat}</span>
+            <span>{'lat : ' + coordinate.lat}</span>
             <br/>
-            <span>{coordinate.lon}</span>
+            <span>{'lon : ' +coordinate.lon}</span>
             <br/>
-            <span>{gwCoord}</span>
+            <span>{'gwcoord : ' +gwCoord}</span>
             <br/>
-            <span>{rootCid}</span>
+            <span>{'rootCID : ' +rootCId}</span>
+            <br/>
             <br/>
             <span>{gwContent}</span>
+            <br/>
+            <br/>
+            <span>{gwInfo}</span>
         </div>
     );
     
 }
 
-export default GPS;
+export default GoeWebSystem;

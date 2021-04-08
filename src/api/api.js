@@ -53,37 +53,37 @@ const geoLookup = async (id) => {
         variables:{id: id}
     })
    
-    let rootCID = ""
+    let lookupId = {_rootCId: "", _parcelId: ""}
 
     try {
-      rootCID = result['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
+      lookupId._rootCId = result['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
+      lookupId._parcelId = result['data']['geoWebCoordinate']['landParcel']['id'];
     }
     catch(e){
         console.error(e);
     }
     
-    return rootCID;
+    return lookupId;
 }
 
 const parcelInfoLookup = async(id) => {
 
-  let result = await graphClient.query({
+  let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
     variables: {id: id}
   })
 
-  return result;
-
-  let rootCID = ""
+  let parcelInfo = "";
 
   try {
-    rootCID = result['state']['content']['landParcel']['license']['rootCID'];
+    parcelInfo = JSON.stringify(info['data']);
   }
   catch(e){
       console.error(e);
   }
 
-  return rootCID;
+  return parcelInfo;
+
 }
 
 const parcelContentLookup = async(docid) => {
@@ -91,7 +91,7 @@ const parcelContentLookup = async(docid) => {
   const doc = await ceramic.loadDocument(docid)
   let parcelContent = "";
   try {
-    parcelContent = JSON.stringify(doc['state']['content']);
+    parcelContent = JSON.stringify(doc['state']['next']['content']);
   }
   catch(e){
       console.error(e);

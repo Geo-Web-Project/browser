@@ -1,13 +1,19 @@
+
+//  Imports
+
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
 
-import CeramicClient from '@ceramicnetwork/http-client'
+import CeramicClient from '@ceramicnetwork/http-client';
 
+import {parseGeo, parseInfo, parseContent} from '../helpers/gwParser';
 
+//  Refer Environment Variables
 const GRAPH_URL = process.env.REACT_APP_GRAPH_URI;
 const CERAMIC_URL = process.env.REACT_APP_CERAMIC_URI;
 
 
+//  Instantiate Apollo & Ceramic Clients
 const graphClient = new ApolloClient({
   uri: GRAPH_URL,
   cache: new InMemoryCache()
@@ -16,6 +22,7 @@ const graphClient = new ApolloClient({
 const ceramic = new CeramicClient(CERAMIC_URL)
 
 
+//  GraphQL Queries
 const LOCATION_LOOKUP_QUERY = 
   gql`
     query GeoWebCoordinate($id: String){
@@ -46,59 +53,44 @@ const PARCEL_INFO_QUERY =
     }`
   
 
-const geoLookup = async (id) => {
+//  Get Ceramic, parcel IDs 
+const getGeoId = async (id) => {
 
     let result = await graphClient.query({
         query: LOCATION_LOOKUP_QUERY,
         variables:{id: id}
     })
    
-    let lookupId = {_rootCId: "", _parcelId: ""}
-
-    try {
-      lookupId._rootCId = result['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
-      lookupId._parcelId = result['data']['geoWebCoordinate']['landParcel']['id'];
-    }
-    catch(e){
-        console.error(e);
-    }
+    let geoId = parseGeo(result);
     
-    return lookupId;
+    return geoId;
 }
 
-const parcelInfoLookup = async(id) => {
+//  Get Parcel Info 
+//  input: parcelId (Eg: '0x2D')
+//  output: {  id: , license: , ceramicId: , value: , expiry: }
+const getParcelInfo = async(id) => {
 
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
     variables: {id: id}
   })
 
-  let parcelInfo = "";
-
-  try {
-    parcelInfo = JSON.stringify(info['data']);
-  }
-  catch(e){
-      console.error(e);
-  }
+  let parcelInfo = parseInfo(info);
 
   return parcelInfo;
 
 }
 
-const parcelContentLookup = async(docid) => {
+const getParcelContent = async(docid) => {
 
   const doc = await ceramic.loadDocument(docid)
-  let parcelContent = "";
-  try {
-    parcelContent = JSON.stringify(doc['state']['next']['content']);
-  }
-  catch(e){
-      console.error(e);
-  }
+  
+  let parcelContent = parseContent(doc);
 
   return parcelContent; 
 
 }
 
-export {geoLookup, parcelInfoLookup, parcelContentLookup};
+
+export {getGeoId, getParcelInfo, getParcelContent};

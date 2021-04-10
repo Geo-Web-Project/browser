@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {geoLookup, parcelInfoLookup, parcelContentLookup} from '../../api/api';
+import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
+
+import Layout from '../Layout/Layout';
 
 const GeoWebCoordinate = require("js-geo-web-coordinate");
 
@@ -39,43 +41,44 @@ const GoeWebSystem = () => {
     }   
 
     const getRoootCid = async (id) => {
-        const lookUpId = await geoLookup(id);
-        const {_rootCId, _parcelId} = lookUpId;
+        const lookUpId = await getGeoId(id);
         
-        setRootCId(_rootCId);
-        
+        setRootCId(lookUpId.rootCId);
+
         //let _dcid = "kjzl6cwe1jw1496nwnopkd13637zk4c46g94um9bonlaghgti5ekwsckzibd5mk";
-        getParcelInfo(_parcelId);
-        getParcelContent(_rootCId);
+        setParcelInfo(lookUpId.parcelId);
+        setParcelContent(lookUpId.rootCId);
     }
 
-    const getParcelInfo = async(_docid) => {
-        const _parcelInfo = await parcelInfoLookup(_docid);
-        setGwInfo(_parcelInfo);
+    const setParcelInfo = async(_docid) => {
+        const _parcelInfo = await getParcelInfo(_docid);
+        //setGwInfo(_parcelInfo);
     }
 
-    const getParcelContent = async(_docid) => {
-        const _parcelData = await parcelContentLookup(_docid);
-        SetGwContent(_parcelData);
+    const setParcelContent = async(_docid) => {
+        const _parcelData = await getParcelContent(_docid);
+        //SetGwContent(_parcelData);
     }
 
 
     return(
-        <div>
-            <span>{'lat : ' + coordinate.lat}</span>
-            <br/>
-            <span>{'lon : ' +coordinate.lon}</span>
-            <br/>
-            <span>{'gwcoord : ' +gwCoord}</span>
-            <br/>
-            <span>{'rootCID : ' +rootCId}</span>
-            <br/>
-            <br/>
-            <span>{gwContent}</span>
-            <br/>
-            <br/>
-            <span>{gwInfo}</span>
-        </div>
+        // <div>
+        //     <span>{'lat : ' + coordinate.lat}</span>
+        //     <br/>
+        //     <span>{'lon : ' +coordinate.lon}</span>
+        //     <br/>
+        //     <span>{'gwcoord : ' +gwCoord}</span>
+        //     <br/>
+        //     <span>{'rootCID : ' +rootCId}</span>
+        //     <br/>
+        //     <br/>
+        //     <span>{gwContent}</span>
+        //     <br/>
+        //     <br/>
+        //     <span>{gwInfo}</span>
+        // </div>
+
+        <Layout/>
     );
     
 }

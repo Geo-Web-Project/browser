@@ -4,7 +4,7 @@ import {convertTimestamp, calcParcelValue} from './gwUtils';
 const parseGeo = (msg) => {
 
     let _geoId = {rootCId: null, parcelId: null}
-
+    debugger;
     try {
         _geoId.rootCId = msg['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
         _geoId.parcelId = msg['data']['geoWebCoordinate']['landParcel']['id']
@@ -25,14 +25,14 @@ const parseInfo = (msg) => {
         value: null,
         expiry: null
     }
-
+    debugger;
     try {
 
-        _parcelInfo.id = msg['data']['id'];
-        _parcelInfo.licensee = msg['data']['license']['owner'];
-        _parcelInfo.ceramicId = msg['data']['license']['rootCID'];
-        _parcelInfo.value = msg['data']['license']['value'];
-        _parcelInfo.expiry = convertTimestamp( msg['data']['license']['expirationTimestamp'] );
+        _parcelInfo.id = msg['data']['landParcel']['id'];
+        _parcelInfo.licensee = msg['data']['landParcel']['license']['owner'];
+        _parcelInfo.ceramicId = msg['data']['landParcel']['license']['rootCID'];
+        _parcelInfo.value = msg['data']['landParcel']['license']['value'];
+        _parcelInfo.expiry = convertTimestamp( msg['data']['landParcel']['license']['expirationTimestamp'] );
         
     }
     catch(e){

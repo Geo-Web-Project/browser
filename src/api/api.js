@@ -1,6 +1,5 @@
 
 //  Imports
-
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
 
@@ -76,6 +75,7 @@ const getParcelInfo = async(id) => {
     variables: {id: id}
   })
 
+  debugger;
   let parcelInfo = parseInfo(info);
 
   return parcelInfo;
@@ -86,6 +86,7 @@ const getParcelContent = async(docid) => {
 
   const doc = await ceramic.loadDocument(docid)
   
+  debugger;
   let parcelContent = parseContent(doc);
 
   return parcelContent; 

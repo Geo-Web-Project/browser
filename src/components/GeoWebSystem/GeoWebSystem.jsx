@@ -52,33 +52,36 @@ const GoeWebSystem = () => {
 
     const setParcelInfo = async(_docid) => {
         const _parcelInfo = await getParcelInfo(_docid);
-        //setGwInfo(_parcelInfo);
+        setGwInfo( JSON.stringify(_parcelInfo) );
     }
 
     const setParcelContent = async(_docid) => {
         const _parcelData = await getParcelContent(_docid);
-        //SetGwContent(_parcelData);
+        SetGwContent( JSON.stringify(_parcelData) );
     }
 
 
     return(
-        // <div>
-        //     <span>{'lat : ' + coordinate.lat}</span>
-        //     <br/>
-        //     <span>{'lon : ' +coordinate.lon}</span>
-        //     <br/>
-        //     <span>{'gwcoord : ' +gwCoord}</span>
-        //     <br/>
-        //     <span>{'rootCID : ' +rootCId}</span>
-        //     <br/>
-        //     <br/>
-        //     <span>{gwContent}</span>
-        //     <br/>
-        //     <br/>
-        //     <span>{gwInfo}</span>
-        // </div>
+        <div>
+            <Layout/>
 
-        <Layout/>
+            <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
+                <span>{'lat : ' + coordinate.lat}</span>
+                <br/>
+                <span>{'lon : ' +coordinate.lon}</span>
+                <br/>
+                <span>{'gwcoord : ' +gwCoord}</span>
+                <br/>
+                <span>{'rootCID : ' +rootCId}</span>
+                <br/>
+                <br/>
+                <span>{gwContent}</span>
+                <br/>
+                <br/>
+                <span>{gwInfo}</span>
+            </div>
+
+        </div>
     );
     
 }

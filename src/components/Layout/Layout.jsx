@@ -7,8 +7,8 @@ const Layout = () => {
         <div className="layout-div">
             <div className="title-bar">
                 <div className="logo" />
-                <div class="title-txt">{'Geo Web'}</div>
-                <div class="title-caption">{'Browse Earth'}</div>
+                <div className="title-txt">{'Geo Web'}</div>
+                <div className="title-caption">{'Browse Earth'}</div>
             </div>
             <div className="bg-img" />
         </div>

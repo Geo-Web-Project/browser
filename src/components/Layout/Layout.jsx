@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './styles.css';
 
+//Page Layout including Title and Background 
 const Layout = () => {
 
     return(

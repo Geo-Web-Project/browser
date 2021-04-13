@@ -1,6 +1,7 @@
 
 import {convertTimestamp, calcParcelValue} from './gwUtils';
 
+//parse root ceramic id and parcel id
 const parseGeo = (msg) => {
 
     let _geoId = {rootCId: null, parcelId: null}
@@ -16,6 +17,7 @@ const parseGeo = (msg) => {
     return _geoId;
 }
 
+//parse parcel info document
 const parseInfo = (msg) => {
 
     let _parcelInfo = {
@@ -43,6 +45,7 @@ const parseInfo = (msg) => {
 
 }
 
+//parse parcel content document
 const parseContent = (msg) => {
    
     let _parcelContent = msg['_state']['content'];

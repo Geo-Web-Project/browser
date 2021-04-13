@@ -1,10 +1,12 @@
 
+//convert timestamp to UTC format
 const convertTimestamp = (_timestamp) => {
   return new Date(
       _timestamp * 1000
     ).toUTCString();
 }
 
+//calculate parcel value based on expiry date and current value
 const calcParcelValue = (_expiry, _value) => {
 
   // let now = Date.now();

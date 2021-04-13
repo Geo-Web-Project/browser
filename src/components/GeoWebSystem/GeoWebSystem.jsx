@@ -28,6 +28,7 @@ const GoeWebSystem = () => {
 
     const showPosition = (position) => {
 
+        //hard-coded coordinates for testing
         const latitude = 34.114669; 
         const longitude = 74.869795;
 
@@ -35,28 +36,27 @@ const GoeWebSystem = () => {
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
 
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate
-        setGwCoord(_gwCoord.toString());
+        setGwCoord(_gwCoord.toString());    
         
         getRoootCid(_gwCoord.toString());
     }   
 
     const getRoootCid = async (id) => {
-        const lookUpId = await getGeoId(id);
+        const lookUpId = await getGeoId(id);    //get root ceramic id and parcel id
         
         setRootCId(lookUpId.rootCId);
 
-        //let _dcid = "kjzl6cwe1jw1496nwnopkd13637zk4c46g94um9bonlaghgti5ekwsckzibd5mk";
         setParcelInfo(lookUpId.parcelId);
         setParcelContent(lookUpId.rootCId);
     }
 
     const setParcelInfo = async(_docid) => {
-        const _parcelInfo = await getParcelInfo(_docid);
+        const _parcelInfo = await getParcelInfo(_docid);    //get parcel info and meta-data
         setGwInfo( JSON.stringify(_parcelInfo) );
     }
 
     const setParcelContent = async(_docid) => {
-        const _parcelData = await getParcelContent(_docid);
+        const _parcelData = await getParcelContent(_docid); //get parcel content
         SetGwContent( JSON.stringify(_parcelData) );
     }
 
@@ -65,6 +65,7 @@ const GoeWebSystem = () => {
         <div>
             <Layout/>
 
+            {/*Display Mock Data*/}
             <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
                 <span>{'lat : ' + coordinate.lat}</span>
                 <br/>

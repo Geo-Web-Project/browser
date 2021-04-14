@@ -1,41 +1,95 @@
+
+//  Imports
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPH_URI,
+import CeramicClient from '@ceramicnetwork/http-client';
+
+import {parseGeo, parseInfo, parseContent} from '../helpers/gwParser';
+
+//  Refer Environment Variables
+const GRAPH_URL = process.env.REACT_APP_GRAPH_URI;
+const CERAMIC_URL = process.env.REACT_APP_CERAMIC_URI;
+
+
+//  Instantiate Apollo & Ceramic Clients
+const graphClient = new ApolloClient({
+  uri: GRAPH_URL,
   cache: new InMemoryCache()
 });
 
-const LOCATION_LOOKUP_QUERY = gql`
-    query {
-            geoWebCoordinate(id: "364436565199400") {
+const ceramic = new CeramicClient(CERAMIC_URL)
+
+
+//  GraphQL Queries
+const LOCATION_LOOKUP_QUERY = 
+  gql`
+    query GeoWebCoordinate($id: String){
+      geoWebCoordinate(id: $id) {
+      id
+      landParcel {
+          id
+          license {
             id
-            landParcel {
-                id
-                license {
-                id
-                rootCID
-                }
-            }
-            }
-        }`
+            rootCID
+          }
+        }
+      }
+    }`
 
-const locationBasedLookup = async () => {
+const PARCEL_INFO_QUERY = 
+  gql`
+    query LandParcel($id: String) {
+      landParcel(id: $id) {
+        id
+        license {
+          rootCID
+          owner
+          value
+          expirationTimestamp
+        }
+      }
+    }`
+  
 
-    let result = await client.query({
-        query: LOCATION_LOOKUP_QUERY
+//  Get Ceramic, parcel IDs 
+const getGeoId = async (id) => {
+
+    let result = await graphClient.query({
+        query: LOCATION_LOOKUP_QUERY,
+        variables:{id: id}
     })
    
-    let rootCID = ""
-
-      try {
-        rootCID = result['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
-      }
-      catch(e){
-          console.error(e);
-      }
-      
-      return rootCID;
+    let geoId = parseGeo(result);
+    
+    return geoId;
 }
 
-export {locationBasedLookup};
+//  Get Parcel Info 
+//  input: parcelId (Eg: '0x2D')
+//  output: {  id: , license: , ceramicId: , value: , expiry: }
+const getParcelInfo = async(id) => {
+
+  let info = await graphClient.query({
+    query: PARCEL_INFO_QUERY,
+    variables: {id: id}
+  })
+
+  let parcelInfo = parseInfo(info);
+
+  return parcelInfo;
+
+}
+
+const getParcelContent = async(docid) => {
+
+  const doc = await ceramic.loadDocument(docid)
+
+  let parcelContent = parseContent(doc);
+
+  return parcelContent; 
+
+}
+
+
+export {getGeoId, getParcelInfo, getParcelContent};

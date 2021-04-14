@@ -1,13 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 
-import GPS from './components/gps/GPS';
+import GoeWebSystem from './components/GeoWebSystem/GeoWebSystem';
 
 function App() {
   return (
     <div className="App">
 
-      <GPS />
+      <GoeWebSystem />
 
     </div>
   );

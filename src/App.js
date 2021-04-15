@@ -1,14 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
 
-import GoeWebSystem from './components/GeoWebSystem/GeoWebSystem';
+import GWS from './components/GeoWebSystem/GWS';
 
 function App() {
   return (
     <div className="App">
-
-      <GoeWebSystem />
-
+      <GWS />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import Layout from '../Layout/Layout';
 const GeoWebCoordinate = require("js-geo-web-coordinate");
 
 
-const GoeWebSystem = () => {
+const GWS = () => {
 
     const initCoordinate = {lat: 0, lon: 0}; //default lat, lon
     const [coordinate, setCoordinate] = useState(initCoordinate);   //gps coordinates {lat, lon}
@@ -87,4 +87,4 @@ const GoeWebSystem = () => {
     
 }
 
-export default GoeWebSystem;
+export default GWS;

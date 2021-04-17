@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
 
 import Layout from '../Layout/Layout';
+import GWInfo from '../GeoWebInfo/GWInfo';
 
 const GeoWebCoordinate = require("js-geo-web-coordinate");
 
@@ -63,10 +64,11 @@ const GWS = () => {
 
     return(
         <div>
-            <Layout/>
+            <Layout />
+            <GWInfo />
 
             {/*Display Mock Data*/}
-            <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
+            {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
                 <span>{'lat : ' + coordinate.lat}</span>
                 <br/>
                 <span>{'lon : ' +coordinate.lon}</span>
@@ -80,7 +82,7 @@ const GWS = () => {
                 <br/>
                 <br/>
                 <span>{gwInfo}</span>
-            </div>
+            </div> */}
 
         </div>
     );

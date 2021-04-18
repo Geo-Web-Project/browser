@@ -3,6 +3,9 @@ import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
 
 import Layout from '../Layout/Layout';
 import GWInfo from '../GeoWebInfo/GWInfo';
+import GWContent from '../GeoWebContent/GWContent';
+
+import './styles.css';
 
 const GeoWebCoordinate = require("js-geo-web-coordinate");
 
@@ -65,7 +68,11 @@ const GWS = () => {
     return(
         <div>
             <Layout />
-            <GWInfo />
+
+            <div className="layout-root">
+                <GWInfo />
+                <GWContent />
+            </div>
 
             {/*Display Mock Data*/}
             {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>

@@ -7,9 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
@@ -21,7 +18,7 @@ export default function GWInfo() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -37,6 +34,5 @@ export default function GWInfo() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </div>
   );
 }

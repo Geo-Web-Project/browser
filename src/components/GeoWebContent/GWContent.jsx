@@ -5,11 +5,11 @@ const GWContent = () => {
 
     return(
         <Switch
-        defaultChecked
-        color="default"
-        inputProps={{ 'aria-label': 'checkbox with default color' }}
-        style={{position:'relative', top: '0px'}}
-      />
+            defaultChecked
+            color="default"
+            inputProps={{ 'aria-label': 'checkbox with default color' }}
+            style={{position:'relative', top: '0px'}}
+        />
     );
 
 }

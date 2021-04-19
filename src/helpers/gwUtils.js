@@ -17,7 +17,7 @@ const convertTimestamp = (_timestamp) => {
 }
 
 //calculate parcel value based on expiry date and current value
-const calcParcelValue = (_expiry, _value) => {
+const calcParcelBalance = (_expiry, _value) => {
 
   let now = Date.now();
   let networkFeeBalance = BigNumber.from(_expiry)
@@ -32,4 +32,4 @@ const calcParcelValue = (_expiry, _value) => {
 
 }
 
-export {convertTimestamp, calcParcelValue};
+export {convertTimestamp, calcParcelBalance};

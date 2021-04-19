@@ -6,12 +6,53 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import './styles.css';
+
 const useStyles = makeStyles((theme) => ({
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
+  root: {
+    height: '60px',
+    background: '#4B5588',
+    color: 'white'
   },
+  expanded: {
+    height: '145px',
+    background: '#4B5588',
+    color: 'white'
+  },
+  heading: {
+    //fontSize: theme.typography.pxToRem(15),
+    //fontWeight: theme.typography.fontWeightRegular,
+    
+    fontFamily: 'Abel',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '32px',
+    lineHeight: '45px',
+    /* or 141% */
+
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
+
+    color: '#FFFFFF',
+  },
+  typography: {
+    fontFamily: 'Abel',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '18px',
+    lineHeight: '24px',
+    /* identical to box height, or 133% */
+
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
+
+    color: '#ffffff',
+  }
 }));
+
+
 
 export default function GWInfo() {
 
@@ -24,13 +65,20 @@ export default function GWInfo() {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          className={classes.root}
         >
-          <Typography className={classes.heading}></Typography>
+          <Typography className={classes.heading}>
+            [Parcel Name]
+          </Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
+        <AccordionDetails className={classes.expanded}>
+          <Typography className={classes.expanded}>
+            <p key={'key1'}>{'Parcel ID: ' + 0}</p>
+            <p key={'key2'}>{'License: ' + 0}</p>
+            <p key={'key3'}>{'For Sale Price: ' + 0}</p>
+            <p key={'key4'}>{'Expiration: ' + 0}</p>
+            <p key={'key5'}>{'Fee Balance: ' + 0}</p>
+            <p key={'key6'}>{'Linked CID: ' + 0}</p>
           </Typography>
         </AccordionDetails>
       </Accordion>

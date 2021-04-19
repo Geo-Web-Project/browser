@@ -1,5 +1,5 @@
 
-import {convertTimestamp, calcParcelValue} from './gwUtils';
+import {convertTimestamp, calcParcelBalance} from './gwUtils';
 
 //parse root ceramic id and parcel id
 const parseGeo = (msg) => {
@@ -23,18 +23,22 @@ const parseInfo = (msg) => {
     let _parcelInfo = {
         id: null,
         license: null,
-        ceramicId: null,
         value: null,
-        expiry: null
+        expiry: null,
+        ceramicId: null,
     }
     
     try {
 
-        _parcelInfo.id = msg['data']['landParcel']['id'];
-        _parcelInfo.licensee = msg['data']['landParcel']['license']['owner'];
-        _parcelInfo.ceramicId = msg['data']['landParcel']['license']['rootCID'];
-        _parcelInfo.value = msg['data']['landParcel']['license']['value'];
-        _parcelInfo.expiry = convertTimestamp( msg['data']['landParcel']['license']['expirationTimestamp'] );
+        let _landParcel = msg['data']['landParcel'];
+        let _license = _landParcel['license']; 
+
+        _parcelInfo.id = _landParcel['id'];
+        _parcelInfo.licensee = _license['owner'];
+        _parcelInfo.value = _license['value'];
+        _parcelInfo.expiry = convertTimestamp( _license['expirationTimestamp'] );
+        _parcelInfo.balance = calcParcelBalance(_license['expirationTimestamp'], _license['value']);
+        _parcelInfo.ceramicId = _license['rootCID'];
         
     }
     catch(e){

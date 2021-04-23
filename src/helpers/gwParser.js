@@ -27,6 +27,7 @@ const parseInfo = (msg) => {
         expiry: null,
         balance: null,
         ceramicId: null,
+        ceramicUri: null,
     }
     
     try {
@@ -40,6 +41,8 @@ const parseInfo = (msg) => {
         _parcelInfo.expiry = convertTimestamp( _license['expirationTimestamp'] );
         _parcelInfo.balance = calcParcelBalance(_license['expirationTimestamp'], _license['value']);
         _parcelInfo.ceramicId = `ceramic://${truncateStr(_license['rootCID'], 11)}`;
+        _parcelInfo.ceramicUri = _license['rootCID'];
+
         
     }
     catch(e){
@@ -52,8 +55,6 @@ const parseInfo = (msg) => {
 
 //parse parcel content document
 const parseContent = (msg) => {
-
-    debugger;
    
     let _parcelContent = msg['_state']['content'];
 

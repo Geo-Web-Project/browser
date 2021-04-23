@@ -80,8 +80,6 @@ const GWS = () => {
                 <br/>
                 <span>{'lon : ' +coordinate.lon}</span>
                 <br/>
-                <span>{'gwcoord : ' +gwCoord}</span>
-                <br/>
                 <span>{'rootCID : ' +rootCId}</span>
                 <br/>
                 <br/>

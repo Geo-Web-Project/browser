@@ -3,12 +3,11 @@ import { ethers, BigNumber} from "ethers";
 
 
 //network constants
-
 let annualRate = process.env.REACT_APP_ANNUALRATE;
-
 let perSecondFeeNumerator = parseFloat(annualRate) * 100;
 let perSecondFeeDenominator = 60 * 60 * 24 * 365 * 100;
 
+//Format value (Ether)
 const formatValue = (_value) => {
   return ethers.utils.formatEther(_value);
 }
@@ -38,6 +37,7 @@ const calcParcelBalance = (_expiry, _value) => {
 
 }
 
+//Truncate Strings for varying lengths
 const truncateStr = (str, strLen) => {
   if (str.length <= strLen) {
     return str;

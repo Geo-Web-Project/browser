@@ -3,6 +3,7 @@ import Switch from '@material-ui/core/Switch';
 
 const GWContent = () => {
 
+    //Toggle Between Web & 3D Content
     return(
         <Switch
             defaultChecked

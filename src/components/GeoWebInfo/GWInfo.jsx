@@ -20,15 +20,12 @@ const useStyles = makeStyles((theme) => ({
     color: 'white'
   },
   heading: {
-    //fontSize: theme.typography.pxToRem(15),
-    //fontWeight: theme.typography.fontWeightRegular,
     
     fontFamily: 'Abel',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: '32px',
     lineHeight: '45px',
-    /* or 141% */
 
     alignItems: 'center',
     textAlign: 'center',
@@ -41,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'normal',
     fontSize: '18px',
     lineHeight: '6px',
-    /* identical to box height, or 133% */
 
     alignItems: 'left',
     textAlign: 'left',
@@ -57,28 +53,42 @@ export default function GWInfo(props) {
 
   const gwInfo = props.gwInfo;
 
+  //Info Schema
   let _gwInfoSchemaMap = {
     'Parcel ID: ' : 'id',
     'Licensee: ' : 'licensee',
     'For Sale Price: ': 'value',
     'Expiration: ': 'expiry',
     'Fee Balance: ': 'balance',
-    'Linked CID: ': 'ceramicId',
+    //'Linked CID: ': 'ceramicId', 
   }
 
   const InfoList = () => {
     
+    //Check if Info is available
     if(gwInfo !== null)
     { 
+      //Iterate over all Keys in Info Object
       return <Typography className={classes.typography}>
+
         {Object.keys(_gwInfoSchemaMap).map((key) => 
           <p key={key}>{key + gwInfo[_gwInfoSchemaMap[key]]}</p>
         )}
-      </Typography>
+        
+        <p key={'Linked CID: '}>
+          {'Linked CID: '}
+          <a href={`https://gateway-clay.ceramic.network/api/v0/documents/${gwInfo['ceramicUri']}`}
+            target="_blank" rel="noreferrer" className={classes.typography}>
+              {gwInfo['ceramicId']}
+          </a>
+        </p>
+
+        </Typography>
     }
     else
       return <div />
-  }
+    
+    }
   
     return (
       

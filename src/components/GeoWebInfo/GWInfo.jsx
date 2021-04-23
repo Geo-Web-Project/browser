@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '45px',
     /* or 141% */
 
-    display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
 
@@ -41,46 +40,62 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: '18px',
-    lineHeight: '24px',
+    lineHeight: '6px',
     /* identical to box height, or 133% */
 
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
+    alignItems: 'left',
+    textAlign: 'left',
 
     color: '#ffffff',
   }
 }));
 
 
-
-export default function GWInfo() {
+export default function GWInfo(props) {
 
   const classes = useStyles();
 
-  return (
+  const gwInfo = props.gwInfo;
+
+  let _gwInfoSchemaMap = {
+    'Parcel ID: ' : 'id',
+    'Licensee: ' : 'licensee',
+    'For Sale Price: ': 'value',
+    'Expiration: ': 'expiry',
+    'Fee Balance: ': 'balance',
+    'Linked CID: ': 'ceramicId',
+  }
+
+  const InfoList = () => {
     
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          className={classes.root}
-        >
-          <Typography className={classes.heading}>
-            [Parcel Name]
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails className={classes.expanded}>
-          <Typography className={classes.expanded}>
-            <p key={'key1'}>{'Parcel ID: ' + 0}</p>
-            <p key={'key2'}>{'License: ' + 0}</p>
-            <p key={'key3'}>{'For Sale Price: ' + 0}</p>
-            <p key={'key4'}>{'Expiration: ' + 0}</p>
-            <p key={'key5'}>{'Fee Balance: ' + 0}</p>
-            <p key={'key6'}>{'Linked CID: ' + 0}</p>
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-  );
+    if(gwInfo !== null)
+    { 
+      return <Typography className={classes.typography}>
+        {Object.keys(_gwInfoSchemaMap).map((key) => 
+          <p key={key}>{key + gwInfo[_gwInfoSchemaMap[key]]}</p>
+        )}
+      </Typography>
+    }
+    else
+      return <div />
+  }
+  
+    return (
+      
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            className={classes.root}
+          >
+            <Typography className={classes.heading}>
+              The Dal Lake
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails className={classes.expanded}>
+              <InfoList />
+          </AccordionDetails>
+        </Accordion>
+    );
 }

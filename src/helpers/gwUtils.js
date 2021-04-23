@@ -1,13 +1,17 @@
 
-let BigNumber = require('big-number');
+import { ethers, BigNumber} from "ethers";
 
 
 //network constants
-const annualRate = parseFloat(process.env.REACT_APP_ANNUALRATE);
 
-let perSecondFeeNumerator = annualRate * 100;
+let annualRate = process.env.REACT_APP_ANNUALRATE;
+
+let perSecondFeeNumerator = parseFloat(annualRate) * 100;
 let perSecondFeeDenominator = 60 * 60 * 24 * 365 * 100;
 
+const formatValue = (_value) => {
+  return ethers.utils.formatEther(_value);
+}
 
 //convert timestamp to UTC format
 const convertTimestamp = (_timestamp) => {
@@ -25,11 +29,30 @@ const calcParcelBalance = (_expiry, _value) => {
     .sub(now)
     .div(1000)
     .mul(BigNumber.from(_value))
-    .mul(perSecondFeeNumerator.toNumber())
-    .div(perSecondFeeDenominator.toNumber());
+    .mul(perSecondFeeNumerator)
+    .div(perSecondFeeDenominator);
 
-  return networkFeeBalance < 0 ? BigNumber.from(0) : networkFeeBalance;
+  networkFeeBalance = networkFeeBalance < 0 ? BigNumber.from(0) : networkFeeBalance;
+
+  return ethers.utils.formatEther(networkFeeBalance.toString())
 
 }
 
-export {convertTimestamp, calcParcelBalance};
+const truncateStr = (str, strLen) => {
+  if (str.length <= strLen) {
+    return str;
+  }
+
+  var separator = "...";
+
+  var sepLen = separator.length,
+    charsToShow = strLen - sepLen,
+    frontChars = Math.ceil(charsToShow / 2),
+    backChars = Math.floor(charsToShow / 2);
+
+  return (
+    str.substr(0, frontChars) + separator + str.substr(str.length - backChars)
+  );
+}
+
+export { formatValue, convertTimestamp, calcParcelBalance, truncateStr};

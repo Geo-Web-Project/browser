@@ -1,5 +1,5 @@
 
-import {convertTimestamp, calcParcelBalance} from './gwUtils';
+import { formatValue, convertTimestamp, calcParcelBalance, truncateStr} from './gwUtils';
 
 //parse root ceramic id and parcel id
 const parseGeo = (msg) => {
@@ -22,23 +22,24 @@ const parseInfo = (msg) => {
 
     let _parcelInfo = {
         id: null,
-        license: null,
+        licensee: null,
         value: null,
         expiry: null,
+        balance: null,
         ceramicId: null,
     }
     
     try {
-
+       
         let _landParcel = msg['data']['landParcel'];
         let _license = _landParcel['license']; 
 
         _parcelInfo.id = _landParcel['id'];
-        _parcelInfo.licensee = _license['owner'];
-        _parcelInfo.value = _license['value'];
+        _parcelInfo.licensee = truncateStr(_license['owner'], 11);
+        _parcelInfo.value = formatValue(_license['value']);
         _parcelInfo.expiry = convertTimestamp( _license['expirationTimestamp'] );
         _parcelInfo.balance = calcParcelBalance(_license['expirationTimestamp'], _license['value']);
-        _parcelInfo.ceramicId = _license['rootCID'];
+        _parcelInfo.ceramicId = `ceramic://${truncateStr(_license['rootCID'], 11)}`;
         
     }
     catch(e){
@@ -51,6 +52,8 @@ const parseInfo = (msg) => {
 
 //parse parcel content document
 const parseContent = (msg) => {
+
+    debugger;
    
     let _parcelContent = msg['_state']['content'];
 

@@ -16,7 +16,7 @@ const GWS = () => {
     const [coordinate, setCoordinate] = useState(initCoordinate);   //gps coordinates {lat, lon}
     const [gwCoord, setGwCoord] = useState(""); //geowebcoordinates as string
     const [rootCId, setRootCId] = useState(""); //rootCid
-    const [gwInfo, setGwInfo] = useState("");
+    const [gwInfo, setGwInfo] = useState(null);
     const [gwContent, SetGwContent] = useState("");
 
     //On Mount
@@ -56,7 +56,7 @@ const GWS = () => {
 
     const setParcelInfo = async(_docid) => {
         const _parcelInfo = await getParcelInfo(_docid);    //get parcel info and meta-data
-        setGwInfo( JSON.stringify(_parcelInfo) );
+        setGwInfo( _parcelInfo );
     }
 
     const setParcelContent = async(_docid) => {
@@ -70,7 +70,7 @@ const GWS = () => {
             <Layout />
 
             <div className="layout-root">
-                <GWInfo />
+                <GWInfo gwInfo={gwInfo} />
                 <GWContent />
             </div>
 
@@ -83,9 +83,6 @@ const GWS = () => {
                 <span>{'gwcoord : ' +gwCoord}</span>
                 <br/>
                 <span>{'rootCID : ' +rootCId}</span>
-                <br/>
-                <br/>
-                <span>{gwContent}</span>
                 <br/>
                 <br/>
                 <span>{gwInfo}</span>

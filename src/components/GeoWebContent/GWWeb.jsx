@@ -3,8 +3,8 @@ import './styles.css';
 
 const GWWeb = (props) => {
 
-   // const gwWebContent = props.gwWebContent;
-    const gwWebContent = "https://wikipedia.org"
+   const gwWebContent = props.gwWebContent;
+    //const gwWebContent = "https://wikipedia.org"
 
     return(
         <iframe src={gwWebContent} className='gwIframe' 

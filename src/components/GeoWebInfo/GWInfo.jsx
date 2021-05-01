@@ -52,6 +52,7 @@ export default function GWInfo(props) {
   const classes = useStyles();
 
   const gwInfo = props.gwInfo;
+  const gwContentName = props.gwContentName;
 
   //Info Schema
   let _gwInfoSchemaMap = {
@@ -100,7 +101,7 @@ export default function GWInfo(props) {
             className={classes.root}
           >
             <Typography className={classes.heading}>
-              The Dal Lake
+              {gwContentName}
             </Typography>
           </AccordionSummary>
           <AccordionDetails className={classes.expanded}>

@@ -55,7 +55,7 @@ const parseInfo = (msg) => {
 
 //parse parcel content document
 const parseContent = (msg) => {
-   
+    
     let _parcelContent = msg['_state']['content'];
 
     return _parcelContent;

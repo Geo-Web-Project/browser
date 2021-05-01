@@ -17,7 +17,7 @@ const GWS = () => {
     const [gwCoord, setGwCoord] = useState(""); //geowebcoordinates as string
     const [rootCId, setRootCId] = useState(""); //rootCid
     const [gwInfo, setGwInfo] = useState(null);
-    const [gwContent, SetGwContent] = useState("");
+    const [gwContent, SetGwContent] = useState(null);
 
     //On Mount
     useEffect( ()=>{
@@ -61,7 +61,7 @@ const GWS = () => {
 
     const setParcelContent = async(_docid) => {
         const _parcelData = await getParcelContent(_docid); //get parcel content
-        SetGwContent( JSON.stringify(_parcelData) );
+        SetGwContent( _parcelData );
     }
 
 
@@ -70,8 +70,8 @@ const GWS = () => {
             <Layout />
 
             <div className="layout-root">
-                <GWInfo gwInfo={gwInfo} />
-                <GWContent />
+                <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""}/>
+                <GWContent gwWebContent={gwContent?gwContent.webContent:""}/>
             </div>
 
             {/*Display Mock Data*/}

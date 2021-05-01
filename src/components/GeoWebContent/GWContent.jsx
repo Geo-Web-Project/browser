@@ -1,7 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 
-import GWWeb from './GWWeb';
+import GWWebView from './GWWebView';
+
+
+import './styles.css'
+import GWCanvas from './GWCanvas';
 
 const GWContent = (props) => {
 
@@ -10,14 +15,18 @@ const GWContent = (props) => {
     //Toggle Between Web & 3D Content
     return(
         <div>
-        <Switch
-            defaultChecked
-            color="default"
-            inputProps={{ 'aria-label': 'checkbox with default color' }}
-            style={{position:'absolute', top: '0px'}}
-        />
+            <div className='switch-div'>
+                <Typography className='switch-left'>{'Web'}</Typography>
+                <Switch
+                    color="default"
+                    inputProps={{ 'aria-label': 'checkbox with default color' }}
+                    style={{position:'absolute', top: '0px'}}
+                />
+                <Typography className='switch-right'>{'3D'}</Typography>
+            </div>
 
-        <GWWeb gwWebContent={gwWebContent} />
+        {/* <GWWebView gwWebContent={gwWebContent} /> */}
+        <GWCanvas />
 
         </div>
     );

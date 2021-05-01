@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './styles.css';
 
-const GWWeb = (props) => {
+const GWWebView = (props) => {
 
    const gwWebContent = props.gwWebContent;
     //const gwWebContent = "https://wikipedia.org"
@@ -12,4 +12,4 @@ const GWWeb = (props) => {
     )
 }
 
-export default GWWeb;
+export default GWWebView;

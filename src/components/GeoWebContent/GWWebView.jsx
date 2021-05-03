@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import './styles.css';
 
-const GWWeb = (props) => {
+const GWWebView = (props) => {
 
-   const gwWebContent = props.gwWebContent;
-    //const gwWebContent = "https://wikipedia.org"
+   //const gwWebContent = props.gwWebContent;
+   const gwWebContent = "https://www.beautifulworld.com/asia/india/dal-lake/";
 
     return(
         <iframe src={gwWebContent} className='gwIframe' 
@@ -12,4 +12,4 @@ const GWWeb = (props) => {
     )
 }
 
-export default GWWeb;
+export default GWWebView;

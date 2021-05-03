@@ -3,8 +3,8 @@ import './styles.css';
 
 const GWWebView = (props) => {
 
-   const gwWebContent = props.gwWebContent;
-    //const gwWebContent = "https://wikipedia.org"
+   //const gwWebContent = props.gwWebContent;
+   const gwWebContent = "https://www.beautifulworld.com/asia/india/dal-lake/";
 
     return(
         <iframe src={gwWebContent} className='gwIframe' 

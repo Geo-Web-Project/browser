@@ -24,6 +24,8 @@ const GWContent = (props) => {
         
     }
 
+
+
     //Toggle Between Web & 3D Content
     return(
         <div>
@@ -39,13 +41,13 @@ const GWContent = (props) => {
             </div>
 
             <div style={{ position: 'absolute', width: '99%', visibility: gwMode==='web' ? 'visible' : 'hidden' }} >
-                    <GWWebView gwWebContent={gwWebContent} />
-                </div>
-
-                <div style={{ visibility: gwMode==='3d' ? 'visible' : 'hidden' }} >
-                    <GWCanvas/>
-                </div>
+                <GWWebView gwWebContent={gwWebContent} />
             </div>
+
+            <div style={{ visibility: gwMode==='3d' ? 'visible' : 'hidden' }} >
+                <GWCanvas/>
+            </div>
+        </div>
     );
 
 }

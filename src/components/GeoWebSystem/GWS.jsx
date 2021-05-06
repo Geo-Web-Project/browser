@@ -66,7 +66,7 @@ const GWS = () => {
         const _parcelData = await getParcelContent(_docid); //get parcel content
         SetGwContent( _parcelData );
 
-        //SetLoading(false);
+        SetLoading(false);
     }
 
 

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
 
 import Layout from '../Layout/Layout';
+import GWLoader from '../Loader/gwLoader';
 import GWInfo from '../GeoWebInfo/GWInfo';
 import GWContent from '../GeoWebContent/GWContent';
 
@@ -18,6 +19,8 @@ const GWS = () => {
     const [rootCId, setRootCId] = useState(""); //rootCid
     const [gwInfo, setGwInfo] = useState(null);
     const [gwContent, SetGwContent] = useState(null);
+
+    const [loading, SetLoading] = useState(true);
 
     //On Mount
     useEffect( ()=>{
@@ -62,6 +65,8 @@ const GWS = () => {
     const setParcelContent = async(_docid) => {
         const _parcelData = await getParcelContent(_docid); //get parcel content
         SetGwContent( _parcelData );
+
+        //SetLoading(false);
     }
 
 
@@ -69,21 +74,18 @@ const GWS = () => {
         <div>
             <Layout />
 
-            <div className="layout-root">
-                <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""}/>
-                <GWContent gwWebContent={gwContent?gwContent.webContent:""}/>
-            </div>
+            { loading ? <GWLoader/> : (
+                <div className="layout-root">
+                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""}/>
+                    <GWContent gwWebContent={gwContent?gwContent.webContent:""}/>
+                </div>  )
+            }
 
             {/*Display Mock Data*/}
             {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
                 <span>{'lat : ' + coordinate.lat}</span>
                 <br/>
                 <span>{'lon : ' +coordinate.lon}</span>
-                <br/>
-                <span>{'rootCID : ' +rootCId}</span>
-                <br/>
-                <br/>
-                <span>{gwInfo}</span>
             </div> */}
 
         </div>

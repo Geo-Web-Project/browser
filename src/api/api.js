@@ -83,15 +83,20 @@ const getParcelInfo = async(id) => {
 
 const getParcelContent = async(docid) => {
 
+  debugger;
   const doc = await ceramic.loadDocument(docid)
 
   let parcelContent = parseContent(doc);
   
-  // const queries = [{
-  //   docId: 'kjzl6cwe1jw...14',
-  //   paths: ['/state/content', '/b/c']
-  // }]
-  // const docMap = await ceramic.multiQuery(queries)
+  /*
+  const queries = [{
+     docId: 'kjzl6cwe1jw...14',
+     paths: ['/state/content', '/b/c']
+  }]
+  
+  const docMap = await ceramic.multiQuery(queries)
+  */
+  
   return parcelContent; 
 
 }

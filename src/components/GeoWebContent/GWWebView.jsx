@@ -5,8 +5,7 @@ import GWEmpty from '../GWEmpty/GWEmpty';
 
 const GWWebView = (props) => {
 
-   //const gwWebContent = props.gwWebContent;
-   const gwWebContent = null; //"https://www.beautifulworld.com/asia/india/dal-lake/";
+   const gwWebContent = props.gwWebContent;
 
    if(gwWebContent !== null) {
         return(

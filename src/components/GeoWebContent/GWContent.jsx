@@ -10,6 +10,7 @@ import GWCanvas from './GWCanvas';
 const GWContent = (props) => {
 
     const gwWebContent= props.gwWebContent;
+    const gwCanvasContent=props.gwCanvasContent;
 
     const [gwMode, setGwMode] = useState('web');
 
@@ -23,7 +24,6 @@ const GWContent = (props) => {
             setGwMode('3d');
         
     }
-
 
 
     //Toggle Between Web & 3D Content
@@ -45,7 +45,7 @@ const GWContent = (props) => {
             </div>
 
             <div style={{ visibility: gwMode==='3d' ? 'visible' : 'hidden' }} >
-                <GWCanvas/>
+                <GWCanvas gwCanvasContent={gwCanvasContent} />
             </div>
         </div>
     );

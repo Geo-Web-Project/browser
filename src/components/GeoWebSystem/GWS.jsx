@@ -3,6 +3,7 @@ import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
 
 import Layout from '../Layout/Layout';
 import GWLoader from '../Loader/gwLoader';
+import GWAvail from '../GWEmpty/GWAvail';
 import GWInfo from '../GeoWebInfo/GWInfo';
 import GWContent from '../GeoWebContent/GWContent';
 
@@ -16,7 +17,8 @@ const GWS = () => {
     const initCoordinate = {lat: 0, lon: 0}; //default lat, lon
     const [coordinate, setCoordinate] = useState(initCoordinate);   //gps coordinates {lat, lon}
     const [gwCoord, setGwCoord] = useState(""); //geowebcoordinates as string
-    const [rootCId, setRootCId] = useState(""); //rootCid
+    const [rootCId, setRootCId] = useState(null); //rootCid
+
     const [gwInfo, setGwInfo] = useState(null);
     const [gwContent, SetGwContent] = useState(null);
 
@@ -36,10 +38,10 @@ const GWS = () => {
     const showPosition = (position) => {
 
         //hard-coded coordinates for testing
-        const latitude = 34.114669; 
-        const longitude = 74.869795;
+        //const latitude = 34.114669; 
+        //const longitude = 74.869795;
 
-        //const {latitude, longitude} = position.coords;
+        const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
 
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate
@@ -51,10 +53,16 @@ const GWS = () => {
     const getRoootCid = async (id) => {
         const lookUpId = await getGeoId(id);    //get root ceramic id and parcel id
         
-        setRootCId(lookUpId.rootCId);
+        if(lookUpId.rootCId !== null) {
+            setRootCId(lookUpId.rootCId);
 
-        setParcelInfo(lookUpId.parcelId);
-        setParcelContent(lookUpId.rootCId);
+            setParcelInfo(lookUpId.parcelId);
+            setParcelContent(lookUpId.rootCId);
+        }
+        else{
+            setRootCId(lookUpId.rootCId);
+            SetLoading(false);
+        }
     }
 
     const setParcelInfo = async(_docid) => {
@@ -69,17 +77,33 @@ const GWS = () => {
         SetLoading(false);
     }
 
+    const GeoWeb = () => {
+       
+        if(rootCId !== null){
+            return (
+                <div className="layout-root">
+                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""}/>
+                    <GWContent gwWebContent={gwContent?gwContent.webContent:null}
+                        gwCanvasContent={gwContent?gwContent.mediaContent:null}/>
+                </div>
+            );
+        }
+        else{
+            return (
+                <div className="layout-root">
+                    <GWInfo gwInfo={null} gwContentName={"No Parcel Found"}/>
+                    <GWAvail />
+                </div>
+            );
+        }
+    }
+
 
     return(
         <div>
             <Layout />
 
-            { loading ? <GWLoader/> : (
-                <div className="layout-root">
-                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""}/>
-                    <GWContent gwWebContent={gwContent?gwContent.webContent:""}/>
-                </div>  )
-            }
+            { loading ? <GWLoader/> : <GeoWeb /> }
 
             {/*Display Mock Data*/}
             {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>

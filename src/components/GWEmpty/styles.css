@@ -1,3 +1,13 @@
+.avail-img {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    left: calc(50vw - 200px);
+    top: calc(50vh - 200px - 140px);
+
+    background: url('/src/assets/Available\ Land_Transparent\ 1.png');
+}
+
 .rect-box {
     position: absolute;
     width: 300px;

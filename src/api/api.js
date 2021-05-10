@@ -83,7 +83,7 @@ const getParcelInfo = async(id) => {
 
 const getParcelContent = async(docid) => {
 
-  /* TEST */
+  /* TEST 
   let parcelContent = {
     name: "Dal Lake",
     webContent: "https://www.beautifulworld.com/asia/india/dal-lake/",
@@ -92,9 +92,11 @@ const getParcelContent = async(docid) => {
       {"name": "Mountain Bike", "contentUrl" : "bafybeifvwcgfg6he3ihovvhakrdlihh5ol4rucu26ou5zel3jlhgo4acay"}
     ]
   }
+  */
 
 
-  /*
+  /**/
+
   const doc = await ceramic.loadDocument(docid)
 
   let parcelContent = parseContent(doc);
@@ -104,8 +106,6 @@ const getParcelContent = async(docid) => {
   //   paths: ['/state/content', '/b/c']
   // }]
   // const docMap = await ceramic.multiQuery(queries)
-  */
-
 
   return parcelContent; 
 

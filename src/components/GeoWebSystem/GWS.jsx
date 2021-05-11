@@ -10,6 +10,7 @@ import GWContent from '../GeoWebContent/GWContent';
 import './styles.css';
 
 const GeoWebCoordinate = require("js-geo-web-coordinate");
+const Gws_mock = require('./Gws_mock.json');
 
 
 const GWS = () => {
@@ -46,13 +47,28 @@ const GWS = () => {
 
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate
         setGwCoord(_gwCoord.toString());    
-        
-        getRoootCid(_gwCoord.toString());
+
+        /* *******************DEMO******************* */
+        const _useGws = process.env.REACT_APP_USE_GWS;
+
+        if(_useGws === 'false')
+            setPreDetermined();
+        else
+            getRoootCid(_gwCoord.toString());
+        /* ****************************************** */
     }   
+
+    const setPreDetermined = () => {
+        setRootCId( Gws_mock.parcelInfo.ceramicUri );
+        setGwInfo( Gws_mock.parcelInfo );
+        SetGwContent( Gws_mock.parcelContent );
+
+        SetLoading(false);
+    }
 
     const getRoootCid = async (id) => {
         const lookUpId = await getGeoId(id);    //get root ceramic id and parcel id
-        
+       
         if(lookUpId.rootCId !== null) {
             setRootCId(lookUpId.rootCId);
 

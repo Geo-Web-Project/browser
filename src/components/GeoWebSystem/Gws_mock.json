@@ -1,0 +1,19 @@
+{   
+    "parcelInfo": {
+        "id": "0x2d",
+        "licensee": "0xfc...3445",
+        "value": "12.0",
+        "expiry": "Mon, 05 Dec 2022 00:15:08 GMT",
+        "balance": "1.88299452054794520",
+        "ceramicId": "ceramic://kjzl...d5mk",
+        "ceramicUri": "kjzl6cwe1jw1496nwnopkd13637zk4c46g94um9bonlaghgti5ekwsckzibd5mk" 
+    },
+    "parcelContent" : {
+        "name": "Dal Lake",
+        "webContent": "https://www.beautifulworld.com/asia/india/dal-lake/",
+        "mediaContent": [
+            {"name": "Lake Boat", "contentUrl" : "QmSJZ2DvrLz2hBeduYiPTsSmCXViZrbj1cc2V3mud8kX6N"},
+            {"name": "Mountain Bike", "contentUrl" : "bafybeifvwcgfg6he3ihovvhakrdlihh5ol4rucu26ou5zel3jlhgo4acay"}
+        ]
+    }
+}

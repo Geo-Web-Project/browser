@@ -1,17 +1,24 @@
 import React, {useEffect, useState} from 'react';
+import GWEmpty from '../GWEmpty/GWEmpty';
 
 import './styles.css';
 
-const GWCanvas = () =>{
+const gwGateway = process.env.REACT_APP_IPFS_GATEWAY;
 
-    let gwGateway = "https://dweb.link/ipfs/";
-    let _cid= "QmSJZ2DvrLz2hBeduYiPTsSmCXViZrbj1cc2V3mud8kX6N"
+const GWCanvas = (props) =>{
+    
+    const gwCanvasContent = props.gwCanvasContent;
 
-    return(
-        <model-viewer className='gwCanvas' src={gwGateway+_cid} alt="Lake Boat" 
-            auto-rotate camera-controls>
-        </model-viewer>
-    );
+    if(gwCanvasContent !== null) {
+        return(
+            <model-viewer className='gwCanvas' src={gwGateway+gwCanvasContent[0].contentUrl} 
+                alt="Lake Boat" auto-rotate camera-controls>
+            </model-viewer>
+        );
+    }
+    else {
+        return <GWEmpty promptType='gallery' />
+    }
 
 }
 

@@ -11,7 +11,7 @@ const parseGeo = (msg) => {
         _geoId.parcelId = msg['data']['geoWebCoordinate']['landParcel']['id']
     }
     catch(e){
-        console.error(e);
+        console.log(e);
     }
 
     return _geoId;
@@ -43,10 +43,9 @@ const parseInfo = (msg) => {
         _parcelInfo.ceramicId = `ceramic://${truncateStr(_license['rootCID'], 11)}`;
         _parcelInfo.ceramicUri = _license['rootCID'];
 
-        
     }
     catch(e){
-        console.error(e);
+        console.log(e);
     }
 
     return _parcelInfo;
@@ -55,8 +54,19 @@ const parseInfo = (msg) => {
 
 //parse parcel content document
 const parseContent = (msg) => {
+
+    let _parcelContent = {
+        name: null,
+        webContent: null,
+        mediaContent: null
+    }
     
-    let _parcelContent = msg['_state']['content'];
+    try {
+        _parcelContent = msg['_state']['content'];
+    }
+    catch(e){
+        console.log(e);
+    }
 
     return _parcelContent;
 }

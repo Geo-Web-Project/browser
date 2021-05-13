@@ -5,7 +5,9 @@ import GWS from './components/GeoWebSystem/GWS';
 function App() {
   return (
     <div className="App">
-      <GWS />
+      <div className="bg-theme">
+        <GWS />
+      </div>
     </div>
   );
 }

@@ -82,22 +82,3 @@ body{
 
     color: #FFFFFF;
 }
-
-.bg-img{
-
-    /* iStock-1162097121 2 */
-
-    width: 100%;
-    height: calc(100% - 80px);
-
-    position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 80px;
-    bottom: 0%;
-
-    background: url('/src/assets/iStock-1162097121\ 2.png');
-    mix-blend-mode: difference;
-    opacity: 1;
-
-}

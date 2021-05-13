@@ -83,7 +83,15 @@ const getParcelInfo = async(id) => {
 
 const getParcelContent = async(docid) => {
 
-  const doc = await ceramic.loadStream(docid)
+  let doc = null;
+  
+  try{
+    doc = await ceramic.loadStream(docid);
+  }
+  catch(e){
+    console.log(e);
+  }
+
   let parcelContent = parseContent(doc);
   
   /*

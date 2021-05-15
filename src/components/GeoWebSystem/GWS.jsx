@@ -39,8 +39,8 @@ const GWS = () => {
     const showPosition = (position) => {
 
         //hard-coded coordinates for testing
-        const latitude = 34.114669; 
-        const longitude = 74.869795;
+        //const latitude = 34.114669; 
+        //const longitude = 74.869795;
 
         //const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state

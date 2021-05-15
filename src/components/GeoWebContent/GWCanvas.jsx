@@ -12,7 +12,19 @@ const GWCanvas = (props) =>{
     if(gwCanvasContent !== null) {
         return(
             <model-viewer className='gwCanvas' src={gwGateway+gwCanvasContent[0].contentUrl} 
-                alt="Lake Boat" auto-rotate camera-controls>
+                shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
+                auto-rotate camera-controls alt="Lake Boat">
+                
+                <button slot="ar-button" id="ar-button" />
+
+                <div id="ar-prompt">
+                    <img id="ar-prompt-img" />
+                </div>
+
+                <button id="ar-failure">
+                    AR is not tracking!
+                </button>
+
             </model-viewer>
         );
     }

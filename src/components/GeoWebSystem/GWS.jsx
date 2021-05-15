@@ -42,7 +42,7 @@ const GWS = () => {
         //const latitude = 34.114669; 
         //const longitude = 74.869795;
 
-        //const {latitude, longitude} = position.coords;
+        const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
 
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate

@@ -3,8 +3,7 @@ import GWEmpty from '../GWEmpty/GWEmpty';
 
 import './styles.css';
 
-const gwGateway = "https://gateway.pinata.cloud/ipfs/";
-//process.env.REACT_APP_IPFS_GATEWAY;
+const gwGateway = process.env.REACT_APP_IPFS_GATEWAY;
 
 const ModelViewer = (props) => {
 

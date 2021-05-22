@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-theme{
+
+  /* iStock-1162097121 2 */
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  background: url('/src/assets/iStock-1162097121\ 2.png');
+  overflow-y: scroll;
+  /*mix-blend-mode: difference;*/
+  opacity: 1;
+
+}

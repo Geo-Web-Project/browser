@@ -59,7 +59,7 @@ const getGeoId = async (id) => {
         query: LOCATION_LOOKUP_QUERY,
         variables:{id: id}
     })
-   
+    
     let geoId = parseGeo(result);
     
     return geoId;
@@ -83,20 +83,25 @@ const getParcelInfo = async(id) => {
 
 const getParcelContent = async(docid) => {
 
-  debugger;
-  const doc = await ceramic.loadDocument(docid)
+  let doc = null;
+  
+  try{
+    doc = await ceramic.loadStream(docid);
+  }
+  catch(e){
+    console.log(e);
+  }
 
   let parcelContent = parseContent(doc);
   
   /*
-  const queries = [{
-     docId: 'kjzl6cwe1jw...14',
-     paths: ['/state/content', '/b/c']
-  }]
-  
-  const docMap = await ceramic.multiQuery(queries)
+  // const queries = [{
+  //   docId: 'kjzl6cwe1jw...14',
+  //   paths: ['/state/content', '/b/c']
+  // }]
+  // const docMap = await ceramic.multiQuery(queries)
   */
-  
+
   return parcelContent; 
 
 }

@@ -11,7 +11,6 @@ const Layout = () => {
                 <div className="title-txt">{'Geo Web'}</div>
                 <div className="title-caption">{'Browse Earth'}</div>
             </div>
-            <div className="bg-img" />
         </div>
     );
 

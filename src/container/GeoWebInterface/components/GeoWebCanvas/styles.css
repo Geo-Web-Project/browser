@@ -1,31 +1,3 @@
-.switch-div {
-    position: relative;
-    margin-top: 2%;
-}
-
-.switch-left {
-    position: absolute;
-    top: 12%;
-    left: 14%;
-    color: white;
-}
-
-.switch-right {
-    position: absolute;
-    float: right;
-    right: 20%;
-    top: 12%;
-    color: white;
-}
-
-.gwIframe {
-    position: relative;
-    margin-top: 2%;
-    width: 100%;
-    height: calc(100vh - 200px);
-    overflow:hidden;
-}
-
 model-viewer {
     position: relative;
     margin-top: 2%;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './styles.css';
 
-import GWEmpty from '../GWEmpty/GWEmpty';
+import GWEmpty from '../../../../components/common/ContentFiller/Empty';
 
 const GWWebView = (props) => {
 

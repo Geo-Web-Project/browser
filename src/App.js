@@ -1,6 +1,6 @@
 import './App.css';
 
-import GWS from './components/GeoWebSystem/GWS';
+import GWS from './container/GeoWebSystem/GWS';
 
 function App() {
   return (

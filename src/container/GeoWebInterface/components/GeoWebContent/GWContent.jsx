@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 
-import GWWebView from './GWWebView';
+import GWWebView from '../GeoWebView/GWWebView';
+import GWCanvas from '../GeoWebCanvas/GWCanvas';
 
 import './styles.css'
-import GWCanvas from './GWCanvas';
 
 const GWContent = (props) => {
 

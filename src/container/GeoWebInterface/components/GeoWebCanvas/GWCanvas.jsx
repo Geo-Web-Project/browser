@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import GWEmpty from '../GWEmpty/GWEmpty';
+import GWEmpty from '../../../../components/common/ContentFiller/Empty';
 
 import './styles.css';
 
@@ -62,7 +62,6 @@ const GWCanvas = (props) =>{
             modelIndex = gwCanvasContent.length - 1;
 
         setModelIndex(modelIndex);
-        debugger;
         var _src = gwGateway + gwCanvasContent[modelIndex].contentUrl;
         setModelUrl(_src);
 
@@ -78,6 +77,8 @@ const GWCanvas = (props) =>{
             modelIndex = 0;
 
         setModelIndex(modelIndex);
+        var _src = gwGateway + gwCanvasContent[modelIndex].contentUrl;
+        setModelUrl(_src);
 
     }
 

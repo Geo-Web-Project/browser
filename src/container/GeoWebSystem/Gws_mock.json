@@ -15,7 +15,8 @@
             {"name": "Penguin", "contentUrl" : "Qmbb585ZZKunL4vAQLyCHCgpsweNCGPuUuAssBw5oCHiyL"},
             {"name": "Igloo", "contentUrl" : "QmP9imfyGwy5R6jSmni4ZXMks2hTcpXX5tjpWrcEu8MT79"},
             {"name": "Antarctic Seal", "contentUrl" : "QmY3jZGTyxJ1qWwg4t2fGTvNscv5tayfbnjc95p4Aut5uA"},
-            {"name": "Lake Boat", "contentUrl" : "QmSJZ2DvrLz2hBeduYiPTsSmCXViZrbj1cc2V3mud8kX6N"}
+            {"name": "Lake Boat", "contentUrl" : "QmSJZ2DvrLz2hBeduYiPTsSmCXViZrbj1cc2V3mud8kX6N"},
+            {"name": "Snowman", "contentUrl": "QmcQGnAEDnsm82bqGEbHHygj2nVreVGzRVmYBvoHWUWZ8q"}
         ]
     }
 }

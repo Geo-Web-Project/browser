@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
 
-import Layout from '../Layout/Layout';
-import GWLoader from '../Loader/gwLoader';
-import GWAvail from '../GWEmpty/GWAvail';
-import GWInfo from '../GeoWebInfo/GWInfo';
-import GWContent from '../GeoWebContent/GWContent';
+import Layout from '../../components/common/TitleBar/TitleBar';
+import GWLoader from '../../components/common/Loader/Loader';
+import GWAvail from '../../components/common/ContentFiller/Avail';
+import GWInfo from '../GeoWebInterface/components/GeoWebInfo/GWInfo';
+import GWContent from '../GeoWebInterface/components/GeoWebContent/GWContent';
 
 import './styles.css';
 
@@ -39,8 +39,8 @@ const GWS = () => {
     const showPosition = (position) => {
 
         //hard-coded coordinates for testing
-        //const latitude = 34.114669; 
-        //const longitude = 74.869795;
+        //const latitude = -69.750; 
+        //const longitude = 71.000;
 
         const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
@@ -96,6 +96,7 @@ const GWS = () => {
     const GeoWeb = () => {
        
         if(rootCId !== null){
+            // Returns Info Expandable and Parcel Content
             return (
                 <div className="layout-root">
                     <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""}/>

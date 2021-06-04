@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './styles.css';
 
 //Page Layout including Title and Background 
-const Layout = () => {
+const TitleBar = () => {
 
     return(
         <div className="layout-div">
@@ -16,4 +16,4 @@ const Layout = () => {
 
 }
 
-export default Layout;
+export default TitleBar;

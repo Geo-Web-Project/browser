@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import './styles.css';
 
-const GWLoader = () => {
+const Loader = () => {
 
     return(
 
@@ -14,4 +14,4 @@ const GWLoader = () => {
     );
 }
 
-export default GWLoader;
+export default Loader;

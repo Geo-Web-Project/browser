@@ -19,7 +19,7 @@ const ModelViewer = (props) => {
             shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
             auto-rotate camera-controls alt="">
             
-            <button slot="ar-button" id="ar-button" />
+            {/* <button slot="ar-button" id="ar-button" /> */}
 
             <div id="ar-prompt">
                 <img id="ar-prompt-img" />

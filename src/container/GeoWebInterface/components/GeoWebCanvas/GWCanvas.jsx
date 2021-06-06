@@ -11,7 +11,6 @@ const ModelViewer = (props) => {
     let modelRef = props.modelRef; 
 
     useEffect(()=>{
-        debugger;
         modelRef.current.src = url;
     }, [url]);
 

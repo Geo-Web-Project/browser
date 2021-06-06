@@ -31,6 +31,7 @@ const GWS = () => {
     }, [] );
 
     const accessGps = () => {
+        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition); //Get Position, with callback
         } 
@@ -48,8 +49,6 @@ const GWS = () => {
         //hard-coded coordinates for testing
         const latitude = -69.750; 
         const longitude = 71.000;
-
-        debugger;
 
         //const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state

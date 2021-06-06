@@ -47,10 +47,10 @@ const GWS = () => {
         SetLoading(true);
 
         //hard-coded coordinates for testing
-        const latitude = -69.750; 
-        const longitude = 71.000;
+        //const latitude = -69.750; 
+        //const longitude = 71.000;
 
-        //const {latitude, longitude} = position.coords;
+        const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
 
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate

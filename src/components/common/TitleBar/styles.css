@@ -82,3 +82,16 @@ body{
 
     color: #FFFFFF;
 }
+
+.gps-location {
+    
+    position: absolute;
+    left: 82.25%;
+    right: 3.12%;
+    top: 12.5%;
+    bottom: 11.25%;
+    height: 61px;
+    width: 61px;
+
+    background: url('/src/assets/gps.png');
+}

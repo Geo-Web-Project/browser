@@ -9,13 +9,14 @@
         "ceramicUri": "kjzl6cwe1jw149479z6y0atz2ncbdz7yjigegehjjbbn4o4xhbfrlx92ub261l6" 
     },
     "parcelContent" : {
-        "name": "Antarctic-Amery Ice Shelf",
+        "name": "Amery Ice Shelf",
         "webContent": "https://en.wikipedia.org/wiki/Amery_Ice_Shelf#/media/File:Amery_Iceberg_animation.gif",
         "mediaContent": [
             {"name": "Penguin", "contentUrl" : "Qmbb585ZZKunL4vAQLyCHCgpsweNCGPuUuAssBw5oCHiyL"},
             {"name": "Igloo", "contentUrl" : "QmP9imfyGwy5R6jSmni4ZXMks2hTcpXX5tjpWrcEu8MT79"},
             {"name": "Antarctic Seal", "contentUrl" : "QmY3jZGTyxJ1qWwg4t2fGTvNscv5tayfbnjc95p4Aut5uA"},
-            {"name": "Lake Boat", "contentUrl" : "QmSJZ2DvrLz2hBeduYiPTsSmCXViZrbj1cc2V3mud8kX6N"}
+            {"name": "Lake Boat", "contentUrl" : "QmSJZ2DvrLz2hBeduYiPTsSmCXViZrbj1cc2V3mud8kX6N"},
+            {"name": "Snowman", "contentUrl": "QmcQGnAEDnsm82bqGEbHHygj2nVreVGzRVmYBvoHWUWZ8q"}
         ]
     }
 }

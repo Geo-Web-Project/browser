@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
 
-import Layout from '../../components/common/TitleBar/TitleBar';
+import TitleBar from '../../components/common/TitleBar/TitleBar';
 import GWLoader from '../../components/common/Loader/Loader';
 import GWAvail from '../../components/common/ContentFiller/Avail';
 import GWInfo from '../GeoWebInterface/components/GeoWebInfo/GWInfo';
@@ -27,16 +27,24 @@ const GWS = () => {
 
     //On Mount
     useEffect( ()=>{
+        accessGps();
+    }, [] );
+
+    const accessGps = () => {
+        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition); //Get Position, with callback
-        } else {
+        } 
+        else {
             console.log("Geolocation is not supported by this browser.");
             setCoordinate({lat: -1, lon: -1});
         }
-    }, [] );
+    }
 
 
     const showPosition = (position) => {
+
+        SetLoading(true);
 
         //hard-coded coordinates for testing
         //const latitude = -69.750; 
@@ -99,7 +107,7 @@ const GWS = () => {
             // Returns Info Expandable and Parcel Content
             return (
                 <div className="layout-root">
-                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""}/>
+                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""} />
                     <GWContent gwWebContent={gwContent?gwContent.webContent:null}
                         gwCanvasContent={gwContent?gwContent.mediaContent:null}/>
                 </div>
@@ -108,7 +116,7 @@ const GWS = () => {
         else{
             return (
                 <div className="layout-root">
-                    <GWInfo gwInfo={null} gwContentName={"No Parcel Found"}/>
+                    <GWInfo gwInfo={null} gwContentName={"No Parcel Found"} />
                     <GWAvail />
                 </div>
             );
@@ -118,7 +126,7 @@ const GWS = () => {
 
     return(
         <div>
-            <Layout />
+            <TitleBar accessGps={accessGps} />
 
             { loading ? <GWLoader/> : <GeoWeb /> }
 

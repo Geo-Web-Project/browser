@@ -69,7 +69,7 @@ const GWS = () => {
     const setPreDetermined = () => {
         setRootCId( Gws_mock.parcelInfo.ceramicUri );
         setGwInfo( Gws_mock.parcelInfo );
-        SetGwContent( Gws_mock.parcelContent );
+        setParcelContent(Gws_mock.parcelInfo.ceramicUri);
 
         SetLoading(false);
     }

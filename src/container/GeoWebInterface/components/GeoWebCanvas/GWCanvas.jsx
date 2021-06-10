@@ -45,7 +45,8 @@ const GWCanvas = (props) =>{
 
         if(gwCanvasContent) 
         {
-            modelUrl = gwGateway + gwCanvasContent[modelIndex].contentUrl; 
+            const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+            modelUrl = gwGateway + cid; 
             setModelUrl(modelUrl);
         }
 
@@ -61,7 +62,8 @@ const GWCanvas = (props) =>{
             modelIndex = gwCanvasContent.length - 1;
 
         setModelIndex(modelIndex);
-        var _src = gwGateway + gwCanvasContent[modelIndex].contentUrl;
+        const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+        var _src = gwGateway + cid;
         setModelUrl(_src);
 
     }
@@ -76,7 +78,8 @@ const GWCanvas = (props) =>{
             modelIndex = 0;
 
         setModelIndex(modelIndex);
-        var _src = gwGateway + gwCanvasContent[modelIndex].contentUrl;
+        const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+        var _src = gwGateway + cid;
         setModelUrl(_src);
 
     }

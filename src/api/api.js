@@ -93,15 +93,22 @@ const getParcelContent = async(docid) => {
   }
 
   let parcelContent = parseContent(doc);
-  
-  /*
-  // const queries = [{
-  //   docId: 'kjzl6cwe1jw...14',
-  //   paths: ['/state/content', '/b/c']
-  // }]
-  // const docMap = await ceramic.multiQuery(queries)
-  */
 
+  if (parcelContent.mediaGallery) {
+    // Load mediaGallery stream
+    const mediaGalleryStream = await ceramic.loadStream(parcelContent.mediaGallery);
+
+    // Load all media gallery items
+    const queries = mediaGalleryStream.content.map((itemId) => {
+      return {streamId: itemId}
+    })
+    const docMap = await ceramic.multiQuery(queries)
+    
+    parcelContent.mediaContent = mediaGalleryStream.content.map((itemId) => {
+      return docMap[itemId].content
+    })
+  }
+  
   return parcelContent; 
 
 }

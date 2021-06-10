@@ -62,7 +62,7 @@ const parseContent = (msg) => {
     }
     
     try {
-        _parcelContent = msg['_state']['content'];
+        _parcelContent = msg.content;
     }
     catch(e){
         console.log(e);

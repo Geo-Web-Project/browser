@@ -114,7 +114,7 @@ const GWS = () => {
             // Returns Info Expandable and Parcel Content
             return (
                 <div className="layout-root">
-                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""} showPosition={showPosition} />
+                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""} />
                     <GWContent gwWebContent={gwContent?gwContent.webContent:null}
                         gwCanvasContent={gwContent?gwContent.mediaContent:null}/>
                 </div>
@@ -123,7 +123,7 @@ const GWS = () => {
         else{
             return (
                 <div className="layout-root">
-                    <GWInfo gwInfo={null} gwContentName={"No Parcel Found"} showPosition={showPosition} />
+                    <GWInfo gwInfo={null} gwContentName={"No Parcel Found"} />
                     <GWAvail />
                 </div>
             );

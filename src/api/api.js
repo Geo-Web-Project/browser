@@ -54,7 +54,7 @@ const PARCEL_INFO_QUERY =
 
 //  Get Ceramic, parcel IDs 
 const getGeoId = async (id) => {
-
+    
     let result = await graphClient.query({
         query: LOCATION_LOOKUP_QUERY,
         variables:{id: id}
@@ -74,7 +74,7 @@ const getParcelInfo = async(id) => {
     query: PARCEL_INFO_QUERY,
     variables: {id: id}
   })
-
+  
   let parcelInfo = parseInfo(info);
 
   return parcelInfo;
@@ -82,7 +82,7 @@ const getParcelInfo = async(id) => {
 }
 
 const getParcelContent = async(docid) => {
-
+  //debugger;
   let doc = null;
   
   try{
@@ -93,7 +93,7 @@ const getParcelContent = async(docid) => {
   }
 
   let parcelContent = parseContent(doc);
-
+  //debugger;
   if (parcelContent.mediaGallery) {
     // Load mediaGallery stream
     const mediaGalleryStream = await ceramic.loadStream(parcelContent.mediaGallery);

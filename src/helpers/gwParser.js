@@ -71,5 +71,34 @@ const parseContent = (msg) => {
     return _parcelContent;
 }
 
+const parseMediaGalleryStream = (msg) => {
 
-export {parseGeo, parseInfo, parseContent}
+    let _mediaStream = null;
+
+    try{
+        _mediaStream = msg.map((itemId) => { return {streamId: itemId}  });
+    }
+    catch(e){
+        console.log(e);
+    }
+
+    return _mediaStream;
+}
+
+const parseMediaContent = (msg1, msg2) => {
+
+    let _mediaContent = null;
+
+    try {
+        if(msg1.length > 0)
+            _mediaContent = msg1.map((itemId) => {return msg2[itemId].content });
+    }
+    catch(e){
+        console.log(e);
+    }
+
+    return _mediaContent;
+}
+
+
+export {parseGeo, parseInfo, parseContent, parseMediaContent, parseMediaGalleryStream}

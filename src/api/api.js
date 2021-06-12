@@ -5,7 +5,7 @@ import { gql } from '@apollo/client';
 
 import CeramicClient from '@ceramicnetwork/http-client';
 
-import {parseGeo, parseInfo, parseContent} from '../helpers/gwParser';
+import {parseGeo, parseInfo, parseContent, parseMediaContent, parseMediaGalleryStream} from '../helpers/gwParser';
 
 //  Refer Environment Variables
 const GRAPH_URL = process.env.REACT_APP_GRAPH_URI;
@@ -54,7 +54,7 @@ const PARCEL_INFO_QUERY =
 
 //  Get Ceramic, parcel IDs 
 const getGeoId = async (id) => {
-
+    
     let result = await graphClient.query({
         query: LOCATION_LOOKUP_QUERY,
         variables:{id: id}
@@ -74,7 +74,7 @@ const getParcelInfo = async(id) => {
     query: PARCEL_INFO_QUERY,
     variables: {id: id}
   })
-
+  
   let parcelInfo = parseInfo(info);
 
   return parcelInfo;
@@ -82,7 +82,7 @@ const getParcelInfo = async(id) => {
 }
 
 const getParcelContent = async(docid) => {
-
+  
   let doc = null;
   
   try{
@@ -94,14 +94,21 @@ const getParcelContent = async(docid) => {
 
   let parcelContent = parseContent(doc);
   
-  /*
-  // const queries = [{
-  //   docId: 'kjzl6cwe1jw...14',
-  //   paths: ['/state/content', '/b/c']
-  // }]
-  // const docMap = await ceramic.multiQuery(queries)
-  */
+  if (parcelContent.mediaGallery) {
+    // Load mediaGallery stream
+    const mediaGalleryStream = await ceramic.loadStream(parcelContent.mediaGallery);
 
+    // Load all media gallery items
+    const queries = parseMediaGalleryStream(mediaGalleryStream.content);
+
+    const docMap = await ceramic.multiQuery(queries);
+    
+    parcelContent.mediaContent = parseMediaContent(mediaGalleryStream.content, docMap);
+
+  }
+
+  debugger;
+  
   return parcelContent; 
 
 }

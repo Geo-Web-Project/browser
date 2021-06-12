@@ -47,12 +47,17 @@ const GWS = () => {
         SetLoading(true);
 
         //hard-coded coordinates for testing
-        //const latitude = -69.750; 
-        //const longitude = 71.000;
+        // Mt. Rainer
+        //const latitude = 46.785802;
+        //const longitude = -121.735557;
+
+        //Doge Pool
+        //const latitude = 12.823911;
+        //const longitude = 80.075334;
 
         const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
-
+        
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate
         setGwCoord(_gwCoord.toString());    
 
@@ -70,11 +75,13 @@ const GWS = () => {
         setRootCId( Gws_mock.parcelInfo.ceramicUri );
         setGwInfo( Gws_mock.parcelInfo );
         SetGwContent( Gws_mock.parcelContent );
+        //setParcelContent(Gws_mock.parcelInfo.ceramicUri);
 
         SetLoading(false);
     }
 
     const getRoootCid = async (id) => {
+
         const lookUpId = await getGeoId(id);    //get root ceramic id and parcel id
        
         if(lookUpId.rootCId !== null) {

@@ -5,7 +5,7 @@ import { gql } from '@apollo/client';
 
 import CeramicClient from '@ceramicnetwork/http-client';
 
-import {parseGeo, parseInfo, parseContent, parseMediaContent} from '../helpers/gwParser';
+import {parseGeo, parseInfo, parseContent, parseMediaContent, parseMediaGalleryStream} from '../helpers/gwParser';
 
 //  Refer Environment Variables
 const GRAPH_URL = process.env.REACT_APP_GRAPH_URI;
@@ -106,6 +106,8 @@ const getParcelContent = async(docid) => {
     parcelContent.mediaContent = parseMediaContent(mediaGalleryStream.content, docMap);
 
   }
+
+  debugger;
   
   return parcelContent; 
 

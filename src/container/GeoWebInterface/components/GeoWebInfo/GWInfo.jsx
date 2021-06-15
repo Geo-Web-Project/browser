@@ -76,8 +76,8 @@ export default function GWInfo(props) {
           <p key={key}>{key + gwInfo[_gwInfoSchemaMap[key]]}</p>
         )}
         
-        <p key={'Linked CID: '}>
-          {'Linked CID: '}
+        <p key={'Stream ID: '}>
+          {'Stream ID: '}
           <a href={`https://gateway-clay.ceramic.network/api/v0/documents/${gwInfo['ceramicUri']}`}
             target="_blank" rel="noreferrer" className={classes.typography}>
               {gwInfo['ceramicId']}

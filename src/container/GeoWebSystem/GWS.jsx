@@ -55,6 +55,9 @@ const GWS = () => {
         //const latitude = 12.823911;
         //const longitude = 80.075334;
 
+        //const latitude = 0;
+        //const longitude = 0;
+
         const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
         

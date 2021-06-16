@@ -3,7 +3,7 @@
     width: 400px;
     height: 400px;
     left: calc(50vw - 200px);
-    top: calc(50vh - 200px - 140px);
+    top: calc(50vh - 200px - 160px);
 
     background: url('/src/assets/Available\ Land_Transparent\ 1.png');
 }
@@ -36,10 +36,9 @@
     text-align: center;
 
     color: #FFFFFF;
-    top: calc(50vh - 150px - 140px + 239px);
+    top: calc(50vh - 150px - 140px + 259px);
 }
 
 .txt2 {
-    
     color: #FFFFFF;
 }

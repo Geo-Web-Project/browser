@@ -7,12 +7,11 @@ const GWAvail = (props) => {
     const promptType = props.promptType;
 
     const prompt1 = `No one has claimed a land parcel that includes your current location!
-
-    Head over to `
+    Head over to `;
     
     const uri = 'https://cadastre.geoweb.eth.link/';
 
-    const prompt2 = ` to claim it yourself (desktop recommended).`
+    const prompt2 = ` to claim it yourself (desktop recommended).`;
 
 
     return (

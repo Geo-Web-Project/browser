@@ -11,11 +11,11 @@ const ModelViewer = (props) => {
     let modelRef = props.modelRef; 
 
     useEffect(()=>{
-        modelRef.current.src = url;
+        //modelRef.current.src = url;
     }, [url]);
 
     return(
-        <model-viewer ref={modelRef} className='gwCanvas' src={""} 
+        <model-viewer ref={modelRef} className='gwCanvas' src={"https://gateway.pinata.cloud/ipfs/Qmbb585ZZKunL4vAQLyCHCgpsweNCGPuUuAssBw5oCHiyL"} 
             shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
             auto-rotate camera-controls alt="">
             
@@ -42,13 +42,14 @@ const GWCanvas = (props) =>{
     let [modelUrl, setModelUrl] = useState("");
 
     useEffect(()=>{
-
+        /*
         if(gwCanvasContent) 
         {
             const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
             modelUrl = gwGateway + cid; 
             setModelUrl(modelUrl);
         }
+        */
 
     }, []);
 
@@ -88,9 +89,9 @@ const GWCanvas = (props) =>{
     if(gwCanvasContent !== null) {
         return(
             <div>
-                <button className="clk-left" onClick={ ()=>clickLeft() } />
+                {/* <button className="clk-left" onClick={ ()=>clickLeft() } /> */}
                 <ModelViewer modelRef={modelRef} url={modelUrl} />
-                <button className="clk-right" onClick={ ()=>clickRight() } />
+                {/* <button className="clk-right" onClick={ ()=>clickRight() } /> */}
             </div>
         );
     }

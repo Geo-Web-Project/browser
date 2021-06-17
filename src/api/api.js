@@ -106,8 +106,6 @@ const getParcelContent = async(docid) => {
     parcelContent.mediaContent = parseMediaContent(mediaGalleryStream.content, docMap);
 
   }
-
-  debugger;
   
   return parcelContent; 
 

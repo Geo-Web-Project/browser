@@ -53,6 +53,14 @@ const GWCanvas = (props) =>{
         }
         */
 
+                    {/*
+            <div>
+                { <button className="clk-left" onClick={ ()=>clickLeft() } /> }
+                { <ModelViewer modelRef={modelRef} url={modelUrl} /> }
+                { <button className="clk-right" onClick={ ()=>clickRight() } /> }
+            </div>
+            */}
+
     }, []);
 
     const clickLeft = () => {
@@ -90,11 +98,10 @@ const GWCanvas = (props) =>{
 
     if(gwCanvasContent !== null) {
         return(
-            <div>
-                {/* <button className="clk-left" onClick={ ()=>clickLeft() } /> */}
-                <ModelViewer modelRef={modelRef} url={modelUrl} />
-                {/* <button className="clk-right" onClick={ ()=>clickRight() } /> */}
-            </div>
+            <model-viewer src={"./3d/doge.glb"} environment-image="neutral"
+            shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
+            auto-rotate camera-controls alt=""></model-viewer>
+
         );
     }
     else {

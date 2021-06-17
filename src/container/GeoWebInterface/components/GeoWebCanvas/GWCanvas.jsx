@@ -15,7 +15,7 @@ const ModelViewer = (props) => {
     }, [url]);
 
     return(
-        <model-viewer ref={modelRef} className='gwCanvas' src={"https://gateway.pinata.cloud/ipfs/Qmbb585ZZKunL4vAQLyCHCgpsweNCGPuUuAssBw5oCHiyL"} 
+        <model-viewer ref={modelRef} className='gwCanvas' src={"./3d/doge.glb"} 
             shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
             auto-rotate camera-controls alt="">
             

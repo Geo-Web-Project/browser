@@ -5,7 +5,7 @@ import { gql } from '@apollo/client';
 
 import CeramicClient from '@ceramicnetwork/http-client';
 
-import {parseGeo, parseInfo, parseContent} from '../helpers/gwParser';
+import {parseGeo, parseInfo, parseContent, parseMediaContent, parseMediaGalleryStream} from '../helpers/gwParser';
 
 //  Refer Environment Variables
 const GRAPH_URL = process.env.REACT_APP_GRAPH_URI;
@@ -82,7 +82,7 @@ const getParcelInfo = async(id) => {
 }
 
 const getParcelContent = async(docid) => {
-  //debugger;
+  
   let doc = null;
   
   try{
@@ -93,21 +93,21 @@ const getParcelContent = async(docid) => {
   }
 
   let parcelContent = parseContent(doc);
-  //debugger;
+  
   if (parcelContent.mediaGallery) {
     // Load mediaGallery stream
     const mediaGalleryStream = await ceramic.loadStream(parcelContent.mediaGallery);
 
     // Load all media gallery items
-    const queries = mediaGalleryStream.content.map((itemId) => {
-      return {streamId: itemId}
-    })
-    const docMap = await ceramic.multiQuery(queries)
+    const queries = parseMediaGalleryStream(mediaGalleryStream.content);
+
+    const docMap = await ceramic.multiQuery(queries);
     
-    parcelContent.mediaContent = mediaGalleryStream.content.map((itemId) => {
-      return docMap[itemId].content
-    })
+    parcelContent.mediaContent = parseMediaContent(mediaGalleryStream.content, docMap);
+
   }
+
+  debugger;
   
   return parcelContent; 
 

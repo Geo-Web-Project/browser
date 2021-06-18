@@ -17,7 +17,7 @@ const ModelViewer = (props) => {
     return(
         <model-viewer src={"./3d/doge.glb"} environment-image="neutral"
             shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
-            auto-rotate camera-controls alt="">
+            quick-look-browsers="safari chrome" auto-rotate camera-controls alt="">
             
             {
             /* <button slot="ar-button" id="ar-button" />

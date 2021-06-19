@@ -11,16 +11,15 @@ const ModelViewer = (props) => {
     let modelRef = props.modelRef; 
 
     useEffect(()=>{
-        //modelRef.current.src = url;
+        modelRef.current.src = url;
     }, [url]);
 
     return(
-        <model-viewer src={"./3d/doge.glb"} environment-image="neutral"
-            shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
-            auto-rotate camera-controls alt="">
+        <model-viewer src={url} environment-image="neutral" shadow-intensity="1" 
+          ar ar-modes="webxr scene-viewer quick-look" quick-look-browsers
+          auto-rotate camera-controls alt="">
             
-            {
-            /* <button slot="ar-button" id="ar-button" />
+            <button slot="ar-button" id="ar-button" />
 
             <div id="ar-prompt">
                 <img id="ar-prompt-img" />
@@ -29,7 +28,6 @@ const ModelViewer = (props) => {
             <button id="ar-failure">
                 AR is not tracking!
             </button>
-            */}
 
         </model-viewer>
     );
@@ -44,22 +42,13 @@ const GWCanvas = (props) =>{
     let [modelUrl, setModelUrl] = useState("");
 
     useEffect(()=>{
-        /*
+        
         if(gwCanvasContent) 
         {
             const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
             modelUrl = gwGateway + cid; 
             setModelUrl(modelUrl);
         }
-        */
-
-                    {/*
-            <div>
-                { <button className="clk-left" onClick={ ()=>clickLeft() } /> }
-                { <ModelViewer modelRef={modelRef} url={modelUrl} /> }
-                { <button className="clk-right" onClick={ ()=>clickRight() } /> }
-            </div>
-            */}
 
     }, []);
 
@@ -98,10 +87,11 @@ const GWCanvas = (props) =>{
 
     if(gwCanvasContent !== null) {
         return(
-            <model-viewer src={"./3d/doge.glb"} environment-image="neutral"
-            shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
-            auto-rotate camera-controls alt=""></model-viewer>
-
+            <div>
+                <button className="clk-left" onClick={ ()=>clickLeft() } /> 
+                <ModelViewer modelRef={modelRef} url={modelUrl} /> 
+                <button className="clk-right" onClick={ ()=>clickRight() } /> 
+            </div>
         );
     }
     else {

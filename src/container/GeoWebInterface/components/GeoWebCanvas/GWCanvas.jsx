@@ -16,10 +16,11 @@ const ModelViewer = (props) => {
 
     return(
         <model-viewer ref={modelRef} className='gwCanvas' src={""} 
-            shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"  
+            environment-image="neutral" shadow-intensity="1" 
+            ar ar-modes="webxr scene-viewer quick-look" quick-look-browsers="safari chrome"
             auto-rotate camera-controls alt="">
             
-            {/* <button slot="ar-button" id="ar-button" /> */}
+            <button slot="ar-button" id="ar-button" />
 
             <div id="ar-prompt">
                 <img id="ar-prompt-img" />
@@ -42,7 +43,7 @@ const GWCanvas = (props) =>{
     let [modelUrl, setModelUrl] = useState("");
 
     useEffect(()=>{
-
+        
         if(gwCanvasContent) 
         {
             const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
@@ -88,9 +89,9 @@ const GWCanvas = (props) =>{
     if(gwCanvasContent !== null) {
         return(
             <div>
-                <button className="clk-left" onClick={ ()=>clickLeft() } />
-                <ModelViewer modelRef={modelRef} url={modelUrl} />
-                <button className="clk-right" onClick={ ()=>clickRight() } />
+                <button className="clk-left" onClick={ ()=>clickLeft() } /> 
+                <ModelViewer modelRef={modelRef} url={modelUrl} /> 
+                <button className="clk-right" onClick={ ()=>clickRight() } /> 
             </div>
         );
     }

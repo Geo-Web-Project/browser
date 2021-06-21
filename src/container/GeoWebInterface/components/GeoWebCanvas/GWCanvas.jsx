@@ -15,9 +15,10 @@ const ModelViewer = (props) => {
     }, [url]);
 
     return(
-        <model-viewer src={url} environment-image="neutral" shadow-intensity="1" 
-          ar ar-modes="webxr scene-viewer quick-look" quick-look-browsers
-          auto-rotate camera-controls alt="">
+        <model-viewer ref={modelRef} className='gwCanvas' src={""} 
+            environment-image="neutral" shadow-intensity="1" 
+            ar ar-modes="webxr scene-viewer quick-look" quick-look-browsers="safari chrome"
+            auto-rotate camera-controls alt="">
             
             <button slot="ar-button" id="ar-button" />
 

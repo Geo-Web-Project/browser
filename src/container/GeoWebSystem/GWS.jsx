@@ -52,13 +52,13 @@ const GWS = () => {
         //const longitude = -121.735557;
 
         //Doge Pool
-        //const latitude = 12.823911;
-        //const longitude = 80.075334;
+        const latitude = 12.823911;
+        const longitude = 80.075334;
 
         //const latitude = 0;
         //const longitude = 0;
 
-        const {latitude, longitude} = position.coords;
+        //const {latitude, longitude} = position.coords;
         setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
         
         const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate

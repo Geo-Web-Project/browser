@@ -22,7 +22,6 @@ const GWContent = (props) => {
             setGwMode('web');
         else if(_checked === true)
             setGwMode('3d');
-        
     }
 
 

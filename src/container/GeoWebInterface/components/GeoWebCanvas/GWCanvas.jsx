@@ -98,7 +98,7 @@ const GWCanvas = (props) =>{
                 <ModelViewer modelRef={modelRef} url={modelUrl} /> 
                 <button className="clk-right" onClick={ ()=>clickRight() } /> 
 
-                <ContentLabel uri={""} label={modelName} />
+                <ContentLabel uri={""} label={modelName} hyperlink={false} />
             </div>
         );
     }

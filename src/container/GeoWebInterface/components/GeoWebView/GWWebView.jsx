@@ -13,7 +13,7 @@ const GWWebView = (props) => {
             <div>
                 < iframe src={gwWebContent} className='gwIframe' 
                     referrerPolicy='allow-same-origin' />
-                <ContentLabel uri={gwWebContent} label={gwWebContent} />
+                <ContentLabel uri={gwWebContent} label={gwWebContent} hyperlink={true} />
             </div>
         );
    }

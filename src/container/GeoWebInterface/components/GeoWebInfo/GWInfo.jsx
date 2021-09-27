@@ -78,7 +78,7 @@ export default function GWInfo(props) {
         
         <p key={'Stream ID: '}>
           {'Stream ID: '}
-          <a href={`https://gateway-clay.ceramic.network/api/v0/documents/${gwInfo['ceramicUri']}`}
+          <a href={`https://tiles.ceramic.community/document/${gwInfo['ceramicUri']}`}
             target="_blank" rel="noreferrer" className={classes.typography}>
               {gwInfo['ceramicId']}
           </a>

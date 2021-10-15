@@ -18,3 +18,18 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.label span {
+    color: #FFFFFF;
+    font-size: 32px;
+    font-style: normal;
+    text-align: center;
+    align-items: center;
+    font-family: Abel;
+    font-weight: normal;
+    line-height: 45px;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

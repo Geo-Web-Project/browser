@@ -2,6 +2,6 @@
     position: relative;
     margin-top: 2%;
     width: 100%;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 260px);
     overflow:hidden;
 }

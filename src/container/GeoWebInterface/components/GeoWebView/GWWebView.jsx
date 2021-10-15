@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './styles.css';
 
 import GWEmpty from '../../../../components/common/ContentFiller/Empty';
+import ContentLabel from '../../../../components/common/ContentLabel/ContentLabel';
 
 const GWWebView = (props) => {
 
@@ -9,9 +10,12 @@ const GWWebView = (props) => {
 
    if(gwWebContent !== null) {
         return(
-            < iframe src={gwWebContent} className='gwIframe' 
-                referrerPolicy='allow-same-origin' />
-        )
+            <div>
+                < iframe src={gwWebContent} className='gwIframe' 
+                    referrerPolicy='allow-same-origin' />
+                <ContentLabel uri={gwWebContent} label={gwWebContent} hyperlink={true} />
+            </div>
+        );
    }
    else {
        return <GWEmpty promptType='web' />

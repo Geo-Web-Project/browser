@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import GWEmpty from '../../../../components/common/ContentFiller/Empty';
+import ContentLabel from '../../../../components/common/ContentLabel/ContentLabel';
 
 import './styles.css';
 
@@ -41,6 +42,7 @@ const GWCanvas = (props) =>{
     let modelRef = React.createRef();
 
     let [modelUrl, setModelUrl] = useState("");
+    let [modelName, setModelName] = useState("");
 
     useEffect(()=>{
         
@@ -49,6 +51,7 @@ const GWCanvas = (props) =>{
             const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
             modelUrl = gwGateway + cid; 
             setModelUrl(modelUrl);
+            setModelName(gwCanvasContent[modelIndex]['name']);
         }
 
     }, []);
@@ -66,6 +69,7 @@ const GWCanvas = (props) =>{
         const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
         var _src = gwGateway + cid;
         setModelUrl(_src);
+        setModelName(gwCanvasContent[modelIndex]['name']);
 
     }
 
@@ -82,6 +86,7 @@ const GWCanvas = (props) =>{
         const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
         var _src = gwGateway + cid;
         setModelUrl(_src);
+        setModelName(gwCanvasContent[modelIndex]['name']);
 
     }
 
@@ -92,6 +97,8 @@ const GWCanvas = (props) =>{
                 <button className="clk-left" onClick={ ()=>clickLeft() } /> 
                 <ModelViewer modelRef={modelRef} url={modelUrl} /> 
                 <button className="clk-right" onClick={ ()=>clickRight() } /> 
+
+                <ContentLabel uri={""} label={modelName} hyperlink={false} />
             </div>
         );
     }

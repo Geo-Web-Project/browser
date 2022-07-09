@@ -7,7 +7,7 @@ const parseGeo = (msg) => {
     let _geoId = {rootCId: null, parcelId: null}
     
     try {
-        _geoId.rootCId = msg['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
+        //_geoId.rootCId = msg['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
         _geoId.parcelId = msg['data']['geoWebCoordinate']['landParcel']['id']
     }
     catch(e){
@@ -16,6 +16,7 @@ const parseGeo = (msg) => {
 
     return _geoId;
 }
+
 
 //parse parcel info document
 const parseInfo = (msg) => {

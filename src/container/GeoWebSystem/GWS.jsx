@@ -7,6 +7,28 @@ import GWAvail from '../../components/common/ContentFiller/Avail';
 import GWInfo from '../GeoWebInterface/components/GeoWebInfo/GWInfo';
 import GWContent from '../GeoWebInterface/components/GeoWebContent/GWContent';
 
+import {
+    NETWORK_ID,
+    CERAMIC_URL,
+    IPFS_BOOTSTRAP_PEER,
+    IPFS_PRELOAD_NODE,
+} from "../../lib/constants";
+
+import { CeramicClient } from "@ceramicnetwork/http-client";
+import { EthereumAuthProvider } from "@ceramicnetwork/blockchain-utils-linking";
+//import { getResolver as getKeyResolver } from "key-did-resolver";
+//import { DID } from "dids";
+//import { Ed25519Provider } from "key-did-provider-ed25519";
+
+import { useMultiAuth } from "@ceramicstudio/multiauth";
+
+//import { Contracts } from "@geo-web/sdk/dist/contract/types";
+
+import { getIpfs, providers } from "ipfs-provider";
+//import { IPFS } from "ipfs-core";
+
+import { useBasicProfileStreamManager } from "../../lib/stream-managers/BasicProfileStreamManager";
+
 import './styles.css';
 
 const GeoWebCoordinate = require("js-geo-web-coordinate");
@@ -25,10 +47,92 @@ const GWS = () => {
 
     const [loading, SetLoading] = useState(true);
 
+    const [parcelIndexStreamId, setParcelIndexStreamId] = useState(null);
+
+    const [assetContentManager, setAssetContentManager] = useState(null);
+
+    const basicProfileStreamManager = useBasicProfileStreamManager(assetContentManager);
+
+    const parcelContent = basicProfileStreamManager ? basicProfileStreamManager.getStreamContent() : null;
+
+    const ceramic = new CeramicClient(CERAMIC_URL);
+    //const didProvider = new Ed25519Provider(sessionSeed);
+
+    /*
+    const didKey = new DID({
+      provider: didProvider,
+      resolver: {
+        ...getKeyResolver(),
+      },
+      parent: `did:pkh:${accountId.toString()}`,
+    });
+    await didKey.authenticate();
+
+    // Check or request capability from user
+    
+    const cacao = await getOrSetCacao(
+      didKey,
+      accountId,
+      authState.connected.provider.state.provider
+    );
+
+    const didKeyWithCap = didKey.withCapability(cacao);
+    await didKeyWithCap.authenticate();
+
+    ceramic.did = didKeyWithCap;
+    setCeramic(ceramic);
+    */
+
     //On Mount
     useEffect( ()=>{
         accessGps();
     }, [] );
+
+    useEffect(() => {
+        (async () => {
+          if (ceramic == null || !ceramic.did) {
+            console.error("Ceramic instance not found");
+            return;
+          }
+    
+          setAssetContentManager(null);
+    
+          if (selectedParcelId && licenseOwner) {
+            const assetId = new AssetId({
+              chainId: `eip155:${NETWORK_ID}`,
+              assetName: {
+                namespace: "erc721",
+                reference: licenseContract.address.toLowerCase(),
+              },
+              tokenId: new BN(selectedParcelId.slice(2), "hex").toString(10),
+            });
+    
+            const accountId = new AccountId({
+              chainId: `eip155:${NETWORK_ID}`,
+              address: licenseOwner,
+            });
+    
+            const model = new DataModel({
+              ceramic,
+              aliases: GeoWebModel,
+            });
+    
+            const _assetContentManager = new AssetContentManager(
+              ceramic,
+              model,
+              `did:pkh:${accountId.toString()}`,
+              assetId
+            );
+            setAssetContentManager(_assetContentManager);
+    
+            const doc = await _assetContentManager.getIndex();
+            setParcelIndexStreamId(doc.id.toString());
+          } else {
+            setAssetContentManager(null);
+            setParcelIndexStreamId(null);
+          }
+        })();
+      }, [ceramic, selectedParcelId, licenseOwner]);
 
     const accessGps = () => {
         
@@ -70,7 +174,7 @@ const GWS = () => {
         if(_useGws === 'false')
             setPreDetermined();
         else
-            getRoootCid(_gwCoord.toString());
+            getParcelId(_gwCoord.toString());
         /* ****************************************** */
     }   
 
@@ -83,12 +187,12 @@ const GWS = () => {
         SetLoading(false);
     }
 
-    const getRoootCid = async (id) => {
+    const getParcelId = async (id) => {
 
-        const lookUpId = await getGeoId(id);    //get root ceramic id and parcel id
+        const lookUpId = await getGeoId(id);    //get root parcel id
        
         if(lookUpId.rootCId !== null) {
-            setRootCId(lookUpId.rootCId);
+            //setRootCId(lookUpId.rootCId);
 
             setParcelInfo(lookUpId.parcelId);
             setParcelContent(lookUpId.rootCId);
@@ -97,6 +201,10 @@ const GWS = () => {
             setRootCId(lookUpId.rootCId);
             SetLoading(false);
         }
+    }
+
+    const setRootCid = async() => {
+
     }
 
     const setParcelInfo = async(_docid) => {

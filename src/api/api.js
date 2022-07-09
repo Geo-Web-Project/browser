@@ -22,35 +22,43 @@ const ceramic = new CeramicClient(CERAMIC_URL)
 
 
 //  GraphQL Queries
+
 const LOCATION_LOOKUP_QUERY = 
-  gql`
-    query GeoWebCoordinate($id: String){
-      geoWebCoordinate(id: $id) {
-      id
-      landParcel {
-          id
-          license {
+    gql`
+      query GeoWebCoordinate($id: String){
+        geoWebCoordinate(id: $id) {
+        id
+        landParcel {
             id
-            rootCID
           }
         }
-      }
-    }`
-
+      }`
+  
 const PARCEL_INFO_QUERY = 
   gql`
     query LandParcel($id: String) {
       landParcel(id: $id) {
         id
         license {
-          rootCID
           owner
-          value
-          expirationTimestamp
+          currentOwnerBid {
+            contributionRate
+            perSecondFeeNumerator
+            perSecondFeeDenominator
+            forSalePrice
+          }
+          outstandingBid {
+            timestamp
+            bidder
+            contributionRate
+            perSecondFeeNumerator
+            perSecondFeeDenominator
+            forSalePrice
+          }
         }
       }
-    }`
-  
+    }
+`;
 
 //  Get Ceramic, parcel IDs 
 const getGeoId = async (id) => {

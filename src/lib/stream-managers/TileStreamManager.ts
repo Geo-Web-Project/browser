@@ -5,7 +5,7 @@ import { TileDocument, TileMetadataArgs } from "@ceramicnetwork/stream-tile";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class TileStreamManager<T = Record<string, any>> {
   ceramic: CeramicApi;
-  stream: TileDocument<T> | null;
+  stream?: TileDocument<T> | null;
   private _schemaStreamId?: string;
   private _shouldPin: boolean;
   protected _controller: string;

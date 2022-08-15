@@ -132,16 +132,19 @@ const GWS = () => {
             );
         }
     }
+  };
+  return (
+    <div>
+      <TitleBar
+        accessGps={accessGps}
+        coordinate={coordinate}
+        showPosition={showPosition}
+      />
 
+      {loading ? <GWLoader /> : <GeoWeb />}
 
-    return(
-        <div>
-            <TitleBar accessGps={accessGps} />
-
-            { loading ? <GWLoader/> : <GeoWeb /> }
-
-            {/*Display Mock Data*/}
-            {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
+      {/*Display Mock Data*/}
+      {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
                 <span>{'lat : ' + coordinate.lat}</span>
                 <br/>
                 <span>{'lon : ' +coordinate.lon}</span>

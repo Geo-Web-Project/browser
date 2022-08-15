@@ -1,22 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import './styles.css';
-
-//Page Layout including Title and Background 
+import React, { useState, useEffect } from "react";
+import "./styles.css";
+import Menu from "../Menu/Menu";
+//Page Layout including Title and Background
 const TitleBar = (props) => {
+  const accessGps = props.accessGps;
 
-    const accessGps = props.accessGps;
-
-    return(
-        <div className="layout-div">
-            <div className="title-bar">
-                <div className="logo" />
-                <div className="title-txt">{'Geo Web'}</div>
-                <div className="title-caption">{'Browse Earth'}</div>
-                <div className="gps-location" onClick={()=>accessGps()}></div>
-            </div>
-        </div>
-    );
-
-}
+  return (
+    <div className="layout-div">
+      <div className="title-bar">
+        <div className="logo" />
+        <div className="title-txt">{"Geo Web"}</div>
+        <div className="title-caption">{"Browse Earth"}</div>
+        <div onClick={() => accessGps()}></div>
+        <Menu
+          coordinate={props.coordinate}
+          showPosition={props.showPosition}
+          accessGps={accessGps}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default TitleBar;

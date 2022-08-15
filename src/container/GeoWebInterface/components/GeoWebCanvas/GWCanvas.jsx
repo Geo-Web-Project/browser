@@ -1,42 +1,45 @@
-import React, {useEffect, useState} from 'react';
-import GWEmpty from '../../../../components/common/ContentFiller/Empty';
-import ContentLabel from '../../../../components/common/ContentLabel/ContentLabel';
+import React, { useEffect, useState } from "react";
+import GWEmpty from "../../../../components/common/ContentFiller/Empty";
+import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
 
-import './styles.css';
+import styles from "./styles.module.css";
 
-const gwGateway = process.env.REACT_APP_IPFS_GATEWAY;
+const gwGateway = process.env.NEXT_PUBLIC_IPFS_GATEWAY;
 
 const ModelViewer = (props) => {
-
     let url = props.url;
-    let modelRef = props.modelRef; 
+    let modelRef = props.modelRef;
 
-    useEffect(()=>{
+    useEffect(() => {
         modelRef.current.src = url;
     }, [url]);
 
-    return(
-        <model-viewer ref={modelRef} className='gwCanvas' src={""} 
-            environment-image="neutral" shadow-intensity="1" 
-            ar ar-modes="webxr scene-viewer quick-look" quick-look-browsers="safari chrome"
-            auto-rotate camera-controls alt="">
-            
+    return (
+        <model-viewer
+            ref={modelRef}
+            className={styles["gwCanvas"]}
+            src={""}
+            environment-image="neutral"
+            shadow-intensity="1"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            quick-look-browsers="safari chrome"
+            auto-rotate
+            camera-controls
+            alt=""
+        >
             <button slot="ar-button" id="ar-button" />
 
             <div id="ar-prompt">
                 <img id="ar-prompt-img" />
             </div>
 
-            <button id="ar-failure">
-                AR is not tracking!
-            </button>
-
+            <button id="ar-failure">AR is not tracking!</button>
         </model-viewer>
     );
-}
+};
 
-const GWCanvas = (props) =>{
-    
+const GWCanvas = (props) => {
     const gwCanvasContent = props.gwCanvasContent;
     let [modelIndex, setModelIndex] = useState(0);
     let modelRef = React.createRef();
@@ -44,68 +47,71 @@ const GWCanvas = (props) =>{
     let [modelUrl, setModelUrl] = useState("");
     let [modelName, setModelName] = useState("");
 
-    useEffect(()=>{
-        
-        if(gwCanvasContent) 
-        {
-            const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
-            modelUrl = gwGateway + cid; 
+    useEffect(() => {
+        if (gwCanvasContent) {
+            const cid = gwCanvasContent[modelIndex].contentUrl.replace(
+                "ipfs://",
+                ""
+            );
+            modelUrl = gwGateway + cid;
             setModelUrl(modelUrl);
-            setModelName(gwCanvasContent[modelIndex]['name']);
+            setModelName(gwCanvasContent[modelIndex]["name"]);
         }
-
     }, []);
 
     const clickLeft = () => {
-        
-        if(gwCanvasContent === null) return;
+        if (gwCanvasContent === null) return;
 
         modelIndex = modelIndex - 1;
 
-        if(modelIndex < 0)
-            modelIndex = gwCanvasContent.length - 1;
+        if (modelIndex < 0) modelIndex = gwCanvasContent.length - 1;
 
         setModelIndex(modelIndex);
-        const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+        const cid = gwCanvasContent[modelIndex].contentUrl.replace(
+            "ipfs://",
+            ""
+        );
         var _src = gwGateway + cid;
         setModelUrl(_src);
-        setModelName(gwCanvasContent[modelIndex]['name']);
-
-    }
+        setModelName(gwCanvasContent[modelIndex]["name"]);
+    };
 
     const clickRight = () => {
-        
-        if(gwCanvasContent === null) return;
+        if (gwCanvasContent === null) return;
 
         modelIndex = modelIndex + 1;
 
-        if(modelIndex > gwCanvasContent.length - 1)
-            modelIndex = 0;
+        if (modelIndex > gwCanvasContent.length - 1) modelIndex = 0;
 
         setModelIndex(modelIndex);
-        const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+        const cid = gwCanvasContent[modelIndex].contentUrl.replace(
+            "ipfs://",
+            ""
+        );
         var _src = gwGateway + cid;
         setModelUrl(_src);
-        setModelName(gwCanvasContent[modelIndex]['name']);
+        setModelName(gwCanvasContent[modelIndex]["name"]);
+    };
 
-    }
-
-
-    if(gwCanvasContent !== null) {
-        return(
+    if (gwCanvasContent !== null) {
+        return (
             <div>
-                <button className="clk-left" onClick={ ()=>clickLeft() } /> 
-                <ModelViewer modelRef={modelRef} url={modelUrl} /> 
-                <button className="clk-right" onClick={ ()=>clickRight() } /> 
+                <button
+                    className={styles["clk-left"]}
+                    onClick={() => clickLeft()}
+                />
+                <ModelViewer modelRef={modelRef} url={modelUrl} />
+                <button
+                    className={styles["clk-right"]}
+                    onClick={() => clickRight()}
+                />
 
                 <ContentLabel uri={""} label={modelName} hyperlink={false} />
             </div>
         );
+    } else {
+        return <GWEmpty promptType="gallery" />;
     }
-    else {
-        return <GWEmpty promptType='gallery' />
-    }
-
-}
+};
 
 export default GWCanvas;

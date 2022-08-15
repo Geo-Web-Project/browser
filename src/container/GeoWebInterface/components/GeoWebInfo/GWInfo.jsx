@@ -6,7 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import './styles.css';
+import styles from "./styles.module.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {

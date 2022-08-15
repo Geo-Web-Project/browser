@@ -1,22 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {getGeoId, getParcelInfo, getParcelContent} from '../../api/api';
+import React, { useState, useEffect } from "react";
+import { getGeoId, getParcelInfo, getParcelContent } from "../../lib/api";
 
-import TitleBar from '../../components/common/TitleBar/TitleBar';
-import GWLoader from '../../components/common/Loader/Loader';
-import GWAvail from '../../components/common/ContentFiller/Avail';
-import GWInfo from '../GeoWebInterface/components/GeoWebInfo/GWInfo';
-import GWContent from '../GeoWebInterface/components/GeoWebContent/GWContent';
+import TitleBar from "../../components/common/TitleBar/TitleBar";
+import GWLoader from "../../components/common/Loader/Loader";
+import GWAvail from "../../components/common/ContentFiller/Avail";
+import GWInfo from "../GeoWebInterface/components/GeoWebInfo/GWInfo";
+import GWContent from "../GeoWebInterface/components/GeoWebContent/GWContent";
 
-import './styles.css';
+import styles from "./styles.module.css";
 
 const GeoWebCoordinate = require("js-geo-web-coordinate");
-const Gws_mock = require('./Gws_mock.json');
-
+const Gws_mock = require("./Gws_mock.json");
 
 const GWS = () => {
-
-    const initCoordinate = {lat: 0, lon: 0}; //default lat, lon
-    const [coordinate, setCoordinate] = useState(initCoordinate);   //gps coordinates {lat, lon}
+    const initCoordinate = { lat: 0, lon: 0 }; //default lat, lon
+    const [coordinate, setCoordinate] = useState(initCoordinate); //gps coordinates {lat, lon}
     const [gwCoord, setGwCoord] = useState(""); //geowebcoordinates as string
     const [rootCId, setRootCId] = useState(null); //rootCid
 
@@ -26,24 +24,20 @@ const GWS = () => {
     const [loading, SetLoading] = useState(true);
 
     //On Mount
-    useEffect( ()=>{
+    useEffect(() => {
         accessGps();
-    }, [] );
+    }, []);
 
     const accessGps = () => {
-        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition); //Get Position, with callback
-        } 
-        else {
+        } else {
             console.log("Geolocation is not supported by this browser.");
-            setCoordinate({lat: -1, lon: -1});
+            setCoordinate({ lat: -1, lon: -1 });
         }
-    }
-
+    };
 
     const showPosition = (position) => {
-
         SetLoading(true);
 
         //hard-coded coordinates for testing
@@ -58,87 +52,87 @@ const GWS = () => {
         //const latitude = 0;
         //const longitude = 0;
 
-        const {latitude, longitude} = position.coords;
-        setCoordinate({lat: latitude, lon: longitude}); //Set Lat and Lon state
-        
-        const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude);    //Convert Lon, Lat to GeoWebCoordinate
-        setGwCoord(_gwCoord.toString());    
+        const { latitude, longitude } = position.coords;
+        setCoordinate({ lat: latitude, lon: longitude }); //Set Lat and Lon state
+
+        const _gwCoord = GeoWebCoordinate.from_gps(longitude, latitude); //Convert Lon, Lat to GeoWebCoordinate
+        setGwCoord(_gwCoord.toString());
 
         /* *******************DEMO******************* */
-        const _useGws = process.env.REACT_APP_USE_GWS;
+        const _useGws = process.env.NEXT_PUBLIC_USE_GWS;
 
-        if(_useGws === 'false')
-            setPreDetermined();
-        else
-            getRoootCid(_gwCoord.toString());
+        if (_useGws === "false") setPreDetermined();
+        else getRoootCid(_gwCoord.toString());
         /* ****************************************** */
-    }   
+    };
 
     const setPreDetermined = () => {
-        setRootCId( Gws_mock.parcelInfo.ceramicUri );
-        setGwInfo( Gws_mock.parcelInfo );
-        SetGwContent( Gws_mock.parcelContent );
+        setRootCId(Gws_mock.parcelInfo.ceramicUri);
+        setGwInfo(Gws_mock.parcelInfo);
+        SetGwContent(Gws_mock.parcelContent);
         //setParcelContent(Gws_mock.parcelInfo.ceramicUri);
 
         SetLoading(false);
-    }
+    };
 
     const getRoootCid = async (id) => {
+        const lookUpId = await getGeoId(id); //get root ceramic id and parcel id
 
-        const lookUpId = await getGeoId(id);    //get root ceramic id and parcel id
-       
-        if(lookUpId.rootCId !== null) {
+        if (lookUpId.rootCId !== null) {
             setRootCId(lookUpId.rootCId);
 
             setParcelInfo(lookUpId.parcelId);
             setParcelContent(lookUpId.rootCId);
-        }
-        else{
+        } else {
             setRootCId(lookUpId.rootCId);
             SetLoading(false);
         }
-    }
+    };
 
-    const setParcelInfo = async(_docid) => {
-        const _parcelInfo = await getParcelInfo(_docid);    //get parcel info and meta-data
-        setGwInfo( _parcelInfo );
-    }
+    const setParcelInfo = async (_docid) => {
+        const _parcelInfo = await getParcelInfo(_docid); //get parcel info and meta-data
+        setGwInfo(_parcelInfo);
+    };
 
-    const setParcelContent = async(_docid) => {
+    const setParcelContent = async (_docid) => {
         const _parcelData = await getParcelContent(_docid); //get parcel content
-        SetGwContent( _parcelData );
+        SetGwContent(_parcelData);
 
         SetLoading(false);
-    }
+    };
 
     const GeoWeb = () => {
-       
-        if(rootCId !== null){
+        if (rootCId !== null) {
             // Returns Info Expandable and Parcel Content
             return (
-                <div className="layout-root">
-                    <GWInfo gwInfo={gwInfo} gwContentName={gwContent?gwContent.name:""} />
-                    <GWContent gwWebContent={gwContent?gwContent.webContent:null}
-                        gwCanvasContent={gwContent?gwContent.mediaContent:null}/>
+                <div className={styles["layout-root"]}>
+                    <GWInfo
+                        gwInfo={gwInfo}
+                        gwContentName={gwContent ? gwContent.name : ""}
+                    />
+                    <GWContent
+                        gwWebContent={gwContent ? gwContent.webContent : null}
+                        gwCanvasContent={
+                            gwContent ? gwContent.mediaContent : null
+                        }
+                    />
                 </div>
             );
-        }
-        else{
+        } else {
             return (
-                <div className="layout-root">
+                <div className={styles["layout-root"]}>
                     <GWInfo gwInfo={null} gwContentName={"No Parcel Found"} />
                     <GWAvail />
                 </div>
             );
         }
-    }
+    };
 
-
-    return(
+    return (
         <div>
             <TitleBar accessGps={accessGps} />
 
-            { loading ? <GWLoader/> : <GeoWeb /> }
+            {loading ? <GWLoader /> : <GeoWeb />}
 
             {/*Display Mock Data*/}
             {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
@@ -146,10 +140,8 @@ const GWS = () => {
                 <br/>
                 <span>{'lon : ' +coordinate.lon}</span>
             </div> */}
-
         </div>
     );
-    
-}
+};
 
 export default GWS;

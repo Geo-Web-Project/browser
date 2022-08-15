@@ -3,7 +3,7 @@ import { ethers, BigNumber} from "ethers";
 
 
 //network constants
-let annualRate = process.env.REACT_APP_ANNUALRATE;
+let annualRate = process.env.NEXT_PUBLIC_ANNUALRATE;
 let perSecondFeeNumerator = parseFloat(annualRate) * 100;
 let perSecondFeeDenominator = 60 * 60 * 24 * 365 * 100;
 

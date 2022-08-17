@@ -84,13 +84,21 @@ body{
 }
 
 .gps-location {
-    
-    position: absolute;
-    right: 3.12%;
-    top: 12.5%;
-    bottom: 11.25%;
-    height: 61px;
-    width: 61px;
+  position: absolute;
+  right: 3.12%;
+  top: 12.5%;
+  bottom: 11.25%;
+  height: 61px;
+  width: 61px;
 
-    background: url('/src/assets/gps.png');
+  background: url("/src/assets/gps.png");
+}
+
+.menu {
+  position: absolute;
+  right: 3.12%;
+  top: 12.5%;
+  bottom: 11.25%;
+  height: 61px;
+  width: 61px;
 }

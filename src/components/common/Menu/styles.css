@@ -15,13 +15,20 @@
 .flexrow {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .flexcolumn {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.textfield {
-  background-color: white;
+.coord-label {
+  padding: 20px;
+  width: 70px;
+}
+
+.buttonContainer {
+  margin-left: auto;
 }

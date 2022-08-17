@@ -4,7 +4,6 @@ import {
   AppBar,
   Toolbar,
   Drawer,
-  Divider,
   Container,
   IconButton,
   TextField,
@@ -17,28 +16,37 @@ import {
 import { Close as CloseIcon, Menu as MenuIcon } from "@material-ui/icons";
 import StyledSwitch from "../Switch/StyledSwitch";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   paper: {
-    backgroundColor: "#202333",
+    backgroundColor: "#1a1c2b",
     color: "white",
+    width: "60%",
+    [theme.breakpoints.up("lg")]: { width: "20%" },
+    [theme.breakpoints.only("md")]: { width: "30%" },
+    [theme.breakpoints.only("sm")]: { width: "40%" },
+    [theme.breakpoints.only("xs")]: { width: "60%" },
   },
   input: {
     backgroundColor: "white",
-    color: "#202333",
+    color: "#1a1c2b",
+    borderRadius: "15px",
+    padding: "9px",
+    marginRight: "10%",
+    marginTop: "1.5%",
+    width: "100%",
   },
-});
+}));
 
 const Menu = (props) => {
   const classes = useStyles();
   const accessGps = props.accessGps;
   const showPosition = props.showPosition;
+
   const [open, setState] = useState(false);
   const [longitude, setLongitude] = useState(props.coordinate.lon);
   const [latitude, setLatitude] = useState(props.coordinate.lat);
-  const toggleDrawer = (open) => (event) => {
-    setState(open);
-  };
   const [isManual, setStateSwitch] = useState(false);
+
   useEffect(() => {
     if (!isManual) {
       setLongitude(props.coordinate.lon);
@@ -46,25 +54,33 @@ const Menu = (props) => {
     }
   }, [isManual, props.coordinate]);
 
+  const toggleDrawer = (open) => (event) => {
+    setState(open);
+  };
+
   const handleChange = () => (event) => {
     setStateSwitch(event.target.checked);
-    if (!event.target.checked) {
-      accessGps();
-    }
   };
 
   const handleLatChange = (event) => {
     setLatitude(event.target.value);
   };
+
   const handleLonChange = (event) => {
     setLongitude(event.target.value);
   };
+
   const handleManualSubmit = () => {
     const position = {
       coords: { latitude: Number(latitude), longitude: Number(longitude) },
     };
     showPosition(position);
   };
+
+  const handleRefreshGPS = () => {
+    accessGps();
+  };
+
   return (
     <div className="menu">
       <AppBar position="static" style={{ background: "#202333" }}>
@@ -85,37 +101,45 @@ const Menu = (props) => {
               onOpen={toggleDrawer(true)}
               classes={{ paper: classes.paper }}
             >
-              <IconButton
-                sx={{ mb: 2 }}
-                onClick={toggleDrawer(false)}
-                style={{ color: "white" }}
-              >
-                <CloseIcon />
-              </IconButton>
               <Box>
-                <Typography> Settings</Typography>
+                <Box display="flex" style={{ paddingBottom: "30px" }}>
+                  <Typography variant="h5" style={{ margin: "15px" }}>
+                    Settings
+                  </Typography>
+                  <IconButton
+                    onClick={toggleDrawer(false)}
+                    style={{ color: "white", marginLeft: "auto" }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
                 <Grid
                   component="label"
                   container
                   alignItems="center"
-                  spacing={1}
+                  justify="center"
+                  spacing={5}
                 >
-                  <Grid item>GPS</Grid>
+                  <Grid item>
+                    <Typography>GPS</Typography>
+                  </Grid>
                   <Grid item>
                     <StyledSwitch
                       checked={isManual}
                       onChange={handleChange()}
                     />
                   </Grid>
-                  <Grid item>Manual</Grid>
+                  <Grid item>
+                    <Typography>Manual</Typography>
+                  </Grid>
                 </Grid>
 
-                <Divider sx={{ mb: 2 }} />
                 <div className="flexcolumn">
                   <div className="flexrow">
-                    <Typography>Latitude</Typography>
+                    <Typography className="coord-label">Latitude:</Typography>
                     <TextField
                       type="number"
+                      size="small"
                       disabled={!isManual}
                       id="filled-basic"
                       variant="filled"
@@ -129,7 +153,7 @@ const Menu = (props) => {
                     />
                   </div>
                   <div className="flexrow">
-                    <Typography>Longitude</Typography>
+                    <Typography className="coord-label">Longitude:</Typography>
                     <TextField
                       type="number"
                       disabled={!isManual}
@@ -144,8 +168,36 @@ const Menu = (props) => {
                       }}
                     />
                   </div>
+                  <div className="buttonContainer">
+                    {isManual ? (
+                      <Button
+                        onClick={() => handleManualSubmit()}
+                        style={{
+                          width: "30%",
+                          marginRight: "10px",
+                          backgroundColor: "#2fc1c1",
+                          color: "white",
+                        }}
+                        variant="contained"
+                      >
+                        Go
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => handleRefreshGPS()}
+                        style={{
+                          width: "auto",
+                          marginRight: "10px",
+                          backgroundColor: "#2fc1c1",
+                          color: "white",
+                        }}
+                        variant="contained"
+                      >
+                        Refresh
+                      </Button>
+                    )}
+                  </div>
                 </div>
-                <Button onClick={() => handleManualSubmit()}>Go</Button>
               </Box>
             </Drawer>
           </Toolbar>

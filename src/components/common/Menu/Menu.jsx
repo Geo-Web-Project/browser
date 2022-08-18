@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { Close as CloseIcon, Menu as MenuIcon } from "@material-ui/icons";
 import StyledSwitch from "../Switch/StyledSwitch";
+import parseQueryVariables from "../../../helpers/queryParser";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,7 +46,7 @@ const Menu = (props) => {
   const [open, setState] = useState(false);
   const [longitude, setLongitude] = useState(props.coordinate.lon);
   const [latitude, setLatitude] = useState(props.coordinate.lat);
-  const [isManual, setStateSwitch] = useState(false);
+  const [isManual, setSwitchState] = useState(false);
 
   useEffect(() => {
     if (!isManual) {
@@ -54,12 +55,21 @@ const Menu = (props) => {
     }
   }, [isManual, props.coordinate]);
 
+  useEffect(() => {
+    const params = parseQueryVariables(window.location.search);
+    if (Object.keys(params).length === 2) {
+      setSwitchState(true);
+      setLatitude(params.latitude);
+      setLongitude(params.longitude);
+    }
+  }, []);
+
   const toggleDrawer = (open) => (event) => {
     setState(open);
   };
 
   const handleChange = () => (event) => {
-    setStateSwitch(event.target.checked);
+    setSwitchState(event.target.checked);
   };
 
   const handleLatChange = (event) => {

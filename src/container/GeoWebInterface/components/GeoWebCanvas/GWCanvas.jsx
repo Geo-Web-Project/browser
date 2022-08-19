@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Image from "next/image";
 import GWEmpty from "../../../../components/common/ContentFiller/Empty";
 import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
 
@@ -32,7 +31,7 @@ const ModelViewer = (props) => {
       <button slot="ar-button" id="ar-button" />
 
       <div id="ar-prompt">
-        <Image alt="AR prompt" id="ar-prompt-img" />
+        <img alt="AR prompt" id="ar-prompt-img" />
       </div>
 
       <button id="ar-failure">AR is not tracking!</button>

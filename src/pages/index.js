@@ -1,6 +1,6 @@
-import GWS from '../container/GeoWebSystem/GWS';
+import GWS from "../container/GeoWebSystem/GWS";
 
-function Index() {
+export default function Index() {
   return (
     <div className="App">
       <div className="bg-theme">
@@ -9,5 +9,3 @@ function Index() {
     </div>
   );
 }
-
-export default Index;

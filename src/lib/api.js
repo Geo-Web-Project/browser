@@ -32,8 +32,7 @@ const LOCATION_LOOKUP_QUERY = gql`
       landParcel {
         id
         license {
-          id
-          rootCID
+          owner
         }
       }
     }
@@ -45,10 +44,10 @@ const PARCEL_INFO_QUERY = gql`
     landParcel(id: $id) {
       id
       license {
-        rootCID
         owner
-        value
-        expirationTimestamp
+        currentOwnerBid {
+          forSalePrice
+        }
       }
     }
   }
@@ -68,47 +67,16 @@ const getGeoId = async (id) => {
 
 //  Get Parcel Info
 //  input: parcelId (Eg: '0x2D')
-//  output: {  id: , license: , ceramicId: , value: , expiry: }
-const getParcelInfo = async (id) => {
+//  output: {  id: , licensee: , value: , ceramicId: , ceramicUri:}
+const getParcelInfo = async (id, streamId) => {
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
     variables: { id: id },
   });
 
-  let parcelInfo = parseInfo(info);
+  let parcelInfo = parseInfo(info, streamId);
 
   return parcelInfo;
 };
 
-const getParcelContent = async (docid) => {
-  let doc = null;
-
-  try {
-    doc = await ceramic.loadStream(docid);
-  } catch (e) {
-    console.log(e);
-  }
-
-  let parcelContent = parseContent(doc);
-
-  if (parcelContent.mediaGallery) {
-    // Load mediaGallery stream
-    const mediaGalleryStream = await ceramic.loadStream(
-      parcelContent.mediaGallery
-    );
-
-    // Load all media gallery items
-    const queries = parseMediaGalleryStream(mediaGalleryStream.content);
-
-    const docMap = await ceramic.multiQuery(queries);
-
-    parcelContent.mediaContent = parseMediaContent(
-      mediaGalleryStream.content,
-      docMap
-    );
-  }
-
-  return parcelContent;
-};
-
-export { getGeoId, getParcelInfo, getParcelContent };
+export { getGeoId, getParcelInfo };

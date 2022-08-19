@@ -13,16 +13,16 @@ export default function Document() {
           name="description"
           content="Geospatial Browser for Accessing The Geo Web"
         />
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <script
+          type="module"
+          src="https://unpkg.com/@google/model-viewer@1.8.0/dist/model-viewer.min.js"
+          defer
+        ></script>
       </Head>
       <body>
         <Main />
         <NextScript />
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        <script
-          type="module"
-          src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
-          defer
-        ></script>
       </body>
     </Html>
   );

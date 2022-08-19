@@ -69,7 +69,6 @@ export default function GWS() {
         return;
       }
 
-      //setAssetContentManager(null);
       const licenseContract =
         getContractsForChainOrThrow(NETWORK_ID).geoWebERC721LicenseContract;
 

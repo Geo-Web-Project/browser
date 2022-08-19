@@ -1,115 +1,114 @@
-
 //  Imports
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { gql } from "@apollo/client";
 
-import CeramicClient from '@ceramicnetwork/http-client';
+import CeramicClient from "@ceramicnetwork/http-client";
 
-import {parseGeo, parseInfo, parseContent, parseMediaContent, parseMediaGalleryStream} from '../helpers/gwParser';
+import {
+  parseGeo,
+  parseInfo,
+  parseContent,
+  parseMediaContent,
+  parseMediaGalleryStream,
+} from "../helpers/gwParser";
 
 //  Refer Environment Variables
 const GRAPH_URL = process.env.REACT_APP_GRAPH_URI;
 const CERAMIC_URL = process.env.REACT_APP_CERAMIC_URI;
 
-
 //  Instantiate Apollo & Ceramic Clients
 const graphClient = new ApolloClient({
   uri: GRAPH_URL,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
-const ceramic = new CeramicClient(CERAMIC_URL)
-
+const ceramic = new CeramicClient(CERAMIC_URL);
 
 //  GraphQL Queries
-const LOCATION_LOOKUP_QUERY = 
-  gql`
-    query GeoWebCoordinate($id: String){
-      geoWebCoordinate(id: $id) {
+const LOCATION_LOOKUP_QUERY = gql`
+  query GeoWebCoordinate($id: String) {
+    geoWebCoordinate(id: $id) {
       id
       landParcel {
-          id
-          license {
-            id
-            rootCID
-          }
-        }
-      }
-    }`
-
-const PARCEL_INFO_QUERY = 
-  gql`
-    query LandParcel($id: String) {
-      landParcel(id: $id) {
         id
         license {
+          id
           rootCID
-          owner
-          value
-          expirationTimestamp
         }
       }
-    }`
-  
+    }
+  }
+`;
 
-//  Get Ceramic, parcel IDs 
+const PARCEL_INFO_QUERY = gql`
+  query LandParcel($id: String) {
+    landParcel(id: $id) {
+      id
+      license {
+        rootCID
+        owner
+        value
+        expirationTimestamp
+      }
+    }
+  }
+`;
+
+//  Get Ceramic, parcel IDs
 const getGeoId = async (id) => {
-    
-    let result = await graphClient.query({
-        query: LOCATION_LOOKUP_QUERY,
-        variables:{id: id}
-    })
-    
-    let geoId = parseGeo(result);
-    
-    return geoId;
-}
+  let result = await graphClient.query({
+    query: LOCATION_LOOKUP_QUERY,
+    variables: { id: id },
+  });
 
-//  Get Parcel Info 
+  let geoId = parseGeo(result);
+
+  return geoId;
+};
+
+//  Get Parcel Info
 //  input: parcelId (Eg: '0x2D')
 //  output: {  id: , license: , ceramicId: , value: , expiry: }
-const getParcelInfo = async(id) => {
-
+const getParcelInfo = async (id) => {
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
-    variables: {id: id}
-  })
-  
+    variables: { id: id },
+  });
+
   let parcelInfo = parseInfo(info);
 
   return parcelInfo;
+};
 
-}
-
-const getParcelContent = async(docid) => {
-  
+const getParcelContent = async (docid) => {
   let doc = null;
-  
-  try{
+
+  try {
     doc = await ceramic.loadStream(docid);
-  }
-  catch(e){
+  } catch (e) {
     console.log(e);
   }
 
   let parcelContent = parseContent(doc);
-  
+
   if (parcelContent.mediaGallery) {
     // Load mediaGallery stream
-    const mediaGalleryStream = await ceramic.loadStream(parcelContent.mediaGallery);
+    const mediaGalleryStream = await ceramic.loadStream(
+      parcelContent.mediaGallery
+    );
 
     // Load all media gallery items
     const queries = parseMediaGalleryStream(mediaGalleryStream.content);
 
     const docMap = await ceramic.multiQuery(queries);
-    
-    parcelContent.mediaContent = parseMediaContent(mediaGalleryStream.content, docMap);
 
+    parcelContent.mediaContent = parseMediaContent(
+      mediaGalleryStream.content,
+      docMap
+    );
   }
-  
-  return parcelContent; 
 
-}
+  return parcelContent;
+};
 
-
-export {getGeoId, getParcelInfo, getParcelContent};
+export { getGeoId, getParcelInfo, getParcelContent };

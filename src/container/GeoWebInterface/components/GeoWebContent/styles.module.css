@@ -1,20 +1,19 @@
 .switch-div {
-    position: relative;
-    margin-top: 2%;
+  position: relative;
+  margin-top: 2%;
 }
 
 .switch-left {
-    position: absolute;
-    top: 12%;
-    left: 14%;
-    color: white;
+  position: absolute;
+  top: 12%;
+  left: 14%;
+  color: white;
 }
 
 .switch-right {
-    position: absolute;
-    float: right;
-    right: 20%;
-    top: 12%;
-    color: white;
+  position: absolute;
+  float: right;
+  right: 20%;
+  top: 12%;
+  color: white;
 }
-

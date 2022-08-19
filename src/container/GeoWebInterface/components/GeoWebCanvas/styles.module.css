@@ -1,69 +1,77 @@
 #ar-prompt-img {
-    content:url('/assets/hand.png');
+  content: url("/assets/hand.png");
 }
 
 #ar-button {
-    background-image: url('/assets/noun_Augmented\ Reality_3557167\ 1.png');
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
-    background-color: rgba(255, 255, 255, 0);
-    position: absolute;
-    right: 2%;
-    top: 0%;
-    height: 64px;
-    width: 64px;
-    border-radius: 18px;
-    border: 1px solid #00000000;
-  }
+  background-image: url("/assets/noun_Augmented\ Reality_3557167\ 1.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0);
+  position: absolute;
+  right: 2%;
+  top: 0%;
+  height: 64px;
+  width: 64px;
+  border-radius: 18px;
+  border: 1px solid #00000000;
+}
 
-  #ar-button:active {
-    background-color: #E8EAED;
-  }
+#ar-button:active {
+  background-color: #e8eaed;
+}
 
-  #ar-button:focus {
-    outline: none;
-  }
+#ar-button:focus {
+  outline: none;
+}
 
-  #ar-button:focus-visible {
-    outline: 1px solid #4285f4;
-  }
+#ar-button:focus-visible {
+  outline: 1px solid #4285f4;
+}
 
-  @keyframes circle {
-    from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
-    to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+@keyframes circle {
+  from {
+    transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
   }
+  to {
+    transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}
 
-  @keyframes elongate {
-    from { transform: translateX(100px); }
-    to   { transform: translateX(-100px); }
+@keyframes elongate {
+  from {
+    transform: translateX(100px);
   }
+  to {
+    transform: translateX(-100px);
+  }
+}
 
-  .clk-left{
-    background-image: url('/assets/noun_right_1920905\ 2.png');
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
-    background-color: rgba(255, 255, 255, 0);
-    position: absolute;
-    left: 2%;
-    bottom: 40%;
-    height: 64px;
-    width: 64px;
-    border: none;
-    z-index: 1;
-  }
+.clk-left {
+  background-image: url("/assets/noun_right_1920905\ 2.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0);
+  position: absolute;
+  left: 2%;
+  bottom: 40%;
+  height: 64px;
+  width: 64px;
+  border: none;
+  z-index: 1;
+}
 
-  .clk-right {
-    background-image: url('/assets/noun_right_1920905\ 1.png');
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
-    background-color: rgba(255, 255, 255, 0);
-    position: absolute;
-    right: 2%;
-    bottom: 40%;
-    height: 64px;
-    width: 64px;
-    border: none;
-  }
+.clk-right {
+  background-image: url("/assets/noun_right_1920905\ 1.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0);
+  position: absolute;
+  right: 2%;
+  bottom: 40%;
+  height: 64px;
+  width: 64px;
+  border: none;
+}

@@ -90,4 +90,4 @@ export function useMediaGalleryStreamManager(
   }, [assetContentManager]);
 
   return mediaGalleryStreamManager;
-} 
+}

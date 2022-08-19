@@ -1,7 +1,7 @@
 .gwIframe {
-    position: relative;
-    margin-top: 2%;
-    width: 100%;
-    height: calc(100vh - 260px);
-    overflow:hidden;
+  position: relative;
+  margin-top: 2%;
+  width: 100%;
+  height: calc(100vh - 260px);
+  overflow: hidden;
 }

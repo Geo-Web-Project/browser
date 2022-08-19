@@ -107,8 +107,6 @@ const Menu = (props) => {
             <Drawer
               anchor="right"
               open={open}
-              onClose={toggleDrawer(false)}
-              onOpen={toggleDrawer(true)}
               classes={{ paper: classes.paper }}
             >
               <Box>

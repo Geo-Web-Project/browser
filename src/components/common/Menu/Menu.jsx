@@ -64,12 +64,12 @@ const Menu = (props) => {
     }
   }, []);
 
-  const toggleDrawer = (open) => (event) => {
+  const toggleDrawer = (open) => {
     setState(open);
   };
 
-  const handleChange = () => (event) => {
-    setSwitchState(event.target.checked);
+  const handleChange = (checked) => {
+    setSwitchState(checked);
   };
 
   const handleLatChange = (event) => {
@@ -93,124 +93,118 @@ const Menu = (props) => {
 
   return (
     <div className="menu">
-      <AppBar position="static" style={{ background: "#202333" }}>
-        <Container maxWidth="lg" disableGutters={true}>
-          <Toolbar>
-            <IconButton
-              aria-label="open drawer"
-              onClick={toggleDrawer(true)}
-              style={{ margin: "-17px", color: "white" }}
-            >
-              <MenuIcon />
-            </IconButton>
+      <Container maxWidth="lg" disableGutters={true}>
+        <Toolbar>
+          <IconButton
+            aria-label="open drawer"
+            onClick={() => toggleDrawer(true)}
+            style={{ color: "white" }}
+          >
+            <MenuIcon />
+          </IconButton>
 
-            <Drawer
-              anchor="right"
-              open={open}
-              classes={{ paper: classes.paper }}
-            >
-              <Box>
-                <Box display="flex" style={{ paddingBottom: "30px" }}>
-                  <Typography variant="h5" style={{ margin: "15px" }}>
-                    Settings
-                  </Typography>
-                  <IconButton
-                    onClick={toggleDrawer(false)}
-                    style={{ color: "white", marginLeft: "auto" }}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-                <Grid
-                  component="label"
-                  container
-                  alignItems="center"
-                  justify="center"
-                  spacing={5}
+          <Drawer anchor="right" open={open} classes={{ paper: classes.paper }}>
+            <Box>
+              <Box display="flex" style={{ paddingBottom: "30px" }}>
+                <Typography variant="h5" style={{ margin: "15px" }}>
+                  Settings
+                </Typography>
+                <IconButton
+                  onClick={() => toggleDrawer(false)}
+                  style={{ color: "white", marginLeft: "auto" }}
                 >
-                  <Grid item>
-                    <Typography>GPS</Typography>
-                  </Grid>
-                  <Grid item>
-                    <StyledSwitch
-                      checked={isManual}
-                      onChange={handleChange()}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography>Manual</Typography>
-                  </Grid>
-                </Grid>
-
-                <div className="flexcolumn">
-                  <div className="flexrow">
-                    <Typography className="coord-label">Latitude:</Typography>
-                    <TextField
-                      type="number"
-                      size="small"
-                      disabled={!isManual}
-                      id="filled-basic"
-                      variant="filled"
-                      value={latitude}
-                      onChange={handleLatChange}
-                      InputProps={{
-                        classes: {
-                          input: classes.input,
-                        },
-                      }}
-                    />
-                  </div>
-                  <div className="flexrow">
-                    <Typography className="coord-label">Longitude:</Typography>
-                    <TextField
-                      type="number"
-                      disabled={!isManual}
-                      id="filled-basic"
-                      variant="filled"
-                      value={longitude}
-                      onChange={handleLonChange}
-                      InputProps={{
-                        classes: {
-                          input: classes.input,
-                        },
-                      }}
-                    />
-                  </div>
-                  <div className="buttonContainer">
-                    {isManual ? (
-                      <Button
-                        onClick={() => handleManualSubmit()}
-                        style={{
-                          width: "30%",
-                          marginRight: "10px",
-                          backgroundColor: "#2fc1c1",
-                          color: "white",
-                        }}
-                        variant="contained"
-                      >
-                        Go
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => handleRefreshGPS()}
-                        style={{
-                          width: "auto",
-                          marginRight: "10px",
-                          backgroundColor: "#2fc1c1",
-                          color: "white",
-                        }}
-                        variant="contained"
-                      >
-                        Refresh
-                      </Button>
-                    )}
-                  </div>
-                </div>
+                  <CloseIcon />
+                </IconButton>
               </Box>
-            </Drawer>
-          </Toolbar>
-        </Container>
-      </AppBar>
+              <Grid
+                component="label"
+                container
+                alignItems="center"
+                justify="center"
+                spacing={5}
+              >
+                <Grid item>
+                  <Typography>GPS</Typography>
+                </Grid>
+                <Grid item>
+                  <StyledSwitch
+                    checked={isManual}
+                    onChange={(event) => handleChange(event.target.checked)}
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography>Manual</Typography>
+                </Grid>
+              </Grid>
+
+              <div className="flexcolumn">
+                <div className="flexrow">
+                  <Typography className="coord-label">Latitude:</Typography>
+                  <TextField
+                    type="number"
+                    size="small"
+                    disabled={!isManual}
+                    id="filled-basic"
+                    variant="filled"
+                    value={latitude}
+                    onChange={handleLatChange}
+                    InputProps={{
+                      classes: {
+                        input: classes.input,
+                      },
+                    }}
+                  />
+                </div>
+                <div className="flexrow">
+                  <Typography className="coord-label">Longitude:</Typography>
+                  <TextField
+                    type="number"
+                    disabled={!isManual}
+                    id="filled-basic"
+                    variant="filled"
+                    value={longitude}
+                    onChange={handleLonChange}
+                    InputProps={{
+                      classes: {
+                        input: classes.input,
+                      },
+                    }}
+                  />
+                </div>
+                <div className="buttonContainer">
+                  {isManual ? (
+                    <Button
+                      onClick={() => handleManualSubmit()}
+                      style={{
+                        width: "30%",
+                        marginRight: "10px",
+                        backgroundColor: "#2fc1c1",
+                        color: "white",
+                      }}
+                      variant="contained"
+                    >
+                      Go
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => handleRefreshGPS()}
+                      style={{
+                        width: "auto",
+                        marginRight: "10px",
+                        backgroundColor: "#2fc1c1",
+                        color: "white",
+                      }}
+                      variant="contained"
+                    >
+                      Refresh
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </Box>
+          </Drawer>
+        </Toolbar>
+      </Container>
     </div>
   );
 };

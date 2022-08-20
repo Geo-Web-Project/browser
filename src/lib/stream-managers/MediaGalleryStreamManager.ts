@@ -5,7 +5,7 @@ import { TileLoader } from "@glazed/tile-loader";
 import { TileDocument } from "@ceramicnetwork/stream-tile";
 import { MediaGallery } from "@geo-web/datamodels";
 import { MediaObject } from "schema-org-ceramic/types/MediaObject.schema";
-import { AssetContentManager } from "../AssetContentManager";
+import { AssetContentManager } from "./AssetContentManager";
 
 export class MediaGalleryStreamManager extends TileStreamManager<MediaGallery> {
   assetContentManager: AssetContentManager;

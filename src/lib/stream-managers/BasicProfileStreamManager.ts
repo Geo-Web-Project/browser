@@ -2,7 +2,7 @@
 import { TileStreamManager } from "./TileStreamManager";
 import * as React from "react";
 import { BasicProfile } from "@geo-web/datamodels";
-import { AssetContentManager } from "../AssetContentManager";
+import { AssetContentManager } from "./AssetContentManager";
 
 export class BasicProfileStreamManager extends TileStreamManager<BasicProfile> {
   assetContentManager: AssetContentManager;

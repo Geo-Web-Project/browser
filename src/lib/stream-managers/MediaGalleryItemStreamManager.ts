@@ -3,7 +3,7 @@ import { TileStreamManager } from "./TileStreamManager";
 import * as React from "react";
 import { MediaGalleryStreamManager } from "./MediaGalleryStreamManager";
 import { MediaObject } from "schema-org-ceramic/types/MediaObject.schema";
-import { AssetContentManager } from "../AssetContentManager";
+import { AssetContentManager } from "./AssetContentManager";
 
 export class MediaGalleryItemStreamManager extends TileStreamManager<MediaObject> {
   assetContentManager: AssetContentManager;

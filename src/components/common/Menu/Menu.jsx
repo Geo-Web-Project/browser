@@ -119,7 +119,7 @@ const Menu = (props) => {
                 component="label"
                 container
                 alignItems="center"
-                justify="center"
+                justifyContent="center"
                 spacing={5}
               >
                 <Grid item>

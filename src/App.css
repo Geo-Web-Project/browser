@@ -1,3 +1,54 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #202333;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+model-viewer {
+  position: relative;
+  margin-top: 2%;
+  width: 100%;
+  height: calc(100vh - 260px);
+  background-color: lightgrey;
+}
+
+model-viewer > #ar-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 175px;
+  animation: elongate 2s infinite ease-in-out alternate;
+  display: none;
+}
+
+model-viewer[ar-status="session-started"] > #ar-prompt {
+  display: block;
+}
+
+model-viewer > #ar-prompt > img {
+  animation: circle 4s linear infinite;
+}
+
+model-viewer > #ar-failure {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 175px;
+  display: none;
+}
+
+model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+  display: block;
+}
+
 .App {
   text-align: center;
 }
@@ -37,17 +88,15 @@
   }
 }
 
-.bg-theme{
-
+.bg-theme {
   /* iStock-1162097121 2 */
 
   position: absolute;
   width: 100%;
   height: 100%;
 
-  background: url('/src/assets/iStock-1162097121\ 2.png');
+  background: url("/assets/iStock-1162097121\ 2.png");
   overflow-y: scroll;
   /*mix-blend-mode: difference;*/
   opacity: 1;
-
 }

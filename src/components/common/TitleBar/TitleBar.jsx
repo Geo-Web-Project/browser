@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import "./styles.css";
+import styles from "./styles.module.css";
 import Menu from "../Menu/Menu";
 //Page Layout including Title and Background
 const TitleBar = (props) => {
   const accessGps = props.accessGps;
 
   return (
-    <div className="layout-div">
-      <div className="title-bar">
-        <div className="logo" />
-        <div className="title-txt">{"Geo Web"}</div>
-        <div className="title-caption">{"Browse Earth"}</div>
+    <div className={styles["layout-div"]}>
+      <div className={styles["title-bar"]}>
+        <div className={styles["logo"]} />
+        <div className={styles["title-txt"]}>{"Geo Web"}</div>
+        <div className={styles["title-caption"]}>{"Browse Earth"}</div>
         <div onClick={() => accessGps()}></div>
         <Menu
           coordinate={props.coordinate}

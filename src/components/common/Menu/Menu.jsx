@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./styles.css";
+import styles from "./styles.module.css";
 import {
-  AppBar,
   Toolbar,
   Drawer,
   Container,
@@ -92,7 +91,7 @@ const Menu = (props) => {
   };
 
   return (
-    <div className="menu">
+    <div className={styles["menu"]}>
       <Container maxWidth="lg" disableGutters={true}>
         <Toolbar>
           <IconButton
@@ -137,9 +136,11 @@ const Menu = (props) => {
                 </Grid>
               </Grid>
 
-              <div className="flexcolumn">
-                <div className="flexrow">
-                  <Typography className="coord-label">Latitude:</Typography>
+              <div className={styles["flexcolumn"]}>
+                <div className={styles["flexrow"]}>
+                  <Typography className={styles["coord-label"]}>
+                    Latitude:
+                  </Typography>
                   <TextField
                     type="number"
                     size="small"
@@ -155,8 +156,10 @@ const Menu = (props) => {
                     }}
                   />
                 </div>
-                <div className="flexrow">
-                  <Typography className="coord-label">Longitude:</Typography>
+                <div className={styles["flexrow"]}>
+                  <Typography className={styles["coord-label"]}>
+                    Longitude:
+                  </Typography>
                   <TextField
                     type="number"
                     disabled={!isManual}
@@ -171,7 +174,7 @@ const Menu = (props) => {
                     }}
                   />
                 </div>
-                <div className="buttonContainer">
+                <div className={styles["buttonContainer"]}>
                   {isManual ? (
                     <Button
                       onClick={() => handleManualSubmit()}

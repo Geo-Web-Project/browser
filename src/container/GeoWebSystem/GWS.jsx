@@ -168,44 +168,27 @@ export default function GWS() {
     /* *******************DEMO******************* */
     const _useGws = process.env.NEXT_PUBLIC_USE_GWS;
 
-    if (_useGws === "false") setPreDetermined();
-    else getRoootCid(_gwCoord.toString());
-    /* ****************************************** */
-  };
-
-  const setPreDetermined = () => {
-    setRootCId(Gws_mock.parcelInfo.ceramicUri);
-    setGwInfo(Gws_mock.parcelInfo);
-    SetGwContent(Gws_mock.parcelContent);
-    //setParcelContent(Gws_mock.parcelInfo.ceramicUri);
-
-    SetLoading(false);
-  };
-
-  const getRoootCid = async (id) => {
-    const lookUpId = await getGeoId(id); //get root ceramic id and parcel id
-
-    if (lookUpId.rootCId !== null) {
-      setRootCId(lookUpId.rootCId);
-
-      setParcelInfo(lookUpId.parcelId);
-      setParcelContent(lookUpId.rootCId);
+    if (_useGws === "false") {
+      setPreDetermined();
+      /* ****************************************** */
     } else {
-      setRootCId(lookUpId.rootCId);
-      SetLoading(false);
+      getParcelId(_gwCoord.toString());
     }
   };
 
-  const setParcelInfo = async (_docid) => {
-    const _parcelInfo = await getParcelInfo(_docid); //get parcel info and meta-data
-    setGwInfo(_parcelInfo);
+  const setPreDetermined = () => {
+    setGwInfo(Gws_mock.parcelInfo);
+    setGwContent(Gws_mock.parcelContent);
+    setParcelIndexStreamId(Gws_mock.ceramicUri);
+    setLoading(false);
   };
 
-  const setParcelContent = async (_docid) => {
-    const _parcelData = await getParcelContent(_docid); //get parcel content
-    SetGwContent(_parcelData);
+  const getParcelId = async (id) => {
+    const lookUpId = await getGeoId(id); //get root parcel id
 
-    SetLoading(false);
+    setParcelId(lookUpId.parcelId);
+    setLicenseOwner(lookUpId.licenseOwner);
+    setLoading(false);
   };
 
   const GeoWeb = () => {

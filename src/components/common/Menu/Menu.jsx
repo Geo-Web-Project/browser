@@ -153,6 +153,7 @@ const Menu = (props) => {
                       classes: {
                         input: classes.input,
                       },
+                      disableUnderline: true,
                     }}
                   />
                 </div>
@@ -171,6 +172,7 @@ const Menu = (props) => {
                       classes: {
                         input: classes.input,
                       },
+                      disableUnderline: true,
                     }}
                   />
                 </div>

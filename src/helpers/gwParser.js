@@ -1,104 +1,81 @@
-
-import { formatValue, convertTimestamp, calcParcelBalance, truncateStr} from './gwUtils';
+import {
+  formatValue,
+  convertTimestamp,
+  calcParcelBalance,
+  truncateStr,
+} from "./gwUtils";
 
 //parse root ceramic id and parcel id
 const parseGeo = (msg) => {
+  let _geoId = { licenseOwner: null, parcelId: null };
 
-    let _geoId = {rootCId: null, parcelId: null}
-    
-    try {
-        _geoId.rootCId = msg['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
-        _geoId.parcelId = msg['data']['geoWebCoordinate']['landParcel']['id']
-    }
-    catch(e){
-        console.log(e);
-    }
+  try {
+    //_geoId.rootCId = msg['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
+    _geoId.parcelId = msg["data"]["geoWebCoordinate"]["landParcel"]["id"];
+    _geoId.licenseOwner =
+      msg["data"]["geoWebCoordinate"]["landParcel"]["license"]["owner"];
+  } catch (e) {
+    console.log(e);
+  }
 
-    return _geoId;
-}
+  return _geoId;
+};
 
 //parse parcel info document
-const parseInfo = (msg) => {
+const parseInfo = (msg, streamId) => {
+  let _parcelInfo = {
+    id: null,
+    licensee: null,
+    value: null,
+    ceramicId: null,
+    ceramicUri: null,
+  };
 
-    let _parcelInfo = {
-        id: null,
-        licensee: null,
-        value: null,
-        expiry: null,
-        balance: null,
-        ceramicId: null,
-        ceramicUri: null,
-    }
-    
-    try {
-       
-        let _landParcel = msg['data']['landParcel'];
-        let _license = _landParcel['license']; 
+  try {
+    let _landParcel = msg["data"]["landParcel"];
+    let _license = _landParcel["license"];
 
-        _parcelInfo.id = _landParcel['id'];
-        _parcelInfo.licensee = truncateStr(_license['owner'], 11);
-        _parcelInfo.value = formatValue(_license['value']);
-        _parcelInfo.expiry = convertTimestamp( _license['expirationTimestamp'] );
-        _parcelInfo.balance = calcParcelBalance(_license['expirationTimestamp'], _license['value']);
-        _parcelInfo.ceramicId = `ceramic://${truncateStr(_license['rootCID'], 11)}`;
-        _parcelInfo.ceramicUri = _license['rootCID'];
+    _parcelInfo.id = _landParcel["id"];
+    _parcelInfo.licensee = truncateStr(_license["owner"], 11);
+    _parcelInfo.value = formatValue(
+      _license["currentOwnerBid"]["forSalePrice"]
+    );
+    _parcelInfo.ceramicId = `ceramic://${truncateStr(streamId, 11)}`;
+    _parcelInfo.ceramicUri = streamId;
+  } catch (e) {
+    console.log(e);
+  }
 
-    }
-    catch(e){
-        console.log(e);
-    }
-
-    return _parcelInfo;
-
-}
-
-//parse parcel content document
-const parseContent = (msg) => {
-    
-    let _parcelContent = {
-        name: null,
-        webContent: null,
-        mediaContent: null
-    }
-    
-    try {
-        _parcelContent = msg.content;
-    }
-    catch(e){
-        console.log(e);
-    }
-
-    return _parcelContent;
-}
+  return _parcelInfo;
+};
 
 const parseMediaGalleryStream = (msg) => {
+  let _mediaStream = null;
 
-    let _mediaStream = null;
+  try {
+    _mediaStream = msg.map((itemId) => {
+      return { streamId: itemId };
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
-    try{
-        _mediaStream = msg.map((itemId) => { return {streamId: itemId}  });
-    }
-    catch(e){
-        console.log(e);
-    }
+  return _mediaStream;
+};
 
-    return _mediaStream;
-}
+const parseMediaContent = (data, items) => {
+  let _mediaContent = null;
 
-const parseMediaContent = (msg1, msg2) => {
+  try {
+    if (data.length > 0)
+      _mediaContent = data.map((itemId) => {
+        return items[itemId]?.getStreamContent();
+      });
+  } catch (e) {
+    console.log(e);
+  }
 
-    let _mediaContent = null;
+  return _mediaContent;
+};
 
-    try {
-        if(msg1.length > 0)
-            _mediaContent = msg1.map((itemId) => {return msg2[itemId].content });
-    }
-    catch(e){
-        console.log(e);
-    }
-
-    return _mediaContent;
-}
-
-
-export {parseGeo, parseInfo, parseContent, parseMediaContent, parseMediaGalleryStream}
+export { parseGeo, parseInfo, parseMediaContent, parseMediaGalleryStream };

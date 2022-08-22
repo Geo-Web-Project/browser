@@ -1,17 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 
-import './styles.css';
+import styles from "./styles.module.css";
 
 const Loader = () => {
-
-    return(
-
-        <div className="lds-ripple">
-            <div></div>
-            <div></div>
-        </div>
-
-    );
-}
+  return (
+    <div className={styles["lds-ripple"]}>
+      <div></div>
+      <div></div>
+    </div>
+  );
+};
 
 export default Loader;

@@ -220,7 +220,11 @@ export default function GWS() {
 
   return (
     <div>
-      <TitleBar accessGps={accessGps} />
+      <TitleBar
+        accessGps={accessGps}
+        coordinate={coordinate}
+        showPosition={showPosition}
+      />
       {loading ? <GWLoader /> : <GeoWeb />}
 
       {/*Display Mock Data*/}

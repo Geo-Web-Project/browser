@@ -1,0 +1,34 @@
+.menu {
+  position: absolute;
+  right: 3.12%;
+  top: 12.5%;
+  bottom: 11.25%;
+  height: 61px;
+  width: 61px;
+}
+
+.switch {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flexcolumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coord-label {
+  padding: 20px;
+  width: 70px;
+}
+
+.buttonContainer {
+  margin-left: auto;
+}

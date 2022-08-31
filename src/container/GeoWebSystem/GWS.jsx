@@ -57,11 +57,6 @@ export default function GWS() {
     assetContentManager
   );
 
-  //On Mount
-  useEffect(() => {
-    accessGps();
-  }, []);
-
   useEffect(() => {
     (async () => {
       if (ceramic == null) {

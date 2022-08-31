@@ -60,6 +60,16 @@ const Menu = (props) => {
       setSwitchState(true);
       setLatitude(params.latitude);
       setLongitude(params.longitude);
+
+      const position = {
+        coords: {
+          latitude: Number(params.latitude),
+          longitude: Number(params.longitude),
+        },
+      };
+      showPosition(position);
+    } else {
+      accessGps();
     }
   }, []);
 

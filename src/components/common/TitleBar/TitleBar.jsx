@@ -11,7 +11,6 @@ const TitleBar = (props) => {
         <div className={styles["logo"]} />
         <div className={styles["title-txt"]}>{"Geo Web"}</div>
         <div className={styles["title-caption"]}>{"Browse Earth"}</div>
-        <div onClick={() => accessGps()}></div>
         <Menu
           coordinate={props.coordinate}
           showPosition={props.showPosition}

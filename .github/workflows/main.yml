@@ -22,16 +22,16 @@ jobs:
             nodeModules-
 
       - name: Install deps
-        run: yarn install
+        run: npm i
         env:
           CI: true
 
       - name: Lint
-        run: yarn lint
+        run: npm run lint
         env:
           CI: true
 
       - name: Build
-        run: yarn build
+        run: npm run build
         env:
           CI: true

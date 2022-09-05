@@ -13,14 +13,6 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Use cached node_modules
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: nodeModules-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            nodeModules-
-
       - name: Install deps
         run: npm i
         env:

@@ -120,11 +120,14 @@ export default function GWS() {
   }, [parcelId, parcelIndexStreamId]);
 
   useEffect(() => {
-    if (parcelContent && mediaGalleryData && mediaGalleryItems) {
+    if (parcelContent) {
       let _parcelContent = {
         name: parcelContent?.name,
         webContent: parcelContent?.url,
-        mediaContent: parseMediaContent(mediaGalleryData, mediaGalleryItems),
+        mediaContent:
+          mediaGalleryData && mediaGalleryItems
+            ? parseMediaContent(mediaGalleryData, mediaGalleryItems)
+            : undefined,
       };
 
       setGwContent(_parcelContent);

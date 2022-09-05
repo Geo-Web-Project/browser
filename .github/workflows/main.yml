@@ -22,7 +22,7 @@ jobs:
             nodeModules-
 
       - name: Install deps
-        run: npm i --force
+        run: npm i
         env:
           CI: true
 

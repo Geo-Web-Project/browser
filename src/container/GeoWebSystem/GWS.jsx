@@ -29,6 +29,8 @@ import { useBasicProfileStreamManager } from "../../lib/stream-managers/BasicPro
 import { useMediaGalleryStreamManager } from "../../lib/stream-managers/MediaGalleryStreamManager";
 import Gws_mock from "./Gws_mock.json";
 import styles from "./styles.module.css";
+import { ChatBox } from "@orbisclub/modules";
+import "@orbisclub/modules/dist/index.modern.css";
 
 const GW_MAX_LAT = 21;
 const GW_MAX_LON = 22;
@@ -39,11 +41,14 @@ export default function GWS() {
   const [gwInfo, setGwInfo] = useState(null);
   const [gwContent, setGwContent] = useState(null);
   const [parcelId, setParcelId] = useState("");
+  const [assetId, setAssetId] = useState("");
   const [licenseOwner, setLicenseOwner] = useState("");
   const [parcelIndexStreamId, setParcelIndexStreamId] = useState(null);
   const [assetContentManager, setAssetContentManager] = useState(null);
   const [ceramic, setCeramic] = useState(new CeramicClient(CERAMIC_URL));
   const [loading, setLoading] = useState(true);
+
+  console.log(parcelId);
 
   const basicProfileStreamManager =
     useBasicProfileStreamManager(assetContentManager);
@@ -76,6 +81,7 @@ export default function GWS() {
           },
           tokenId: new BN(parcelId.slice(2), "hex").toString(10),
         });
+        setAssetId(assetId);
 
         const accountId = new AccountId({
           chainId: `eip155:${NETWORK_ID}`,
@@ -221,7 +227,9 @@ export default function GWS() {
         showPosition={showPosition}
       />
       {loading ? <GWLoader /> : <GeoWeb />}
-
+      {assetId ? (
+        <ChatBox context={assetId.toString()} poweredByOrbis="black" />
+      ) : null}
       {/*Display Mock Data*/}
       {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
                 <span>{'lat : ' + coordinate.lat}</span>

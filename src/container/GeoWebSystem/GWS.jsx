@@ -41,7 +41,6 @@ export default function GWS() {
   const [gwInfo, setGwInfo] = useState(null);
   const [gwContent, setGwContent] = useState(null);
   const [parcelId, setParcelId] = useState("");
-  const [assetId, setAssetId] = useState("");
   const [licenseOwner, setLicenseOwner] = useState("");
   const [parcelIndexStreamId, setParcelIndexStreamId] = useState(null);
   const [assetContentManager, setAssetContentManager] = useState(null);
@@ -81,7 +80,6 @@ export default function GWS() {
           },
           tokenId: new BN(parcelId.slice(2), "hex").toString(10),
         });
-        setAssetId(assetId);
 
         const accountId = new AccountId({
           chainId: `eip155:${NETWORK_ID}`,
@@ -230,8 +228,11 @@ export default function GWS() {
         showPosition={showPosition}
       />
       {loading ? <GWLoader /> : <GeoWeb />}
-      {assetId ? (
-        <ChatBox context={assetId.toString()} poweredByOrbis="black" />
+      {parcelId ? (
+        <ChatBox
+          context={`Geo Web Parcel - ${parcelId.toString()}`}
+          poweredByOrbis="black"
+        />
       ) : null}
       {/*Display Mock Data*/}
       {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>

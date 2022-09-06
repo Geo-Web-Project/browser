@@ -17,21 +17,21 @@ jobs:
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: nodeModules-${{hashFiles('**/package-lock.json')}}
+          key: nodeModules-${{hashFiles('**/yarn.lock')}}
           restore-keys: |
             nodeModules-
 
       - name: Install deps
-        run: npm i
+        run: yarn install
         env:
           CI: true
 
       - name: Lint
-        run: npm run lint
+        run: yarn lint
         env:
           CI: true
 
       - name: Build
-        run: npm run build
+        run: yarn build
         env:
           CI: true

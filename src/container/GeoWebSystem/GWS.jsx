@@ -29,6 +29,8 @@ import { useBasicProfileStreamManager } from "../../lib/stream-managers/BasicPro
 import { useMediaGalleryStreamManager } from "../../lib/stream-managers/MediaGalleryStreamManager";
 import Gws_mock from "./Gws_mock.json";
 import styles from "./styles.module.css";
+import { ChatBox } from "@orbisclub/modules";
+import "@orbisclub/modules/dist/index.modern.css";
 
 const GW_MAX_LAT = 21;
 const GW_MAX_LON = 22;
@@ -44,6 +46,8 @@ export default function GWS() {
   const [assetContentManager, setAssetContentManager] = useState(null);
   const [ceramic, setCeramic] = useState(new CeramicClient(CERAMIC_URL));
   const [loading, setLoading] = useState(true);
+
+  console.log(parcelId);
 
   const basicProfileStreamManager =
     useBasicProfileStreamManager(assetContentManager);
@@ -114,11 +118,14 @@ export default function GWS() {
   }, [parcelId, parcelIndexStreamId]);
 
   useEffect(() => {
-    if (parcelContent && mediaGalleryData && mediaGalleryItems) {
+    if (parcelContent) {
       let _parcelContent = {
         name: parcelContent?.name,
         webContent: parcelContent?.url,
-        mediaContent: parseMediaContent(mediaGalleryData, mediaGalleryItems),
+        mediaContent:
+          mediaGalleryData && mediaGalleryItems
+            ? parseMediaContent(mediaGalleryData, mediaGalleryItems)
+            : undefined,
       };
 
       setGwContent(_parcelContent);
@@ -221,7 +228,12 @@ export default function GWS() {
         showPosition={showPosition}
       />
       {loading ? <GWLoader /> : <GeoWeb />}
-
+      {parcelId ? (
+        <ChatBox
+          context={`Geo Web Parcel - ${parcelId.toString()}`}
+          poweredByOrbis="black"
+        />
+      ) : null}
       {/*Display Mock Data*/}
       {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
                 <span>{'lat : ' + coordinate.lat}</span>

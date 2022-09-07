@@ -1913,10 +1913,10 @@
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.7.3.tgz#939534757a81f8d69cc854c7692805684ff3111e"
   integrity sha512-dGRS0agJzu8ybo44pCIf3xBaPQN/65AIXNgK8+4gzKd5kbvlqyxryUYVLJv7fK98Seyd2hDZzVEHSWAh0Bt1Yw==
 
-"@orbisclub/modules@^0.0.40":
-  version "0.0.40"
-  resolved "https://registry.yarnpkg.com/@orbisclub/modules/-/modules-0.0.40.tgz#20e589ce6ce6ab7a9f5b05f647c6ed0cddbce713"
-  integrity sha512-0U5G61ZOogc1xR/p585d09do4Vtbri7BpR8F0pLpl6ZTARbTqI+GIr9cEYdhO+twwzilLbenrNxsCFh7S0i5LA==
+"@orbisclub/modules@^0.0.41":
+  version "0.0.41"
+  resolved "https://registry.yarnpkg.com/@orbisclub/modules/-/modules-0.0.41.tgz#6ea46e657c2873ac41b8156d5297cbe48ca0e087"
+  integrity sha512-p7MQpJphFr1dGGliQ2D2kyxYPhub4XAmbhE6/Rgb6gMi/Q9SEkHDXhKl6YrSD39yONRlxbZFky0U3eCjJ0+ogg==
 
 "@orbisclub/orbis-sdk@^0.3.30":
   version "0.3.30"

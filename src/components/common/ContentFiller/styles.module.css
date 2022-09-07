@@ -5,7 +5,7 @@
   left: calc(50vw - 200px);
   top: calc(50vh - 200px - 160px);
 
-  background: url("/assets/Available\ Land_Transparent\ 1.png");
+  background: url("/assets/available-land.png");
 }
 
 .rect-box {

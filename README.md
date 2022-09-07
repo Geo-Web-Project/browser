@@ -2,16 +2,16 @@
 
 ## Install
 ```
-npm install
+yarn
 ```
 ##  Development 
 ```
-npm run dev
+yarn dev
 ```
 Then open https://localhost:3000 in a browser.
 
 ## Production
 ```
-npm run build
-npm run start
+yarn build
+yarn start
 ```

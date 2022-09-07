@@ -11,8 +11,6 @@
 }
 
 .logo {
-  /* Small Geo Web Icon 1 */
-
   position: absolute;
   left: 3.12%;
   right: 82.25%;
@@ -21,7 +19,7 @@
   height: 61px;
   width: 61px;
 
-  background: url("/assets/Pixelated_Geo_Web_Logo_Transparent.png");
+  background: url("/assets/geo-web-logo.png");
 }
 
 .title-bar {

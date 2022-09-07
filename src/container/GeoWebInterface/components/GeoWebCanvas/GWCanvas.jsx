@@ -28,7 +28,6 @@ const ModelViewer = (props) => {
       camera-controls
       alt=""
     >
-      <button slot="ar-button" id="ar-button" />
 
       <div id="ar-prompt">
         <img alt="AR prompt" id="ar-prompt-img" />

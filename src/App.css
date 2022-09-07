@@ -37,6 +37,10 @@ model-viewer > #ar-prompt > img {
   animation: circle 4s linear infinite;
 }
 
+model-viewer > #ar-prompt-img {
+  content: url("/assets/hand.png");
+}
+
 model-viewer > #ar-failure {
   position: absolute;
   left: 50%;
@@ -47,6 +51,10 @@ model-viewer > #ar-failure {
 
 model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   display: block;
+}
+
+model-viewer::part(default-ar-button) {
+  bottom: 85%;
 }
 
 .App {
@@ -89,14 +97,13 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
 }
 
 .bg-theme {
-  /* iStock-1162097121 2 */
-
   position: absolute;
   width: 100%;
   height: 100%;
 
-  background: url("/assets/iStock-1162097121\ 2.png");
-  overflow-y: scroll;
+  background: url("/assets/map-bg.png");
+  overflow-y: auto;
+  overflow-x: hidden;
   /*mix-blend-mode: difference;*/
   opacity: 1;
 }

@@ -231,6 +231,7 @@ export default function GWS() {
       {parcelId ? (
         <ChatBox
           context={`Geo Web Parcel - ${parcelId.toString()}`}
+          title={"Leave a comment on this parcel"}
           poweredByOrbis="black"
         />
       ) : null}

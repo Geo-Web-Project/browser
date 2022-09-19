@@ -1913,15 +1913,15 @@
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.7.3.tgz#939534757a81f8d69cc854c7692805684ff3111e"
   integrity sha512-dGRS0agJzu8ybo44pCIf3xBaPQN/65AIXNgK8+4gzKd5kbvlqyxryUYVLJv7fK98Seyd2hDZzVEHSWAh0Bt1Yw==
 
-"@orbisclub/modules@^0.0.41":
-  version "0.0.41"
-  resolved "https://registry.yarnpkg.com/@orbisclub/modules/-/modules-0.0.41.tgz#6ea46e657c2873ac41b8156d5297cbe48ca0e087"
-  integrity sha512-p7MQpJphFr1dGGliQ2D2kyxYPhub4XAmbhE6/Rgb6gMi/Q9SEkHDXhKl6YrSD39yONRlxbZFky0U3eCjJ0+ogg==
+"@orbisclub/modules@^0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@orbisclub/modules/-/modules-0.0.42.tgz#7c7bace9e6fccbb8649acb3b12655d878dad789e"
+  integrity sha512-fNSMMP/6qa0gudIbtFTtQjD962NrJwc0WaOTRduQ0UhJh629WRlW6MJ9i7LSuqUreTHINqxTahvqIUnImdV45Q==
 
-"@orbisclub/orbis-sdk@^0.3.30":
-  version "0.3.30"
-  resolved "https://registry.yarnpkg.com/@orbisclub/orbis-sdk/-/orbis-sdk-0.3.30.tgz#31d4fce36aaec94e0d1d7ff131f44925d0c82826"
-  integrity sha512-R1vW6KZOhhEXCXEeLyADNF0xZr5DOGk5UDyexK/c3G2mHaa++RIp4XhKi9zceie2ApaTQGOcIOmuHg3F4Q40TQ==
+"@orbisclub/orbis-sdk@^0.3.41":
+  version "0.3.43"
+  resolved "https://registry.yarnpkg.com/@orbisclub/orbis-sdk/-/orbis-sdk-0.3.43.tgz#f77e0f167025cd1313abf4458c4767729d48dee6"
+  integrity sha512-NkSf8GcZ0z89EhT83z7XHbBgT1ZFRW4qVJ3rDwitXK18N9wBILo4UBIa7yYP+FNnaNB/SycZm+XOLs/LRs2dKg==
   dependencies:
     "@ceramicnetwork/blockchain-utils-linking" "^2.0.8"
     "@ceramicnetwork/http-client" "^2.3.1"

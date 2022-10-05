@@ -10,10 +10,9 @@ const parseGeo = (msg) => {
   let _geoId = { licenseOwner: null, parcelId: null };
 
   try {
-    //_geoId.rootCId = msg['data']['geoWebCoordinate']['landParcel']['license']['rootCID'];
-    _geoId.parcelId = msg["data"]["geoWebCoordinate"]["landParcel"]["id"];
+    _geoId.parcelId = msg["data"]["geoWebCoordinate"]["parcel"]["id"];
     _geoId.licenseOwner =
-      msg["data"]["geoWebCoordinate"]["landParcel"]["license"]["owner"];
+      msg["data"]["geoWebCoordinate"]["parcel"]["licenseOwner"];
   } catch (e) {
     console.log(e);
   }
@@ -32,13 +31,12 @@ const parseInfo = (msg, streamId) => {
   };
 
   try {
-    let _landParcel = msg["data"]["landParcel"];
-    let _license = _landParcel["license"];
+    let _parcel = msg["data"]["geoWebParcel"];
 
-    _parcelInfo.id = _landParcel["id"];
-    _parcelInfo.licensee = truncateStr(_license["owner"], 11);
+    _parcelInfo.id = _parcel["id"];
+    _parcelInfo.licensee = truncateStr(_parcel["licenseOwner"], 11);
     _parcelInfo.value = formatValue(
-      _license["currentOwnerBid"]["forSalePrice"]
+      _parcel["currentBid"]["forSalePrice"]
     );
     _parcelInfo.ceramicId = `ceramic://${truncateStr(streamId, 11)}`;
     _parcelInfo.ceramicUri = streamId;

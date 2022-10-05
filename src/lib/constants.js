@@ -1,9 +1,9 @@
-export const NETWORK_ID = 69;
-export const NETWORK_NAME = "Optimism Kovan";
+export const NETWORK_ID = 5;
+export const NETWORK_NAME = "Goerli";
 export const PAYMENT_TOKEN = "ETHx";
 export const PAYMENT_TOKEN_FAUCET_URL = "https://faucet.paradigm.xyz";
 export const SUBGRAPH_URL =
-  "https://api.thegraph.com/subgraphs/name/geo-web-project/geo-web-optimism-kovan";
+  "https://api.thegraph.com/subgraphs/name/geo-web-project/geo-web-testnet";
 
 export const CERAMIC_URL = "https://g12-a-ceramic.3boxlabs.com/";
 export const CONNECT_NETWORK = "mainnet";

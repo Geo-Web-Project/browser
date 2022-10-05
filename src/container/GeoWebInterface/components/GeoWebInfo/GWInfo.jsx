@@ -84,7 +84,7 @@ export default function GWInfo(props) {
   };
 
   return (
-    <Accordion>
+    <Accordion disabled={!gwInfo}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

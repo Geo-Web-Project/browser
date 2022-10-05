@@ -29,25 +29,21 @@ const LOCATION_LOOKUP_QUERY = gql`
   query GeoWebCoordinate($id: String) {
     geoWebCoordinate(id: $id) {
       id
-      landParcel {
+      parcel {
         id
-        license {
-          owner
-        }
+        licenseOwner
       }
     }
   }
 `;
 
 const PARCEL_INFO_QUERY = gql`
-  query LandParcel($id: String) {
-    landParcel(id: $id) {
+  query Parcel($id: String) {
+    geoWebParcel(id: $id) {
       id
-      license {
-        owner
-        currentOwnerBid {
-          forSalePrice
-        }
+      licenseOwner
+      currentBid {
+        forSalePrice
       }
     }
   }

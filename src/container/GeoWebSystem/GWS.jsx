@@ -32,8 +32,8 @@ import styles from "./styles.module.css";
 import { ChatBox } from "@orbisclub/modules";
 import "@orbisclub/modules/dist/index.modern.css";
 
-const GW_MAX_LAT = 21;
-const GW_MAX_LON = 22;
+const GW_MAX_LAT = 22;
+const GW_MAX_LON = 23;
 
 export default function GWS() {
   const initCoordinate = { lat: 0, lon: 0 }; //default lat, lon
@@ -46,8 +46,6 @@ export default function GWS() {
   const [assetContentManager, setAssetContentManager] = useState(null);
   const [ceramic, setCeramic] = useState(new CeramicClient(CERAMIC_URL));
   const [loading, setLoading] = useState(true);
-
-  console.log(parcelId);
 
   const basicProfileStreamManager =
     useBasicProfileStreamManager(assetContentManager);
@@ -68,15 +66,15 @@ export default function GWS() {
         return;
       }
 
-      const licenseContract =
-        getContractsForChainOrThrow(NETWORK_ID).geoWebERC721LicenseContract;
+      const { registryDiamondContract } =
+        getContractsForChainOrThrow(NETWORK_ID);
 
       if (parcelId && licenseOwner) {
         const assetId = new AssetId({
           chainId: `eip155:${NETWORK_ID}`,
           assetName: {
             namespace: "erc721",
-            reference: licenseContract.address.toLowerCase(),
+            reference: registryDiamondContract.address.toLowerCase(),
           },
           tokenId: new BN(parcelId.slice(2), "hex").toString(10),
         });
@@ -129,7 +127,6 @@ export default function GWS() {
       };
 
       setGwContent(_parcelContent);
-      setLoading(false);
     }
   }, [mediaGalleryItems]);
 
@@ -194,13 +191,15 @@ export default function GWS() {
   };
 
   const GeoWeb = () => {
-    if (gwContent) {
+    if (parcelId) {
       // Returns Info Expandable and Parcel Content
       return (
         <div className={styles["layout-root"]}>
           <GWInfo
             gwInfo={gwInfo}
-            gwContentName={gwContent?.name ? gwContent.name : ""}
+            gwContentName={
+              gwContent?.name ? gwContent.name : `Parcel ${parcelId}`
+            }
           />
           <GWContent
             gwWebContent={gwContent?.webContent ? gwContent.webContent : null}

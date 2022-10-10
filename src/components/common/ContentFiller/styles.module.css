@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .avail-img {
   position: absolute;
   width: 400px;
@@ -9,34 +15,20 @@
 }
 
 .rect-box {
-  position: absolute;
   width: 300px;
   height: 300px;
-  left: calc(50vw - 150px);
-  top: calc(50vh - 150px - 140px);
   border: 1px solid #ffffff;
   box-sizing: border-box;
 }
 
 .empty-txt {
-  position: absolute;
   width: 353px;
-  height: 340px;
-  left: calc(50vw - 176px);
-
   font-family: "Abel";
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
   line-height: 32px;
-  /* or 133% */
-
-  /*display: flex;*/
-  align-items: center;
-  text-align: center;
-
   color: #ffffff;
-  top: calc(50vh - 150px - 140px + 259px);
 }
 
 .txt2 {

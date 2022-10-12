@@ -128,7 +128,7 @@ export default function GWS() {
 
       setGwContent(_parcelContent);
     }
-  }, [mediaGalleryItems]);
+  }, [basicProfileStreamManager, mediaGalleryItems]);
 
   const accessGps = () => {
     if (navigator.geolocation) {

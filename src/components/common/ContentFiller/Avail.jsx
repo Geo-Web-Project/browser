@@ -13,7 +13,7 @@ const GWAvail = (props) => {
   const prompt2 = ` to claim it yourself (desktop recommended).`;
 
   return (
-    <div style={{ position: "absolute" }}>
+    <div className={styles["wrapper"]}>
       <div className={styles["avail-img"]} />
       <div className={styles["empty-txt"]}>
         <span className={styles["txt1"]}> {prompt1} </span>

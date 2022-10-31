@@ -31,9 +31,6 @@ import styles from "./styles.module.css";
 import { ChatBox } from "@orbisclub/modules";
 import "@orbisclub/modules/dist/index.modern.css";
 
-const GW_MAX_LAT = 22;
-const GW_MAX_LON = 23;
-
 export default function GWS() {
   const initCoordinate = { lat: 0, lon: 0 }; //default lat, lon
   const [coordinate, setCoordinate] = useState(initCoordinate); //gps coordinates {lat, lon}
@@ -141,18 +138,6 @@ export default function GWS() {
   const showPosition = (position) => {
     setLoading(true);
 
-    //hard-coded coordinates for testing
-    // Mt. Rainer
-    //const latitude = 46.785802;
-    //const longitude = -121.735557;
-
-    //Doge Pool
-    //const latitude = 12.823911;
-    //const longitude = 80.075334;
-
-    //const latitude = 0;
-    //const longitude = 0;
-
     const { latitude, longitude } = position.coords;
     setCoordinate({ lat: latitude, lon: longitude }); //Set Lat and Lon state
 
@@ -227,11 +212,6 @@ export default function GWS() {
         />
       ) : null}
       {/*Display Mock Data*/}
-      {/* <div style={{position: "absolute", top: '20%', color: 'white', width:'50%'}}>
-                <span>{'lat : ' + coordinate.lat}</span>
-                <br/>
-                <span>{'lon : ' +coordinate.lon}</span>
-            </div> */}
     </div>
   );
 }

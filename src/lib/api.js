@@ -26,13 +26,17 @@ const ceramic = new CeramicClient(CERAMIC_URL);
 
 //  GraphQL Queries
 const LOCATION_LOOKUP_QUERY = gql`
-  query GeoWebCoordinate($id: String) {
-    geoWebCoordinate(id: $id) {
-      id
-      parcel {
-        id
-        licenseOwner
+  query GeoWebParcels($lat: String $lon: String) {
+    geoWebParcels(
+      where: {
+        bboxE_gte: $lon
+        bboxW_lte: $lon
+        bboxS_lte: $lat
+        bboxN_gte: $lat
       }
+    ) {
+      id
+      licenseOwner
     }
   }
 `;
@@ -50,10 +54,10 @@ const PARCEL_INFO_QUERY = gql`
 `;
 
 //  Get Ceramic, parcel IDs
-const getGeoId = async (id) => {
+const getGeoId = async (lat, lon) => {
   let result = await graphClient.query({
     query: LOCATION_LOOKUP_QUERY,
-    variables: { id: id },
+    variables: { lat, lon },
   });
 
   let geoId = parseGeo(result);

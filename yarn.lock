@@ -668,13 +668,6 @@
   dependencies:
     "@ethersproject/logger" "^5.7.0"
 
-"@ethersproject/networks@5.7.1":
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/@ethersproject/networks/-/networks-5.7.1.tgz#118e1a981d757d45ccea6bb58d9fd3d9db14ead6"
-  integrity sha512-n/MufjFYv3yFcUyfhnXotyDlNdFb7onmkSy8aQERi2PjNcnWQ66xXxa3XlS8nCcA8aJKJjIIMNJTC7tu80GwpQ==
-  dependencies:
-    "@ethersproject/logger" "^5.7.0"
-
 "@ethersproject/pbkdf2@5.7.0", "@ethersproject/pbkdf2@^5.7.0":
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/pbkdf2/-/pbkdf2-5.7.0.tgz#d2267d0a1f6e123f3771007338c47cccd83d3102"
@@ -694,32 +687,6 @@
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.7.0.tgz#a885cfc7650a64385e7b03ac86fe9c2d4a9c2c63"
   integrity sha512-+TTrrINMzZ0aXtlwO/95uhAggKm4USLm1PbeCBR/3XZ7+Oey+3pMyddzZEyRhizHpy1HXV0FRWRMI1O3EGYibA==
-  dependencies:
-    "@ethersproject/abstract-provider" "^5.7.0"
-    "@ethersproject/abstract-signer" "^5.7.0"
-    "@ethersproject/address" "^5.7.0"
-    "@ethersproject/base64" "^5.7.0"
-    "@ethersproject/basex" "^5.7.0"
-    "@ethersproject/bignumber" "^5.7.0"
-    "@ethersproject/bytes" "^5.7.0"
-    "@ethersproject/constants" "^5.7.0"
-    "@ethersproject/hash" "^5.7.0"
-    "@ethersproject/logger" "^5.7.0"
-    "@ethersproject/networks" "^5.7.0"
-    "@ethersproject/properties" "^5.7.0"
-    "@ethersproject/random" "^5.7.0"
-    "@ethersproject/rlp" "^5.7.0"
-    "@ethersproject/sha2" "^5.7.0"
-    "@ethersproject/strings" "^5.7.0"
-    "@ethersproject/transactions" "^5.7.0"
-    "@ethersproject/web" "^5.7.0"
-    bech32 "1.1.4"
-    ws "7.4.6"
-
-"@ethersproject/providers@5.7.1":
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.7.1.tgz#b0799b616d5579cd1067a8ebf1fc1ec74c1e122c"
-  integrity sha512-vZveG/DLyo+wk4Ga1yx6jSEHrLPgmTt+dFv0dv8URpVCRf0jVhalps1jq/emN/oXnMRsC7cQgAF32DcXLL7BPQ==
   dependencies:
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/abstract-signer" "^5.7.0"
@@ -856,17 +823,6 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@ethersproject/web@5.7.1":
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/@ethersproject/web/-/web-5.7.1.tgz#de1f285b373149bee5928f4eb7bcb87ee5fbb4ae"
-  integrity sha512-Gueu8lSvyjBWL4cYsWsjh6MtMwM0+H4HvqFPZfB6dV8ctbP9zFAO73VG1cMWae0FLPCtz0peKPpZY8/ugJJX2w==
-  dependencies:
-    "@ethersproject/base64" "^5.7.0"
-    "@ethersproject/bytes" "^5.7.0"
-    "@ethersproject/logger" "^5.7.0"
-    "@ethersproject/properties" "^5.7.0"
-    "@ethersproject/strings" "^5.7.0"
-
 "@ethersproject/wordlists@5.7.0", "@ethersproject/wordlists@^5.7.0":
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/wordlists/-/wordlists-5.7.0.tgz#8fb2c07185d68c3e09eb3bfd6e779ba2774627f5"
@@ -878,16 +834,15 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@geo-web/contracts@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@geo-web/contracts/-/contracts-3.0.1.tgz#dd0571f706d33f2230a04ae25eace0fb5f5cd020"
-  integrity sha512-XV+Vzudj2HmoajWS8PlkPPfyvC1XtTYSZ3i/WPDEef0nke3vdsQROki1ZuzoKijCmhXT6sFKc40ykOnmJ5hFSw==
+"@geo-web/contracts@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@geo-web/contracts/-/contracts-4.1.0.tgz#2ffbb461ac8559724a7c329dc03d5347942a5edd"
+  integrity sha512-VD1qfriTpbOVUMsVcYQJWHIRQyRiGOCgG8UxqK7tg3r4aWKYRwp0kcixUSEZRlvg6nMpGdEtkipSKji08/gRbA==
   dependencies:
     "@superfluid-finance/ethereum-contracts" "^1.3.0"
     "@truffle/hdwallet-provider" "^1.1.1"
     bn.js "^5.1.3"
     date-fns "^2.28.0"
-    hardhat-diamond-abi "^3.0.1"
     remixd "^0.2.4-alpha.0"
 
 "@geo-web/datamodels@2.3.5":
@@ -908,12 +863,12 @@
     schema-org-ceramic "^1.3.0"
     uint8arrays "^3.0.0"
 
-"@geo-web/sdk@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@geo-web/sdk/-/sdk-3.0.1.tgz#992a088df410649cbcf228ed97ea2a61a8146dce"
-  integrity sha512-tGE1aTk4eW5DYVmgv8aBCiYecvRXUFLjrf2u2bgZYpUzSa5Z+OUthLt+hfTDh/crpUpzgiawLiiOtM4wM1JuNg==
+"@geo-web/sdk@^4.0.1":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@geo-web/sdk/-/sdk-4.1.0.tgz#3c94f2a5c673e676105fcbb9b03549a2349bbc6b"
+  integrity sha512-1aHg4yVvIC9ehGi5yMOykLytZz9efJ1erIdwyiyJ7CwyLVWlvCqlbV5b6rjixFYO0ZNBRM+Ku7l7idoUTeKybA==
   dependencies:
-    "@geo-web/contracts" "3.0.1"
+    "@geo-web/contracts" "4.1.0"
     ethers ">=5.0.0"
     typescript "^4.6.3"
 
@@ -5718,7 +5673,7 @@ ethereumjs-wallet@^1.0.1:
     utf8 "^3.0.0"
     uuid "^8.3.2"
 
-ethers@>=5.0.0, ethers@^5.0.13, ethers@^5.0.27, ethers@^5.6.5:
+ethers@>=5.0.0, ethers@^5.0.13, ethers@^5.0.27:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.7.0.tgz#0055da174b9e076b242b8282638bc94e04b39835"
   integrity sha512-5Xhzp2ZQRi0Em+0OkOcRHxPzCfoBfgtOQA+RUylSkuHbhTEaQklnYi2hsWbRgs3ztJsXVXd9VKBcO1ScWL8YfA==
@@ -5768,42 +5723,6 @@ ethers@^4.0.32:
     setimmediate "1.0.4"
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
-
-ethers@^5.5.2:
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.7.1.tgz#48c83a44900b5f006eb2f65d3ba6277047fd4f33"
-  integrity sha512-5krze4dRLITX7FpU8J4WscXqADiKmyeNlylmmDLbS95DaZpBhDe2YSwRQwKXWNyXcox7a3gBgm/MkGXV1O1S/Q==
-  dependencies:
-    "@ethersproject/abi" "5.7.0"
-    "@ethersproject/abstract-provider" "5.7.0"
-    "@ethersproject/abstract-signer" "5.7.0"
-    "@ethersproject/address" "5.7.0"
-    "@ethersproject/base64" "5.7.0"
-    "@ethersproject/basex" "5.7.0"
-    "@ethersproject/bignumber" "5.7.0"
-    "@ethersproject/bytes" "5.7.0"
-    "@ethersproject/constants" "5.7.0"
-    "@ethersproject/contracts" "5.7.0"
-    "@ethersproject/hash" "5.7.0"
-    "@ethersproject/hdnode" "5.7.0"
-    "@ethersproject/json-wallets" "5.7.0"
-    "@ethersproject/keccak256" "5.7.0"
-    "@ethersproject/logger" "5.7.0"
-    "@ethersproject/networks" "5.7.1"
-    "@ethersproject/pbkdf2" "5.7.0"
-    "@ethersproject/properties" "5.7.0"
-    "@ethersproject/providers" "5.7.1"
-    "@ethersproject/random" "5.7.0"
-    "@ethersproject/rlp" "5.7.0"
-    "@ethersproject/sha2" "5.7.0"
-    "@ethersproject/signing-key" "5.7.0"
-    "@ethersproject/solidity" "5.7.0"
-    "@ethersproject/strings" "5.7.0"
-    "@ethersproject/transactions" "5.7.0"
-    "@ethersproject/units" "5.7.0"
-    "@ethersproject/wallet" "5.7.0"
-    "@ethersproject/web" "5.7.1"
-    "@ethersproject/wordlists" "5.7.0"
 
 ethjs-unit@0.1.6:
   version "0.1.6"
@@ -6512,14 +6431,6 @@ har-validator@~5.1.3:
   dependencies:
     ajv "^6.12.3"
     har-schema "^2.0.0"
-
-hardhat-diamond-abi@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/hardhat-diamond-abi/-/hardhat-diamond-abi-3.0.1.tgz#bb38f3247752953f5aefaef2bc3aa77d8385cd67"
-  integrity sha512-t+skBGX8lK3qH/YQB8L/QJVIINyuji/2r4q9JcZQ0rX9oEZzgfJMka2ttZ4gyuNcYRT95KyfDSuCCwSQX1cVDA==
-  dependencies:
-    debug "^4.3.3"
-    ethers "^5.5.2"
 
 has-ansi@^2.0.0:
   version "2.0.0"
@@ -7974,14 +7885,6 @@ jet-logger@1.2.2:
   integrity sha512-Kbw4G3BC45+Umz5XBnsE50pHplruJTVKGRy5X1YfCu3Te7f8ggTL8Tm10YegAD2QP41MVQ3o/Y9MFAZzfythqw==
   dependencies:
     colors "1.3.0"
-
-js-geo-web-coordinate@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/js-geo-web-coordinate/-/js-geo-web-coordinate-0.3.7.tgz#08de765ff0703455571f652f60f3fc77443bf5fc"
-  integrity sha512-WAHVk4u2G1dz4QYRfPlINns/YErBcLDcFwxS3203hSYsF3snP/h66GdbpUq6fmwGmnCGYabHUt/oDecKWY9b0Q==
-  dependencies:
-    bn.js "^5.1.3"
-    ethers "^5.6.5"
 
 js-sha256@^0.9.0:
   version "0.9.0"

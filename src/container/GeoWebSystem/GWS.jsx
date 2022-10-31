@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { CeramicClient } from "@ceramicnetwork/http-client";
 import { getContractsForChainOrThrow } from "@geo-web/sdk";
-import { GeoWebCoordinate } from "js-geo-web-coordinate";
 import { AccountId, AssetId } from "caip";
 import { DataModel } from "@glazed/datamodel";
 import { model as GeoWebModel } from "@geo-web/datamodels";
@@ -157,13 +156,6 @@ export default function GWS() {
     const { latitude, longitude } = position.coords;
     setCoordinate({ lat: latitude, lon: longitude }); //Set Lat and Lon state
 
-    const _gwCoord = GeoWebCoordinate.fromGPS(
-      longitude,
-      latitude,
-      GW_MAX_LON,
-      GW_MAX_LAT
-    ); //Convert Lon, Lat to GeoWebCoordinate
-
     /* *******************DEMO******************* */
     const _useGws = process.env.NEXT_PUBLIC_USE_GWS;
 
@@ -171,7 +163,7 @@ export default function GWS() {
       setPreDetermined();
       /* ****************************************** */
     } else {
-      getParcelId(_gwCoord.toString());
+      getParcelId(latitude.toString(), longitude.toString());
     }
   };
 
@@ -182,8 +174,8 @@ export default function GWS() {
     setLoading(false);
   };
 
-  const getParcelId = async (id) => {
-    const lookUpId = await getGeoId(id); //get root parcel id
+  const getParcelId = async (latitude, longitude) => {
+    const lookUpId = await getGeoId(latitude, longitude); //get root parcel id
 
     setParcelId(lookUpId.parcelId);
     setLicenseOwner(lookUpId.licenseOwner);

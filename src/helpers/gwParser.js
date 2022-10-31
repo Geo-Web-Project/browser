@@ -10,9 +10,9 @@ const parseGeo = (msg) => {
   let _geoId = { licenseOwner: null, parcelId: null };
 
   try {
-    _geoId.parcelId = msg["data"]["geoWebCoordinate"]["parcel"]["id"];
+    _geoId.parcelId = msg["data"]["geoWebParcels"][0]["id"];
     _geoId.licenseOwner =
-      msg["data"]["geoWebCoordinate"]["parcel"]["licenseOwner"];
+      msg["data"]["geoWebParcels"][0]["licenseOwner"];
   } catch (e) {
     console.log(e);
   }

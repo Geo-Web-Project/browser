@@ -46,7 +46,7 @@ const GWCanvas = (props) => {
   let [modelName, setModelName] = useState("");
 
   useEffect(() => {
-    if (gwCanvasContent && gwCanvasContent.length > 0) {
+    if (gwCanvasContent && gwCanvasContent[modelIndex]) {
       const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
       modelUrl = gwGateway + cid;
       setModelUrl(modelUrl);

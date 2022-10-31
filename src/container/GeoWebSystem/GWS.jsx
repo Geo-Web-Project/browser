@@ -211,7 +211,6 @@ export default function GWS() {
           poweredByOrbis="black"
         />
       ) : null}
-      {/*Display Mock Data*/}
     </div>
   );
 }

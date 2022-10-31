@@ -46,40 +46,40 @@ const GWCanvas = (props) => {
   let [modelName, setModelName] = useState("");
 
   useEffect(() => {
-    if (gwCanvasContent) {
+    if (gwCanvasContent && gwCanvasContent.length > 0) {
       const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
       modelUrl = gwGateway + cid;
       setModelUrl(modelUrl);
       setModelName(gwCanvasContent[modelIndex]["name"]);
     }
-  }, []);
+  }, [gwCanvasContent]);
 
   const clickLeft = () => {
     if (gwCanvasContent === null) return;
 
-    modelIndex = modelIndex - 1;
+    let _modelIndex = modelIndex - 1;
 
-    if (modelIndex < 0) modelIndex = gwCanvasContent.length - 1;
+    if (_modelIndex < 0) _modelIndex = gwCanvasContent.length - 1;
 
-    setModelIndex(modelIndex);
-    const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+    setModelIndex(_modelIndex);
+    const cid = gwCanvasContent[_modelIndex].contentUrl.replace("ipfs://", "");
     var _src = gwGateway + cid;
     setModelUrl(_src);
-    setModelName(gwCanvasContent[modelIndex]["name"]);
+    setModelName(gwCanvasContent[_modelIndex]["name"]);
   };
 
   const clickRight = () => {
     if (gwCanvasContent === null) return;
 
-    modelIndex = modelIndex + 1;
+    let _modelIndex = modelIndex + 1;
 
-    if (modelIndex > gwCanvasContent.length - 1) modelIndex = 0;
+    if (_modelIndex > gwCanvasContent.length - 1) _modelIndex = 0;
 
-    setModelIndex(modelIndex);
-    const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+    setModelIndex(_modelIndex);
+    const cid = gwCanvasContent[_modelIndex].contentUrl.replace("ipfs://", "");
     var _src = gwGateway + cid;
     setModelUrl(_src);
-    setModelName(gwCanvasContent[modelIndex]["name"]);
+    setModelName(gwCanvasContent[_modelIndex]["name"]);
   };
 
   if (gwCanvasContent !== null) {

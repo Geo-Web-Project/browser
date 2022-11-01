@@ -70,7 +70,7 @@ export default function GWInfo(props) {
           <p key={"Stream ID: "}>
             {"Stream ID: "}
             <a
-              href={`https://tiles.ceramic.community/document/${gwInfo["ceramicUri"]}`}
+              href={`https://cerscan.com/testnet-clay/stream/${gwInfo["ceramicUri"]}`}
               target="_blank"
               rel="noreferrer"
               className={classes.typography}

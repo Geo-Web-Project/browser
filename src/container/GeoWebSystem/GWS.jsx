@@ -181,7 +181,9 @@ export default function GWS() {
           <GWContent
             gwWebContent={gwContent?.webContent ? gwContent.webContent : null}
             gwCanvasContent={
-              gwContent?.mediaContent ? gwContent.mediaContent : null
+              gwContent?.mediaContent && gwContent.mediaContent.length > 0
+                ? gwContent.mediaContent
+                : null
             }
           />
         </div>

@@ -62,13 +62,16 @@ const parseMediaGalleryStream = (msg) => {
 };
 
 const parseMediaContent = (data, items) => {
-  let _mediaContent = null;
+  let _mediaContent = [];
 
   try {
     if (data.length > 0)
-      _mediaContent = data.map((itemId) => {
-        return items[itemId]?.getStreamContent();
-      });
+      for (const itemId of data) {
+        const streamContent = items[itemId]?.getStreamContent();
+        if (streamContent && Object.keys(streamContent).length > 0) {
+          _mediaContent.push(streamContent);
+        }
+      }
   } catch (e) {
     console.log(e);
   }

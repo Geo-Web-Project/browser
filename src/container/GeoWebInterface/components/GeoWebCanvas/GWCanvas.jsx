@@ -46,17 +46,15 @@ const GWCanvas = (props) => {
   let [modelName, setModelName] = useState("");
 
   useEffect(() => {
-    if (gwCanvasContent && gwCanvasContent[modelIndex]) {
-      const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
-      modelUrl = gwGateway + cid;
-      setModelUrl(modelUrl);
-      setModelName(gwCanvasContent[modelIndex]["name"]);
-    }
+    if (!gwCanvasContent) return;
+
+    const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
+    modelUrl = gwGateway + cid;
+    setModelUrl(modelUrl);
+    setModelName(gwCanvasContent[modelIndex]["name"]);
   }, [gwCanvasContent]);
 
   const clickLeft = () => {
-    if (gwCanvasContent === null) return;
-
     let _modelIndex = modelIndex - 1;
 
     if (_modelIndex < 0) _modelIndex = gwCanvasContent.length - 1;
@@ -69,8 +67,6 @@ const GWCanvas = (props) => {
   };
 
   const clickRight = () => {
-    if (gwCanvasContent === null) return;
-
     let _modelIndex = modelIndex + 1;
 
     if (_modelIndex > gwCanvasContent.length - 1) _modelIndex = 0;
@@ -82,12 +78,19 @@ const GWCanvas = (props) => {
     setModelName(gwCanvasContent[_modelIndex]["name"]);
   };
 
-  if (gwCanvasContent !== null) {
+  if (gwCanvasContent) {
     return (
       <div>
-        <button className={styles["clk-left"]} onClick={() => clickLeft()} />
+        {gwCanvasContent.length > 1 && (
+          <button className={styles["clk-left"]} onClick={() => clickLeft()} />
+        )}
         <ModelViewer modelRef={modelRef} url={modelUrl} />
-        <button className={styles["clk-right"]} onClick={() => clickRight()} />
+        {gwCanvasContent.length > 1 && (
+          <button
+            className={styles["clk-right"]}
+            onClick={() => clickRight()}
+          />
+        )}
 
         <ContentLabel uri={""} label={modelName} hyperlink={false} />
       </div>

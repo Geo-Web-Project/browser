@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import GWWebView from "../GeoWebView/GWWebView";
 import GWCanvas from "../GeoWebCanvas/GWCanvas";
 
+import GWWebXR from "../GeoWebXR/GWWebXR";
+
 import styles from "./styles.module.css";
 
 const GWContent = (props) => {
@@ -34,7 +36,7 @@ const GWContent = (props) => {
           onChange={switchMode}
         />
         <Typography className={styles["switch-right"]}>
-          {"3D Gallery"}
+          {"WebXR"}
         </Typography>
       </div>
 
@@ -49,7 +51,8 @@ const GWContent = (props) => {
       </div>
 
       <div style={{ visibility: gwMode === "3d" ? "visible" : "hidden" }}>
-        <GWCanvas gwCanvasContent={gwCanvasContent} />
+        {/* <GWCanvas gwCanvasContent={gwCanvasContent} /> */}
+        <GWWebXR gwWebxrContent={gwCanvasContent}></GWWebXR>
       </div>
     </div>
   );

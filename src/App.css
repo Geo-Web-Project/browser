@@ -100,10 +100,15 @@ model-viewer::part(default-ar-button) {
   position: absolute;
   width: 100%;
   height: 100%;
-
-  background: url("/assets/map-bg.png");
+  background-image: url("/assets/bg-417x778px.png");
+  background-size: cover;
   overflow-y: auto;
   overflow-x: hidden;
-  /*mix-blend-mode: difference;*/
   opacity: 1;
+}
+
+@media (min-width: 600px) {
+  .bg-theme {
+    background-image: url("/assets/bg-3000x2000px.png");
+  }
 }

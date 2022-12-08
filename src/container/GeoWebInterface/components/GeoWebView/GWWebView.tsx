@@ -5,17 +5,17 @@ import styles from "./styles.module.css";
 import GWEmpty from "../../../../components/common/ContentFiller/Empty";
 import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
 
-const GWWebView = (props) => {
-  const gwWebContent = props.gwWebContent;
+export type GWWebViewProps = {
+  url: string | null;
+};
+
+const GWWebView = (props: GWWebViewProps) => {
+  const gwWebContent = props.url;
 
   if (gwWebContent !== null) {
     return (
       <div>
-        <iframe
-          src={gwWebContent}
-          className={styles["gwIframe"]}
-          referrerPolicy="allow-same-origin"
-        />
+        <iframe src={gwWebContent} className={styles["gwIframe"]} />
         <ContentLabel
           uri={gwWebContent}
           label={gwWebContent}

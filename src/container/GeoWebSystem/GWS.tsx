@@ -60,26 +60,6 @@ export default function GWS(props: GWSProps) {
             })
           ).toString();
           setRootCid(_rootCid);
-
-          const _parcelRoot = await gwContent.raw.getPath("/", {
-            parcelId: assetId,
-            ownerId: accountId,
-            schema: "ParcelRoot",
-          });
-          const _basicProfile = await gwContent.raw.getPath("/basicProfile", {
-            parcelId: assetId,
-            ownerId: accountId,
-            schema: "BasicProfile",
-          });
-          const _mediaGallery = await gwContent.raw.getPath("/mediaGallery", {
-            parcelId: assetId,
-            ownerId: accountId,
-            schema: "MediaGallery",
-          });
-
-          setParcelRoot(_parcelRoot);
-          setBasicProfile(_basicProfile);
-          setMediaGallery(_mediaGallery);
         } catch (e) {
           console.info(e);
           setRootCid(null);
@@ -87,9 +67,47 @@ export default function GWS(props: GWSProps) {
           setBasicProfile(null);
           setMediaGallery(null);
         }
+
+        try {
+          const _parcelRoot = await gwContent.raw.getPath("/", {
+            parcelId: assetId,
+            ownerId: accountId,
+            schema: "ParcelRoot",
+          });
+          setParcelRoot(_parcelRoot);
+        } catch (e) {
+          console.info(e);
+          setParcelRoot(null);
+        }
+
+        try {
+          const _mediaGallery = await gwContent.raw.getPath("/mediaGallery", {
+            parcelId: assetId,
+            ownerId: accountId,
+            schema: "MediaGallery",
+          });
+
+          setMediaGallery(_mediaGallery);
+        } catch (e) {
+          console.info(e);
+          setMediaGallery(null);
+        }
+
+        try {
+          const _basicProfile = await gwContent.raw.getPath("/basicProfile", {
+            parcelId: assetId,
+            ownerId: accountId,
+            schema: "BasicProfile",
+          });
+
+          setBasicProfile(_basicProfile);
+        } catch (e) {
+          console.info(e);
+          setBasicProfile(null);
+        }
       }
     })();
-  }, [parcelId, licenseOwner]);
+  }, [parcelId, licenseOwner, gwContent]);
 
   useEffect(() => {
     (async () => {

@@ -59,11 +59,11 @@ const GWCanvas = (props: GWCanvasProps) => {
         setModelName(undefined);
         return;
       }
-      const mediaObject = (await gwContent.raw.get(
+      const mediaObject = await gwContent.raw.get(
         mediaGallery[modelIndex],
         "/",
-        { schema: "MediaObject" }
-      )) as MediaObject;
+        {}
+      );
       setModelUrl(gwGateway + mediaObject.content.toString());
       setModelName(mediaObject.name);
     };
@@ -107,7 +107,7 @@ const GWCanvas = (props: GWCanvasProps) => {
           />
         )}
 
-        <ContentLabel uri={""} label={modelName} hyperlink={false} />
+        <ContentLabel uri={""} label={modelName ?? ""} hyperlink={false} />
       </div>
     );
   } else {

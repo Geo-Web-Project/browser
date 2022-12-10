@@ -17,8 +17,8 @@ const GWWebView = (props: GWWebViewProps) => {
       <div>
         <iframe src={gwWebContent} className={styles["gwIframe"]} />
         <ContentLabel
-          uri={gwWebContent}
-          label={gwWebContent}
+          uri={gwWebContent ?? ""}
+          label={gwWebContent ?? ""}
           hyperlink={true}
         />
       </div>

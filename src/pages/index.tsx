@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { CeramicClient } from "@ceramicnetwork/http-client";
 import { CERAMIC_URL } from "../lib/constants";
 import { getIpfs, providers } from "ipfs-provider";
-import type { IPFS } from "ipfs-core-types";
 import * as IPFSCore from "ipfs-core";
 import { GeoWebContent } from "@geo-web/content";
+import { Web3Storage } from "web3.storage";
 
 const { jsIpfs } = providers;
 
@@ -15,9 +15,14 @@ export default function Index() {
 
   useEffect(() => {
     (async () => {
+      const web3Storage = new Web3Storage({
+        token: process.env.NEXT_PUBLIC_WEB3_STORAGE_TOKEN ?? "",
+        endpoint: new URL("https://api.web3.storage"),
+      });
+
       const ceramic = new CeramicClient(CERAMIC_URL);
 
-      const ipfs = await getIpfs({
+      const { ipfs } = await getIpfs({
         providers: [
           // httpClient({
           //   loadHttpClientModule: () => require("ipfs-http-client"),
@@ -44,6 +49,7 @@ export default function Index() {
       const _gwContent = new GeoWebContent({
         ceramic: ceramic as any,
         ipfs: ipfs,
+        web3Storage,
       });
       setGWContent(_gwContent);
     })();

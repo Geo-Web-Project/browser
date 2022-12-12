@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
+import { MediaGallery, BasicProfile } from "@geo-web/types";
+import { GeoWebContent } from "@geo-web/content";
 
 import GWWebView from "../GeoWebView/GWWebView";
 import GWCanvas from "../GeoWebCanvas/GWCanvas";
 
 import styles from "./styles.module.css";
 
-const GWContent = (props) => {
-  const gwWebContent = props.gwWebContent;
-  const gwCanvasContent = props.gwCanvasContent;
+export type GWContentViewProps = {
+  basicProfile: BasicProfile | null;
+  mediaGallery: MediaGallery | null;
+  gwContent: GeoWebContent;
+};
 
+const GWContentView = (props: GWContentViewProps) => {
+  const { basicProfile, mediaGallery, gwContent } = props;
   const [gwMode, setGwMode] = useState("web");
 
-  const switchMode = (event) => {
+  const switchMode = (event: any) => {
     let _checked = event.target.checked;
 
     if (_checked === false) setGwMode("web");
@@ -45,14 +51,14 @@ const GWContent = (props) => {
           visibility: gwMode === "web" ? "visible" : "hidden",
         }}
       >
-        <GWWebView gwWebContent={gwWebContent} />
+        <GWWebView url={basicProfile?.url ?? null} />
       </div>
 
       <div style={{ visibility: gwMode === "3d" ? "visible" : "hidden" }}>
-        <GWCanvas gwCanvasContent={gwCanvasContent} />
+        <GWCanvas mediaGallery={mediaGallery} gwContent={gwContent} />
       </div>
     </div>
   );
 };
 
-export default GWContent;
+export default GWContentView;

@@ -2,27 +2,19 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { gql } from "@apollo/client";
 
-import CeramicClient from "@ceramicnetwork/http-client";
-
 import {
   parseGeo,
   parseInfo,
-  parseContent,
-  parseMediaContent,
-  parseMediaGalleryStream,
 } from "../helpers/gwParser";
 
 //  Refer Environment Variables
 const GRAPH_URL = process.env.NEXT_PUBLIC_GRAPH_URI;
-const CERAMIC_URL = process.env.NEXT_PUBLIC_CERAMIC_URI;
 
 //  Instantiate Apollo & Ceramic Clients
 const graphClient = new ApolloClient({
   uri: GRAPH_URL,
   cache: new InMemoryCache(),
 });
-
-const ceramic = new CeramicClient(CERAMIC_URL);
 
 //  GraphQL Queries
 const LOCATION_LOOKUP_QUERY = gql`
@@ -68,13 +60,13 @@ const getGeoId = async (lat, lon) => {
 //  Get Parcel Info
 //  input: parcelId (Eg: '0x2D')
 //  output: {  id: , licensee: , value: , ceramicId: , ceramicUri:}
-const getParcelInfo = async (id, streamId) => {
+const getParcelInfo = async (id, rootCid) => {
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
     variables: { id: id },
   });
 
-  let parcelInfo = parseInfo(info, streamId);
+  let parcelInfo = parseInfo(info, rootCid);
 
   return parcelInfo;
 };

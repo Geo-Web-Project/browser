@@ -67,15 +67,15 @@ export default function GWInfo(props) {
             <p key={key}>{key + gwInfo[_gwInfoSchemaMap[key]]}</p>
           ))}
 
-          <p key={"Stream ID: "}>
-            {"Stream ID: "}
+          <p key={"Root CID: "}>
+            {"Root CID: "}
             <a
-              href={`https://cerscan.com/testnet-clay/stream/${gwInfo["ceramicUri"]}`}
+              href={`https://explore.ipld.io/#/explore/${gwInfo["rootCid"]}`}
               target="_blank"
               rel="noreferrer"
               className={classes.typography}
             >
-              {gwInfo["ceramicId"]}
+              {gwInfo["rootCid"]}
             </a>
           </p>
         </Typography>

@@ -21,13 +21,12 @@ const parseGeo = (msg) => {
 };
 
 //parse parcel info document
-const parseInfo = (msg, streamId) => {
+const parseInfo = (msg, rootCid) => {
   let _parcelInfo = {
     id: null,
     licensee: null,
     value: null,
-    ceramicId: null,
-    ceramicUri: null,
+    rootCid: null,
   };
 
   try {
@@ -38,8 +37,7 @@ const parseInfo = (msg, streamId) => {
     _parcelInfo.value = formatValue(
       _parcel["currentBid"]["forSalePrice"]
     );
-    _parcelInfo.ceramicId = `ceramic://${truncateStr(streamId, 11)}`;
-    _parcelInfo.ceramicUri = streamId;
+    _parcelInfo.rootCid = rootCid;
   } catch (e) {
     console.log(e);
   }

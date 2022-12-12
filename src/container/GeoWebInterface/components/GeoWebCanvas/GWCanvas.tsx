@@ -1,12 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import GWEmpty from "../../../../components/common/ContentFiller/Empty";
 import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
-
+import { GeoWebContent } from "@geo-web/content";
+import { MediaGallery, MediaObject } from "@geo-web/types";
 import styles from "./styles.module.css";
 
 const gwGateway = process.env.NEXT_PUBLIC_IPFS_GATEWAY;
 
-const ModelViewer = (props) => {
+export type GWCanvasProps = {
+  mediaGallery: MediaGallery | null;
+  gwContent: GeoWebContent;
+};
+
+const ModelViewer = (props: any) => {
   let url = props.url;
   let modelRef = props.modelRef;
 
@@ -15,6 +21,7 @@ const ModelViewer = (props) => {
   }, [url]);
 
   return (
+    // @ts-ignore
     <model-viewer
       ref={modelRef}
       className={styles["gwCanvas"]}
@@ -31,68 +38,76 @@ const ModelViewer = (props) => {
       <div id="ar-prompt">
         <img alt="AR prompt" id="ar-prompt-img" />
       </div>
-
       <button id="ar-failure">AR is not tracking!</button>
+      {/* @ts-ignore */}
     </model-viewer>
   );
 };
 
-const GWCanvas = (props) => {
-  const gwCanvasContent = props.gwCanvasContent;
-  let [modelIndex, setModelIndex] = useState(0);
-  let modelRef = useRef();
+const GWCanvas = (props: GWCanvasProps) => {
+  const { mediaGallery, gwContent } = props;
+  const [modelIndex, setModelIndex] = useState(0);
+  const modelRef = useRef();
 
-  let [modelUrl, setModelUrl] = useState("");
-  let [modelName, setModelName] = useState("");
+  const [modelUrl, setModelUrl] = useState<string | undefined>(undefined);
+  const [modelName, setModelName] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (!gwCanvasContent) return;
+    const loadObj = async () => {
+      if (!mediaGallery) {
+        setModelUrl(undefined);
+        setModelName(undefined);
+        return;
+      }
+      const mediaObject = await gwContent.raw.get(
+        mediaGallery[modelIndex],
+        "/",
+        {}
+      );
+      setModelUrl(gwGateway + mediaObject.content.toString());
+      setModelName(mediaObject.name);
+    };
 
-    const cid = gwCanvasContent[modelIndex].contentUrl.replace("ipfs://", "");
-    modelUrl = gwGateway + cid;
-    setModelUrl(modelUrl);
-    setModelName(gwCanvasContent[modelIndex]["name"]);
-  }, [gwCanvasContent]);
+    loadObj();
+  }, [modelIndex]);
 
   const clickLeft = () => {
+    setModelUrl(undefined);
+    setModelName(undefined);
+
     let _modelIndex = modelIndex - 1;
 
-    if (_modelIndex < 0) _modelIndex = gwCanvasContent.length - 1;
+    if (_modelIndex < 0) _modelIndex = mediaGallery?.length ?? 0 - 1;
 
     setModelIndex(_modelIndex);
-    const cid = gwCanvasContent[_modelIndex].contentUrl.replace("ipfs://", "");
-    var _src = gwGateway + cid;
-    setModelUrl(_src);
-    setModelName(gwCanvasContent[_modelIndex]["name"]);
   };
 
   const clickRight = () => {
+    setModelUrl(undefined);
+    setModelName(undefined);
+
     let _modelIndex = modelIndex + 1;
 
-    if (_modelIndex > gwCanvasContent.length - 1) _modelIndex = 0;
+    if (_modelIndex > (mediaGallery?.length ?? 0) - 1) _modelIndex = 0;
 
     setModelIndex(_modelIndex);
-    const cid = gwCanvasContent[_modelIndex].contentUrl.replace("ipfs://", "");
-    var _src = gwGateway + cid;
-    setModelUrl(_src);
-    setModelName(gwCanvasContent[_modelIndex]["name"]);
   };
 
-  if (gwCanvasContent) {
+  if (mediaGallery && mediaGallery.length > 0) {
     return (
       <div>
-        {gwCanvasContent.length > 1 && (
+        {mediaGallery.length > 1 && (
           <button className={styles["clk-left"]} onClick={() => clickLeft()} />
         )}
         <ModelViewer modelRef={modelRef} url={modelUrl} />
-        {gwCanvasContent.length > 1 && (
+        {mediaGallery.length > 1 && (
           <button
             className={styles["clk-right"]}
             onClick={() => clickRight()}
           />
         )}
 
-        <ContentLabel uri={""} label={modelName} hyperlink={false} />
+        <ContentLabel uri={""} label={modelName ?? ""} hyperlink={false} />
       </div>
     );
   } else {

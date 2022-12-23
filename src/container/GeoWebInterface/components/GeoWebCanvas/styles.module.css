@@ -46,3 +46,19 @@
   border: none;
   cursor: pointer;
 }
+
+.model-loading {
+  position: relative;
+  margin-top: 2%;
+  width: 100%;
+  height: calc(100vh - 260px);
+  background-color: lightgrey;
+}
+
+.model-loading img {
+  position: absolute;
+  width: 128px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

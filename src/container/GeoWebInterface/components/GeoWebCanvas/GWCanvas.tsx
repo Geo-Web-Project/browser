@@ -68,23 +68,27 @@ const GWCanvas = (props: GWCanvasProps) => {
   }, [modelIndex]);
 
   const clickLeft = () => {
+    if (!mediaGallery) return
+
     setModelUrl(undefined);
     setModelName(undefined);
 
     let _modelIndex = modelIndex - 1;
 
-    if (_modelIndex < 0) _modelIndex = mediaGallery?.length ?? 0 - 1;
+    if (_modelIndex < 0) _modelIndex = mediaGallery.length - 1;
 
     setModelIndex(_modelIndex);
   };
 
   const clickRight = () => {
+    if (!mediaGallery) return
+
     setModelUrl(undefined);
     setModelName(undefined);
 
     let _modelIndex = modelIndex + 1;
 
-    if (_modelIndex > (mediaGallery?.length ?? 0) - 1) _modelIndex = 0;
+    if (_modelIndex > mediaGallery.length - 1) _modelIndex = 0;
 
     setModelIndex(_modelIndex);
   };

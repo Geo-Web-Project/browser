@@ -16,7 +16,7 @@ export default function Index() {
     (async () => {
       const ceramic = new CeramicClient(CERAMIC_URL);
 
-      const { ipfs } = await getIpfs({
+      const { ipfs, provider } = await getIpfs({
         providers: [
           // httpClient({
           //   loadHttpClientModule: () => require("ipfs-http-client"),
@@ -34,8 +34,8 @@ export default function Index() {
       });
 
       if (ipfs) {
-        console.log("IPFS API is provided by: " + ipfs.provider);
-        if (ipfs.provider === "httpClient") {
+        console.log("IPFS API is provided by: " + provider);
+        if (provider === "httpClient") {
           console.log("HTTP API address: " + ipfs.apiAddress);
         }
       }

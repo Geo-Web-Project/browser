@@ -1060,10 +1060,10 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@geo-web/content@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@geo-web/content/-/content-0.3.3.tgz#0fed138711136f6a5a7435826a17f0b2c44da6de"
-  integrity sha512-XUiKnMZ3GUlG/So3aGSv+6FXdrzoAbnzXgHObhuheGOu+z7rRmSHZU1ip9rmDlR4BQAHsjqhqOxbFuMa5ks8fQ==
+"@geo-web/content@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@geo-web/content/-/content-0.3.4.tgz#e430816cee7df2349890bebf6ab1fcef6da3c223"
+  integrity sha512-8/DDFx8WJwV7eH2bR4iXJwzJOYQArxWVbTS32Vruc0v1CPKfw8gvLiWVSSzygTVeZjVtmAi8Nb/zlTX/i0bK1w==
   dependencies:
     "@ceramicnetwork/common" "^2.13.0"
     "@ceramicnetwork/http-client" "^2.10.0"

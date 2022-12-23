@@ -16,16 +16,12 @@ const ModelViewer = (props: any) => {
   let url = props.url;
   let modelRef = props.modelRef;
 
-  useEffect(() => {
-    modelRef.current.src = url;
-  }, [url]);
-
   return (
     // @ts-ignore
     <model-viewer
       ref={modelRef}
       className={styles["gwCanvas"]}
-      src={""}
+      src={url}
       environment-image="neutral"
       shadow-intensity="1"
       ar

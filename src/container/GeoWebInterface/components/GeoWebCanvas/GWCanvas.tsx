@@ -68,23 +68,27 @@ const GWCanvas = (props: GWCanvasProps) => {
   }, [modelIndex]);
 
   const clickLeft = () => {
+    if (!mediaGallery) return;
+
     setModelUrl(undefined);
     setModelName(undefined);
 
     let _modelIndex = modelIndex - 1;
 
-    if (_modelIndex < 0) _modelIndex = mediaGallery?.length ?? 0 - 1;
+    if (_modelIndex < 0) _modelIndex = mediaGallery.length - 1;
 
     setModelIndex(_modelIndex);
   };
 
   const clickRight = () => {
+    if (!mediaGallery) return;
+
     setModelUrl(undefined);
     setModelName(undefined);
 
     let _modelIndex = modelIndex + 1;
 
-    if (_modelIndex > (mediaGallery?.length ?? 0) - 1) _modelIndex = 0;
+    if (_modelIndex > mediaGallery.length - 1) _modelIndex = 0;
 
     setModelIndex(_modelIndex);
   };
@@ -95,7 +99,13 @@ const GWCanvas = (props: GWCanvasProps) => {
         {mediaGallery.length > 1 && (
           <button className={styles["clk-left"]} onClick={() => clickLeft()} />
         )}
-        <ModelViewer modelRef={modelRef} url={modelUrl} />
+        {modelUrl ? (
+          <ModelViewer modelRef={modelRef} url={modelUrl} />
+        ) : (
+          <div className={styles["model-loading"]}>
+            <img src="/assets/spinner.svg" alt="loading" />
+          </div>
+        )}
         {mediaGallery.length > 1 && (
           <button
             className={styles["clk-right"]}

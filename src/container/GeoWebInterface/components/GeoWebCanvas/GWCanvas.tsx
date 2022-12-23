@@ -5,7 +5,7 @@ import { GeoWebContent } from "@geo-web/content";
 import { MediaGallery, MediaObject } from "@geo-web/types";
 import styles from "./styles.module.css";
 
-const gwGateway = process.env.NEXT_PUBLIC_IPFS_GATEWAY;
+const gwGateway = process.env.NEXT_PUBLIC_MODEL_VIEWER_IPFS_GATEWAY;
 
 export type GWCanvasProps = {
   mediaGallery: MediaGallery | null;
@@ -64,7 +64,7 @@ const GWCanvas = (props: GWCanvasProps) => {
         "/",
         {}
       );
-      setModelUrl(gwGateway + mediaObject.content.toString());
+      setModelUrl(`${gwGateway}/ipfs/` + mediaObject.content.toString());
       setModelName(mediaObject.name);
     };
 

@@ -16,7 +16,7 @@ export default function Document() {
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <script
           type="module"
-          src="https://unpkg.com/@google/model-viewer@2.0.2/dist/model-viewer.min.js"
+          src="https://unpkg.com/@google/model-viewer@2.1.1/dist/model-viewer.min.js"
           defer
         ></script>
       </Head>

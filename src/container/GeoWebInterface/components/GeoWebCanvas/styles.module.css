@@ -48,17 +48,22 @@
 }
 
 .model-loading {
-  position: relative;
-  margin-top: 2%;
-  width: 100%;
-  height: calc(100vh - 260px);
-  background-color: lightgrey;
-}
-
-.model-loading img {
-  position: absolute;
   width: 128px;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.ar-only {
+  background: #202333;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3), 0 0 8px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  z-index: 100;
 }

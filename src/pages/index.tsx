@@ -24,13 +24,10 @@ export default function Index() {
 
       const { ipfs } = await getIpfs({
         providers: [
-          // httpClient({
-          //   loadHttpClientModule: () => require("ipfs-http-client"),
-          //   apiAddress: "/ip4/127.0.0.1/tcp/5001",
-          // }),
           jsIpfs({
             loadJsIpfsModule: () => IPFSCore,
             options: {
+              reframe: true, // enable the Reframe protocol
               preload: {
                 enabled: false,
               },
@@ -38,6 +35,9 @@ export default function Index() {
           }),
         ],
       });
+
+
+
 
       if (ipfs) {
         console.log("IPFS API is provided by: " + ipfs.provider);

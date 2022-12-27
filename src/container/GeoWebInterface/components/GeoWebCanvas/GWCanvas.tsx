@@ -12,18 +12,16 @@ export type GWCanvasProps = {
   gwContent: GeoWebContent;
 };
 
-const ModelViewer = ({ url, modelRef, isUsdzModel }: any) => {
-  useEffect(() => {
-    if (!modelRef) {
-      return;
-    }
+const ModelViewer = (props: any) => {
+  const { url, modelRef, isUsdzModel } = props;
 
+  useEffect(() => {
     if (url && !isUsdzModel) {
       modelRef.current.dismissPoster();
     } else {
       modelRef.current.showPoster();
     }
-  }, [modelRef, url, isUsdzModel]);
+  }, [url, isUsdzModel]);
 
   return (
     /* @ts-ignore */

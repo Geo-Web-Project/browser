@@ -44,7 +44,13 @@ export default function Index() {
         if (ipfs.provider === "httpClient") {
           console.log("HTTP API address: " + ipfs.apiAddress);
         }
+
+        // Check if the Reframe protocol is being used
+        if (ipfs.options.reframe) {
+          console.log("Using the Reframe protocol with js-ipfs");
+        }
       }
+
 
       const _gwContent = new GeoWebContent({
         ceramic: ceramic as any,

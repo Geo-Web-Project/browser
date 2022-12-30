@@ -1060,16 +1060,16 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@geo-web/content@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@geo-web/content/-/content-0.3.4.tgz#e430816cee7df2349890bebf6ab1fcef6da3c223"
-  integrity sha512-8/DDFx8WJwV7eH2bR4iXJwzJOYQArxWVbTS32Vruc0v1CPKfw8gvLiWVSSzygTVeZjVtmAi8Nb/zlTX/i0bK1w==
+"@geo-web/content@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@geo-web/content/-/content-0.3.6.tgz#4492f5c39a98b03825f3819ee0a7d2be313ca59a"
+  integrity sha512-45p576D77H3RXWXCPCKmA/8Kkj/LHm5jyKpWtIJvvWXgIZqZhloCQsczBgHMujXGM4C+TnTvRzSVYIe53ibBgw==
   dependencies:
     "@ceramicnetwork/common" "^2.13.0"
     "@ceramicnetwork/http-client" "^2.10.0"
     "@ceramicnetwork/stream-tile" "^2.9.0"
     "@geo-web/types" "^0.1.3"
-    "@ipld/car" "3.2.4"
+    "@ipld/car" "^5.0.1"
     "@ipld/dag-cbor" "^8.0.0"
     "@ipld/schema" "^4.1.2"
     "@typescript-eslint/parser" "^4.33.0"
@@ -1168,7 +1168,7 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ipld/car@3.2.4", "@ipld/car@^3.0.1", "@ipld/car@^3.1.4", "@ipld/car@^3.2.3":
+"@ipld/car@^3.0.1", "@ipld/car@^3.1.4", "@ipld/car@^3.2.3":
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/@ipld/car/-/car-3.2.4.tgz#115951ba2255ec51d865773a074e422c169fb01c"
   integrity sha512-rezKd+jk8AsTGOoJKqzfjLJ3WVft7NZNH95f0pfPbicROvzTyvHCNy567HzSUd6gRXZ9im29z5ZEv9Hw49jSYw==
@@ -1195,6 +1195,16 @@
     "@ipld/dag-cbor" "^7.0.0"
     cborg "^1.9.0"
     multiformats "^9.5.4"
+    varint "^6.0.0"
+
+"@ipld/car@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ipld/car/-/car-5.0.1.tgz#078e8dc81be747dfcf7126c28429b26539d66d15"
+  integrity sha512-YPXr1TztVmTPE4MerjKpFMuIll73MqvEakzWDMqj4uGJnwkY+tE0SlBGmqkMSofOgVMQAxZ6JtuRA93WlTzb8w==
+  dependencies:
+    "@ipld/dag-cbor" "^8.0.0"
+    cborg "^1.9.0"
+    multiformats "^10.0.2"
     varint "^6.0.0"
 
 "@ipld/dag-cbor@^6.0.3":

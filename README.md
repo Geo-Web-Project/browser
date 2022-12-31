@@ -7,11 +7,11 @@ yarn
 ## Environment
 Windows
 ```
-set APP_ENV = testing
+set APP_ENV = testnet
 ```
 Linux
 ```
-export APP_ENV = testing
+export APP_ENV = testnet
 ```
 
 ##  Development 

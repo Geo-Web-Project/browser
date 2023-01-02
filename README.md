@@ -4,6 +4,16 @@
 ```
 yarn
 ```
+## Environment
+Windows
+```
+set APP_ENV = testnet
+```
+Linux
+```
+export APP_ENV = testnet
+```
+
 ##  Development 
 ```
 yarn dev

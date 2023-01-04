@@ -9,93 +9,73 @@ import styles from "./styles.module.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "60px",
     background: "#4B5588",
     color: "white",
   },
   expanded: {
-    height: "145px",
     background: "#4B5588",
     color: "white",
+    flexDirection: "column",
   },
   heading: {
     fontFamily: "Abel",
     fontStyle: "normal",
     fontWeight: "normal",
-    fontSize: "32px",
-    lineHeight: "45px",
-
+    fontSize: "2rem",
     alignItems: "center",
     textAlign: "center",
-
-    color: "#FFFFFF",
+    color: "white",
   },
   typography: {
     fontFamily: "Abel",
     fontStyle: "normal",
     fontWeight: "normal",
-    fontSize: "18px",
-    lineHeight: "6px",
-
-    alignItems: "left",
+    fontSize: "1.3rem",
+    color: "white",
     textAlign: "left",
-
-    color: "#ffffff",
+  },
+  link: {
+    color: "white",
+    textDecorationThickness: "0.1rem",
   },
 }));
 
-export default function GWInfo(props) {
+export default function GWInfo({ gwInfo, gwContentName }) {
   const classes = useStyles();
 
-  const gwInfo = props.gwInfo;
-  const gwContentName = props.gwContentName;
-
-  //Info Schema
-  let _gwInfoSchemaMap = {
-    "Parcel ID: ": "id",
-    "Licensee: ": "licensee",
-    "For Sale Price: ": "value",
-  };
-
-  const InfoList = () => {
-    //Check if Info is available
-    if (gwInfo !== null) {
-      //Iterate over all Keys in Info Object
-      return (
-        <Typography component={"span"} className={classes.typography}>
-          {Object.keys(_gwInfoSchemaMap).map((key) => (
-            <p key={key}>{key + gwInfo[_gwInfoSchemaMap[key]]}</p>
-          ))}
-
-          <p key={"Root CID: "}>
-            {"Root CID: "}
-            <a
-              href={`https://explore.ipld.io/#/explore/${gwInfo["rootCid"]}`}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.typography}
-            >
-              {gwInfo["rootCid"]}
-            </a>
-          </p>
-        </Typography>
-      );
-    } else return <div />;
-  };
-
   return (
-    <Accordion disabled={!gwInfo}>
+    <Accordion className={classes.root} disabled={!gwInfo}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
-        className={classes.root}
       >
         <Typography className={classes.heading}>{gwContentName}</Typography>
       </AccordionSummary>
-      <AccordionDetails className={classes.expanded}>
-        <InfoList />
-      </AccordionDetails>
+      {gwInfo && (
+        <AccordionDetails className={classes.expanded}>
+          <Typography noWrap className={classes.typography}>
+            Parcel ID: {gwInfo.id}
+          </Typography>
+          <Typography noWrap className={classes.typography}>
+            Licensee: {gwInfo.licensee}
+          </Typography>
+          <Typography noWrap className={classes.typography}>
+            For Sale Price: {gwInfo.value}
+          </Typography>
+          <Typography noWrap className={classes.typography}>
+            {"Root CID: "}
+            <a
+              className={classes.link}
+              href={`https://explore.ipld.io/#/explore/${gwInfo["rootCid"]}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {gwInfo["rootCid"]}
+            </a>
+          </Typography>
+        </AccordionDetails>
+      )}
     </Accordion>
   );
 }

@@ -41,7 +41,7 @@ const ModelViewer = (props: any) => {
       alt=""
     >
       <div id="ar-prompt">
-        <img alt="AR prompt" id="ar-prompt-img" />
+        <img alt="AR prompt" src="assets/hand.png" />
       </div>
       <button id="ar-failure">AR is not tracking!</button>
       {isUsdzModel ? (

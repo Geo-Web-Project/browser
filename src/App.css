@@ -37,8 +37,22 @@ model-viewer > #ar-prompt > img {
   animation: circle 4s linear infinite;
 }
 
-model-viewer > #ar-prompt-img {
-  content: url("/assets/hand.png");
+@keyframes circle {
+  from {
+    transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}
+
+@keyframes elongate {
+  from {
+    transform: translateX(100px);
+  }
+  to {
+    transform: translateX(-100px);
+  }
 }
 
 model-viewer > #ar-failure {

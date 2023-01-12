@@ -83,13 +83,19 @@ const GWCanvas = (props: GWCanvasProps) => {
         "/",
         {}
       );
-      const _isUsdzModel = mediaObject.encodingFormat === "model/vnd.usdz+zip";
-      const fileName = _isUsdzModel ? `?filename=${mediaObject.name}.usdz` : "";
-      const contentUrl = `${gwGateway}/ipfs/${mediaObject.content.toString()}/${fileName}`;
 
-      setIsUsdzModel(_isUsdzModel);
-      setModelUrl(contentUrl);
-      setModelName(mediaObject.name);
+      if (mediaObject) {
+        const _isUsdzModel =
+          mediaObject.encodingFormat === "model/vnd.usdz+zip";
+        const fileName = _isUsdzModel
+          ? `?filename=${mediaObject.name}.usdz`
+          : "";
+        const contentUrl = `${gwGateway}/ipfs/${mediaObject.content.toString()}/${fileName}`;
+
+        setIsUsdzModel(_isUsdzModel);
+        setModelUrl(contentUrl);
+        setModelName(mediaObject.name);
+      }
     };
 
     loadObj();

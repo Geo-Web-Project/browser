@@ -30,7 +30,6 @@ export default function GWS(props: GWSProps) {
   const [parcelRoot, setParcelRoot] = useState<ParcelRoot | null>(null);
   const [basicProfile, setBasicProfile] = useState<BasicProfile | null>(null);
   const [mediaGallery, setMediaGallery] = useState<MediaGallery | null>(null);
-  const [rootCid, setRootCid] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -59,10 +58,12 @@ export default function GWS(props: GWSProps) {
               ownerId: accountId,
             })
           ).toString();
-          setRootCid(_rootCid);
+          const _parcelInfo = await getParcelInfo(parcelId, _rootCid); //get parcel info and meta-data
+
+          setGwInfo(_parcelInfo);
         } catch (e) {
           console.info(e);
-          setRootCid(null);
+          setGwInfo(null);
           setParcelRoot(null);
           setBasicProfile(null);
           setMediaGallery(null);
@@ -105,46 +106,11 @@ export default function GWS(props: GWSProps) {
           console.info(e);
           setBasicProfile(null);
         }
+
+        setLoading(false);
       }
     })();
-  }, [parcelId, licenseOwner, gwContent]);
-
-  useEffect(() => {
-    (async () => {
-      if (parcelId && rootCid) {
-        const _parcelInfo = await getParcelInfo(parcelId, rootCid); //get parcel info and meta-data
-        setGwInfo(_parcelInfo);
-      }
-    })();
-  }, [parcelId, rootCid]);
-
-  useEffect(() => {
-    const loadObj = async () => {
-      if (!parcelRoot?.mediaGallery || !gwContent) {
-        setMediaGallery(null);
-      } else {
-        const _mediaGallery = (await gwContent.raw.get(
-          parcelRoot.mediaGallery,
-          "/",
-          { schema: "MediaGallery" }
-        )) as MediaGallery;
-        setMediaGallery(_mediaGallery);
-      }
-
-      if (!parcelRoot?.basicProfile || !gwContent) {
-        setBasicProfile(null);
-      } else {
-        const _basicProfile = (await gwContent.raw.get(
-          parcelRoot.basicProfile,
-          "/",
-          { schema: "BasicProfile" }
-        )) as BasicProfile;
-        setBasicProfile(_basicProfile);
-      }
-    };
-
-    loadObj();
-  }, [parcelRoot]);
+  }, [parcelId, licenseOwner, gwContent, coordinate]);
 
   const accessGps = () => {
     if (navigator.geolocation) {
@@ -164,11 +130,14 @@ export default function GWS(props: GWSProps) {
   };
 
   const getParcelId = async (latitude: any, longitude: any) => {
-    const lookUpId = await getGeoId(latitude, longitude); //get root parcel id
+    const { parcelId, licenseOwner } = await getGeoId(latitude, longitude);
 
-    setParcelId(lookUpId.parcelId as any);
-    setLicenseOwner(lookUpId.licenseOwner as any);
-    setLoading(false);
+    if (!parcelId || !licenseOwner) {
+      setLoading(false);
+    }
+
+    setParcelId(parcelId as any);
+    setLicenseOwner(licenseOwner as any);
   };
 
   const GeoWeb = () => {

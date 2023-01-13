@@ -15,7 +15,11 @@ const GWWebView = (props: GWWebViewProps) => {
   if (gwWebContent !== null) {
     return (
       <div>
-        <iframe src={gwWebContent} className={styles["gwIframe"]} />
+        <iframe
+          src={gwWebContent}
+          className={styles["gwIframe"]}
+          allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;"
+        />
         <ContentLabel
           uri={gwWebContent ?? ""}
           label={gwWebContent ?? ""}

@@ -40,6 +40,7 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
+    "dev-https": "local-ssl-proxy --key localhost-key.pem --cert localhost.pem --source 3001 --target 3000",
     "dev": "next dev",
     "build": "next build",
     "export": "next export",

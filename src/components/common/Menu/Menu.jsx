@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import styles from "./styles.module.css";
-import {
-  Toolbar,
-  Drawer,
-  Container,
-  IconButton,
-  TextField,
-  Typography,
-  Box,
-  makeStyles,
-  Button,
-  Grid,
-} from "@material-ui/core";
+import { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Container from "@material-ui/core/Container";
+import IconButton from "@material-ui/core/IconButton";
+import Drawer from "@material-ui/core/Drawer";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import { Close as CloseIcon, Menu as MenuIcon } from "@material-ui/icons";
 import StyledSwitch from "../Switch/StyledSwitch";
 import parseQueryVariables from "../../../helpers/queryParser";
+import styles from "./styles.module.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: "#1a1c2b",
     color: "white",
     width: "60%",
+    overflowX: "hidden",
+    justifyContent: "space-between",
     [theme.breakpoints.up("lg")]: { width: "20%" },
     [theme.breakpoints.only("md")]: { width: "30%" },
     [theme.breakpoints.only("sm")]: { width: "40%" },
-    [theme.breakpoints.only("xs")]: { width: "60%" },
+    [theme.breakpoints.only("xs")]: { width: "80%" },
   },
   input: {
     backgroundColor: "white",
@@ -35,24 +35,28 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1.5%",
     width: "100%",
   },
+  coordBtn: {
+    alignSelf: "flex-end",
+    marginRight: "20px",
+    backgroundColor: "#2fc1c1",
+    color: "white",
+  },
 }));
 
-const Menu = (props) => {
-  const classes = useStyles();
-  const accessGps = props.accessGps;
-  const showPosition = props.showPosition;
-
+export default function Menu({ accessGps, showPosition, coordinate }) {
   const [open, setState] = useState(false);
-  const [longitude, setLongitude] = useState(props.coordinate.lon);
-  const [latitude, setLatitude] = useState(props.coordinate.lat);
+  const [longitude, setLongitude] = useState(coordinate.lon);
+  const [latitude, setLatitude] = useState(coordinate.lat);
   const [isManual, setSwitchState] = useState(false);
+
+  const classes = useStyles();
 
   useEffect(() => {
     if (!isManual) {
-      setLongitude(props.coordinate.lon);
-      setLatitude(props.coordinate.lat);
+      setLongitude(coordinate.lon);
+      setLatitude(coordinate.lat);
     }
-  }, [isManual, props.coordinate]);
+  }, [isManual, coordinate]);
 
   useEffect(() => {
     const params = parseQueryVariables(window.location.search);
@@ -101,22 +105,34 @@ const Menu = (props) => {
   };
 
   return (
-    <div className={styles["menu"]}>
+    <div style={{ position: "fixed", right: 0 }}>
       <Container maxWidth="lg" disableGutters={true}>
         <Toolbar>
           <IconButton
+            disableRipple
             aria-label="open drawer"
             onClick={() => toggleDrawer(true)}
             style={{ color: "white" }}
           >
-            <MenuIcon />
+            <MenuIcon fontSize="large" />
           </IconButton>
 
           <Drawer anchor="right" open={open} classes={{ paper: classes.paper }}>
             <Box>
-              <Box display="flex" style={{ paddingBottom: "30px" }}>
-                <Typography variant="h5" style={{ margin: "15px" }}>
-                  Settings
+              <Box
+                display="flex"
+                style={{
+                  paddingBottom: "30px",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  style={{ display: "flex", margin: "15px" }}
+                >
+                  <span>Spatial Browser</span>
+                  <span style={{ alignSelf: "flex-start", fontSize: "0.6rem" }}>
+                    ALPHA
+                  </span>
                 </Typography>
                 <IconButton
                   onClick={() => toggleDrawer(false)}
@@ -186,42 +202,59 @@ const Menu = (props) => {
                     }}
                   />
                 </div>
-                <div className={styles["buttonContainer"]}>
-                  {isManual ? (
-                    <Button
-                      onClick={() => handleManualSubmit()}
-                      style={{
-                        width: "30%",
-                        marginRight: "10px",
-                        backgroundColor: "#2fc1c1",
-                        color: "white",
-                      }}
-                      variant="contained"
-                    >
-                      Go
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => handleRefreshGPS()}
-                      style={{
-                        width: "auto",
-                        marginRight: "10px",
-                        backgroundColor: "#2fc1c1",
-                        color: "white",
-                      }}
-                      variant="contained"
-                    >
-                      Refresh
-                    </Button>
-                  )}
-                </div>
+                {isManual ? (
+                  <Button
+                    onClick={() => handleManualSubmit()}
+                    className={classes.coordBtn}
+                    variant="contained"
+                  >
+                    Go
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleRefreshGPS()}
+                    className={classes.coordBtn}
+                    variant="contained"
+                  >
+                    Refresh
+                  </Button>
+                )}
               </div>
             </Box>
+            <div className={styles["social"]}>
+              <a
+                href="https://geoweb.network/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src="/assets/web.svg" alt="Web" style={{ width: 30 }} />
+              </a>
+              <a
+                href="https://discord.com/invite/reXgPru7ck"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src="/assets/discord.svg"
+                  alt="Discord"
+                  style={{ width: 30 }}
+                />
+              </a>
+              <a
+                href="https://twitter.com/thegeoweb"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src="/assets/twitter.svg"
+                  alt="Twitter"
+                  style={{ width: 30 }}
+                />
+              </a>
+            </div>
           </Drawer>
         </Toolbar>
       </Container>
     </div>
   );
-};
-
-export default Menu;
+}

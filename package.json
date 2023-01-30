@@ -18,13 +18,6 @@
     "@material-ui/icons": "^4.11.2",
     "@orbisclub/modules": "^0.0.43",
     "@orbisclub/orbis-sdk": "^0.4.3",
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^12.8.3",
-    "@types/jest": "^28.1.4",
-    "@types/node": "^18.0.3",
-    "@types/react": "^17.0.47",
-    "@types/react-dom": "^18.0.2",
     "bn.js": "^5.2.1",
     "caip": "^1.1.0",
     "dotenv": "^16.0.3",
@@ -35,8 +28,8 @@
     "ipfs-http-client": "^59.0.0",
     "ipfs-provider": "^2.1.0",
     "next": "^12.2.5",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "^4.7.4"
   },
   "scripts": {
@@ -64,6 +57,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.3",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "eslint": "^7.32.0",
     "eslint-config-next": "12.2.5",
     "eslint-config-prettier": "^8.5.0",

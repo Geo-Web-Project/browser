@@ -1,35 +1,44 @@
-import React, { useState } from "react";
-
-import styles from "./styles.module.css";
-
+import { useState } from "react";
+import { Close } from "@material-ui/icons";
 import GWEmpty from "../../../../components/common/ContentFiller/Empty";
-import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
+import styles from "./styles.module.css";
 
 export type GWWebViewProps = {
   url: string | null;
 };
 
-const GWWebView = (props: GWWebViewProps) => {
-  const gwWebContent = props.url;
+export default function GWWebView(props: GWWebViewProps) {
+  const { url } = props;
 
-  if (gwWebContent !== null) {
-    return (
-      <div>
-        <iframe
-          src={gwWebContent}
-          className={styles["gwIframe"]}
-          allow="geolocation;camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;"
-        />
-        <ContentLabel
-          uri={gwWebContent ?? ""}
-          label={gwWebContent ?? ""}
-          hyperlink={true}
-        />
-      </div>
-    );
-  } else {
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+  if (!url) {
     return <GWEmpty promptType="web" />;
   }
-};
 
-export default GWWebView;
+  return (
+    <div className={styles["wrapper"]}>
+      <iframe
+        className={styles[isFullScreen ? "full-screen" : "gwIframe"]}
+        src={url}
+        allow="geolocation;camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;"
+      />
+      <button
+        className={`${styles["full-screen-btn"]} ${
+          styles[isFullScreen ? "on" : "off"]
+        }`}
+        onClick={() => setIsFullScreen(!isFullScreen)}
+      >
+        {isFullScreen ? (
+          <Close fontSize="large" style={{ color: "#fff" }} />
+        ) : (
+          <img
+            style={{ width: 30 }}
+            src="/assets/fullscreen.svg"
+            alt="full screen button"
+          />
+        )}
+      </button>
+    </div>
+  );
+}

@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   height: calc(100vh - 135px);
+  height: calc(100svh - 135px);
 }
 
 .wrapper a {

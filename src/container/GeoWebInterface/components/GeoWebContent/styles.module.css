@@ -9,3 +9,12 @@
   background: rgba(32, 35, 51, 0.7);
   padding: 16px 0 16px 0;
 }
+
+.switch-web {
+  transform: translateX(-50%);
+  margin: 0 16px 0 16px;
+}
+
+.gallery-web {
+  transform: translateX(-80%);
+}

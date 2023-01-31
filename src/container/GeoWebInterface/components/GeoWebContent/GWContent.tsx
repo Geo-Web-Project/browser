@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { GeoWebContent } from "@geo-web/content";
 import { MediaGallery, BasicProfile } from "@geo-web/types";
@@ -23,6 +23,22 @@ export default function GWContentView(props: GWContentViewProps) {
 
   const [gwMode, setGwMode] = useState<GwMode>(GwMode.WEB);
 
+  const isWebAr = useMemo(() => {
+    if (basicProfile?.url) {
+      try {
+        const url = new URL(basicProfile.url);
+
+        if (url.hostname.endsWith(".8thwall.app")) {
+          return true;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    return false;
+  }, [basicProfile]);
+
   useEffect(() => {
     if (!basicProfile?.url) {
       setGwMode(GwMode.GALLERY);
@@ -39,22 +55,6 @@ export default function GWContentView(props: GWContentViewProps) {
     }
   };
 
-  const isWebAr = (urlStr: string | null) => {
-    if (urlStr) {
-      try {
-        const url = new URL(urlStr);
-
-        if (url.hostname.endsWith(".8thwall.app")) {
-          return true;
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    return false;
-  };
-
   return (
     <>
       {gwMode === GwMode.WEB ? (
@@ -63,16 +63,19 @@ export default function GWContentView(props: GWContentViewProps) {
         <GWCanvas mediaGallery={mediaGallery} gwContent={gwContent} />
       )}
       <div className={styles["switch-div"]}>
-        <Typography>
-          {isWebAr(basicProfile?.url ?? null) ? "WebAR" : "Web Content"}
-        </Typography>
+        <Typography>{isWebAr ? "WebAR" : "Web Content"}</Typography>
         <StyledSwitch
           color="default"
           inputProps={{ "aria-label": "checkbox with default color" }}
           checked={gwMode === GwMode.GALLERY}
           onChange={switchMode}
+          className={isWebAr ? "" : styles["switch-web"]}
         />
-        <Typography>{"Gallery"}</Typography>
+        <Typography
+          className={isWebAr ? "" : styles["gallery-web"]}
+        >
+          {"Gallery"}
+        </Typography>
       </div>
     </>
   );

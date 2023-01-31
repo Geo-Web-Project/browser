@@ -1,4 +1,4 @@
-import { makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
   subHeading: {
     fontFamily: "Abel",
     fontStyle: "normal",
-    fontWeight: "bold",
     fontSize: "1.7rem",
     textAlign: "left",
     color: "white",
@@ -49,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     fontFamily: "Abel",
     fontStyle: "normal",
-    fontWeight: "normal",
     fontSize: "1.3rem",
     color: "white",
     textAlign: "left",
@@ -93,13 +91,13 @@ export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }) {
             )}
           </Typography>
           <Typography noWrap className={classes.typography}>
-            Parcel ID: <b>{gwInfo.id}</b>
+            Parcel ID: {gwInfo.id}
           </Typography>
           <Typography noWrap className={classes.typography}>
-            Licensee: <b>{gwInfo.licensee}</b>
+            Licensee: {gwInfo.licensee}
           </Typography>
           <Typography noWrap className={classes.typography}>
-            For Sale Price: <b>{gwInfo.value}</b>
+            For Sale Price: {gwInfo.value}
           </Typography>
           <Typography noWrap className={classes.typography}>
             {"Root CID: "}
@@ -109,7 +107,7 @@ export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }) {
               target="_blank"
               rel="noreferrer"
             >
-              <b>{gwInfo.rootCid}</b>
+              {gwInfo.rootCid}
             </a>
           </Typography>
         </AccordionDetails>

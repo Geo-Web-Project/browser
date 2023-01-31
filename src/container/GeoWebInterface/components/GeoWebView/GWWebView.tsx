@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Close } from "@material-ui/icons";
 import GWEmpty from "../../../../components/common/ContentFiller/Empty";
 import styles from "./styles.module.css";
@@ -11,6 +11,54 @@ export default function GWWebView(props: GWWebViewProps) {
   const { url } = props;
 
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+  useEffect(() => {
+    [
+      "fullscreenchange",
+      "webkitfullscreenchange",
+      "mozfullscreenchange",
+      "fullscreenerror",
+      "webkitfullscreenerror",
+      "mozfullscreenerror",
+    ].forEach((eventName) =>
+      document.documentElement.addEventListener(eventName, () =>
+        setIsFullScreen((prev) => !prev)
+      )
+    );
+  }, []);
+
+  const toggleFullScreen = () => {
+    const doc: any = document;
+    const docElem: any = document.documentElement;
+
+    if (
+      !doc.fullscreenElement &&
+      !doc.webkitFullscreenElement &&
+      !doc.mozFullScreenElement
+    ) {
+      if (docElem.requestFullscreen) {
+        docElem.requestFullscreen();
+      } else if (docElem.webkitRequestFullscreen) {
+        docElem.webkitRequestFullscreen();
+      } else if (docElem.mozRequestFullScreen) {
+        docElem.mozRequestFullScreen();
+      } else {
+        setIsFullScreen(!isFullScreen);
+      }
+    } else if (
+      doc.fullscreenElement ||
+      doc.webkitFullscreenElement ||
+      doc.mozFullScreenElement
+    ) {
+      if (doc.exitFullscreen) {
+        doc.exitFullscreen();
+      } else if (doc.webkitExitFullscreen) {
+        doc.webkitExitFullscreen();
+      } else if (doc.mozCancelFullScreen) {
+        doc.cancelFullScreen();
+      }
+    }
+  };
 
   if (!url) {
     return <GWEmpty promptType="web" />;
@@ -25,15 +73,15 @@ export default function GWWebView(props: GWWebViewProps) {
       />
       <button
         className={`${styles["full-screen-btn"]} ${
-          styles[isFullScreen ? "on" : "off"]
+          styles[isFullScreen ? "off" : "on"]
         }`}
-        onClick={() => setIsFullScreen(!isFullScreen)}
+        onClick={toggleFullScreen}
       >
         {isFullScreen ? (
-          <Close fontSize="large" style={{ color: "#fff" }} />
+          <Close style={{ color: "#fff" }} />
         ) : (
           <img
-            style={{ width: 30 }}
+            style={{ width: 22 }}
             src="/assets/fullscreen.svg"
             alt="full screen button"
           />

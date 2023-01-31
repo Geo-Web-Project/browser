@@ -1,6 +1,7 @@
 .wrapper {
   width: 100%;
   height: calc(100vh - 73px);
+  height: calc(100svh - 73px);
   overflow: hidden;
 }
 
@@ -25,26 +26,26 @@
 .full-screen-btn {
   position: fixed;
   z-index: 1001;
-  right: 16px;
+  right: 30px;
   display: flex;
   align-items: center;
   background: rgba(32, 35, 51, 0.6);
-  padding: 6px;
+  padding: 5px;
   border: 0;
   border-radius: 6px;
   cursor: pointer;
 }
 
-.full-screen-btn.on {
-  top: 32px;
+.full-screen-btn.off {
+  top: 16px;
 }
 
-.full-screen-btn.off {
+.full-screen-btn.on {
   top: 100px;
 }
 
 @media (min-width: 600px) {
   .full-screen-btn {
-    right: 32px;
+    right: 36px;
   }
 }

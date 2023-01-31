@@ -1,5 +1,3 @@
-import GWS from "../container/GeoWebSystem/GWS";
-
 import { useState, useEffect } from "react";
 import { CeramicClient } from "@ceramicnetwork/http-client";
 import { CERAMIC_URL } from "../lib/constants";
@@ -7,6 +5,7 @@ import { getIpfs, providers } from "ipfs-provider";
 import * as IPFSCore from "ipfs-core";
 import * as IPFSHttpClient from "ipfs-http-client";
 import { GeoWebContent } from "@geo-web/content";
+import GWS from "../container/GeoWebSystem/GWS";
 
 const { jsIpfs, httpClient } = providers;
 

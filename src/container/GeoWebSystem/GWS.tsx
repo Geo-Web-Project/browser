@@ -176,7 +176,7 @@ export default function GWS(props: GWSProps) {
           theme={{
             mainCta: {
               position: "fixed",
-              right: "20px",
+              right: "36px",
               bottom: "84px",
             },
           }}

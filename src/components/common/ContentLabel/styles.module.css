@@ -1,34 +1,16 @@
 .label {
-  height: 60px;
-  background: #4b5588;
+  display: flex;
+  justify-content: center;
+  height: 98px;
+  background: #202333;
   color: white;
 }
 
-.label a {
-  color: #ffffff;
-  font-size: 32px;
-  font-style: normal;
-  text-align: center;
-  align-items: center;
-  font-family: Abel;
-  font-weight: normal;
-  line-height: 45px;
-  width: 100px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 .label span {
-  color: #ffffff;
+  padding-top: 4px;
+  color: #2fc1c1;
   font-size: 32px;
-  font-style: normal;
   text-align: center;
-  align-items: center;
-  font-family: Abel;
-  font-weight: normal;
-  line-height: 45px;
-  width: 100px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

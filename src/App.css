@@ -1,11 +1,19 @@
+@font-face {
+  font-family: "Abel";
+  src: local("Abel"),
+    url("/assets/fonts/Abel/Abel-Regular.ttf") format("opentype");
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: "Abel", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #202333;
+  background-image: url("/assets/bg-417x778px.png");
+  background-size: cover;
 }
 
 code {
@@ -15,9 +23,9 @@ code {
 
 model-viewer {
   position: relative;
-  margin-top: 2%;
   width: 100%;
-  height: calc(100vh - 260px);
+  height: calc(100vh - 170px);
+  height: calc(100svh - 170px);
   background-color: lightgrey;
 }
 
@@ -110,19 +118,8 @@ model-viewer::part(default-ar-button) {
   }
 }
 
-.bg-theme {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("/assets/bg-417x778px.png");
-  background-size: cover;
-  overflow-y: auto;
-  overflow-x: hidden;
-  opacity: 1;
-}
-
 @media (min-width: 600px) {
-  .bg-theme {
+  body {
     background-image: url("/assets/bg-3000x2000px.png");
   }
 }

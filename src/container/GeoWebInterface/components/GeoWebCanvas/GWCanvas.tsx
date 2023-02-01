@@ -145,7 +145,7 @@ const GWCanvas = (props: GWCanvasProps) => {
           />
         )}
 
-        <ContentLabel uri={""} label={modelName ?? ""} hyperlink={false} />
+        <ContentLabel label={modelName ?? ""} />
       </div>
     );
   } else {

@@ -114,10 +114,18 @@ export default function GWS(props: GWSProps) {
 
   const accessGps = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition); //Get Position, with callback
+      navigator.geolocation.getCurrentPosition(
+        showPosition,
+        (err) => {
+          console.info(err.message);
+          setLoading(false);
+        },
+        { maximumAge: 0, enableHighAccuracy: true, timeout: 10000 }
+      );
     } else {
-      console.log("Geolocation is not supported by this browser.");
+      console.info("Geolocation is not supported by this browser.");
       setCoordinate({ lat: -1, lon: -1 });
+      setLoading(false);
     }
   };
 
@@ -140,49 +148,42 @@ export default function GWS(props: GWSProps) {
     setLicenseOwner(licenseOwner as any);
   };
 
-  const GeoWeb = () => {
-    if (parcelId && gwContent) {
-      // Returns Info Expandable and Parcel Content
-      return (
-        <div className={styles["layout-root"]}>
-          <GWInfo
-            gwInfo={gwInfo}
-            gwContentName={
-              basicProfile?.name ? basicProfile.name : `Parcel ${parcelId}`
-            }
-          />
-          <GWContentView
-            gwContent={gwContent}
-            basicProfile={basicProfile}
-            mediaGallery={mediaGallery}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div className={styles["layout-root"]}>
-          <GWInfo gwInfo={null} gwContentName={"No Parcel Found"} />
-          <GWAvail />
-        </div>
-      );
-    }
-  };
-
   return (
-    <div>
+    <>
       <TitleBar
         accessGps={accessGps}
         coordinate={coordinate}
         showPosition={showPosition}
+        loading={loading}
+        parcelId={parcelId}
+        gwInfo={gwInfo}
+        basicProfile={basicProfile}
       />
-      {loading ? <GWLoader /> : <GeoWeb />}
+      {loading ? (
+        <GWLoader />
+      ) : parcelId && gwContent ? (
+        <GWContentView
+          gwContent={gwContent}
+          basicProfile={basicProfile}
+          mediaGallery={mediaGallery}
+        />
+      ) : (
+        <GWAvail />
+      )}
       {parcelId ? (
         <ChatBox
           context={`Geo Web Parcel - ${parcelId.toString()}`}
+          theme={{
+            mainCta: {
+              position: "fixed",
+              right: "36px",
+              bottom: "84px",
+            },
+          }}
           title={"Leave a comment on this parcel"}
           poweredByOrbis="black"
         />
       ) : null}
-    </div>
+    </>
   );
 }

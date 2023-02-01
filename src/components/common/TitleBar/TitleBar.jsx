@@ -1,24 +1,35 @@
-import React, { useState, useEffect } from "react";
-import styles from "./styles.module.css";
 import Menu from "../Menu/Menu";
-//Page Layout including Title and Background
-const TitleBar = (props) => {
-  const accessGps = props.accessGps;
+import GWInfo from "../../../container/GeoWebInterface/components/GeoWebInfo/GWInfo";
 
+import styles from "./styles.module.css";
+
+export default function TitleBar({
+  accessGps,
+  coordinate,
+  showPosition,
+  loading,
+  parcelId,
+  gwInfo,
+  basicProfile,
+}) {
   return (
-    <div className={styles["layout-div"]}>
-      <div className={styles["title-bar"]}>
-        <div className={styles["logo"]} />
-        <div className={styles["title-txt"]}>{"Geo Web"}</div>
-        <div className={styles["title-caption"]}>{"Browse Earth"}</div>
-        <Menu
-          coordinate={props.coordinate}
-          showPosition={props.showPosition}
-          accessGps={accessGps}
+    <header className={styles["title-bar"]}>
+      {loading ? null : parcelId ? (
+        <GWInfo
+          gwInfo={gwInfo}
+          gwContentName={
+            basicProfile?.name ? basicProfile.name : `Parcel ${parcelId}`
+          }
+          gwContentUrl={basicProfile?.url ? basicProfile.url : ""}
         />
-      </div>
-    </div>
+      ) : (
+        <GWInfo gwInfo={null} gwContentName={"No Parcel Found"} />
+      )}
+      <Menu
+        coordinate={coordinate}
+        showPosition={showPosition}
+        accessGps={accessGps}
+      />
+    </header>
   );
-};
-
-export default TitleBar;
+}

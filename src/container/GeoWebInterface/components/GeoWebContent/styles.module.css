@@ -1,19 +1,20 @@
 .switch-div {
-  position: relative;
-  margin-top: 2%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  color: white;
+  background: rgba(32, 35, 51, 0.7);
+  padding: 16px 0 16px 0;
 }
 
-.switch-left {
-  position: absolute;
-  top: 12%;
-  left: 14%;
-  color: white;
+.switch-web {
+  transform: translateX(-50%);
+  margin: 0 16px 0 16px;
 }
 
-.switch-right {
-  position: absolute;
-  float: right;
-  right: 20%;
-  top: 12%;
-  color: white;
+.gallery-web {
+  transform: translateX(-80%);
 }

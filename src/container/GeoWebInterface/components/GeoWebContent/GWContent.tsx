@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Switch from "@material-ui/core/Switch";
+import { useState, useMemo, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
-import { MediaGallery, BasicProfile } from "@geo-web/types";
 import { GeoWebContent } from "@geo-web/content";
-
+import { MediaGallery, BasicProfile } from "@geo-web/types";
 import GWWebView from "../GeoWebView/GWWebView";
 import GWCanvas from "../GeoWebCanvas/GWCanvas";
-
+import StyledSwitch from "../../../../components/common/Switch/StyledSwitch";
 import styles from "./styles.module.css";
 
 export type GWContentViewProps = {
@@ -15,50 +13,70 @@ export type GWContentViewProps = {
   gwContent: GeoWebContent;
 };
 
-const GWContentView = (props: GWContentViewProps) => {
+enum GwMode {
+  WEB,
+  GALLERY,
+}
+
+export default function GWContentView(props: GWContentViewProps) {
   const { basicProfile, mediaGallery, gwContent } = props;
-  const [gwMode, setGwMode] = useState("web");
+
+  const [gwMode, setGwMode] = useState<GwMode>(GwMode.WEB);
+
+  const isWebAr = useMemo(() => {
+    if (basicProfile?.url) {
+      try {
+        const url = new URL(basicProfile.url);
+
+        if (url.hostname.endsWith(".8thwall.app")) {
+          return true;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    return false;
+  }, [basicProfile]);
+
+  useEffect(() => {
+    if (!basicProfile?.url) {
+      setGwMode(GwMode.GALLERY);
+    }
+  }, []);
 
   const switchMode = (event: any) => {
-    let _checked = event.target.checked;
+    const { checked } = event.target;
 
-    if (_checked === false) setGwMode("web");
-    else if (_checked === true) setGwMode("3d");
+    if (checked) {
+      setGwMode(GwMode.GALLERY);
+    } else {
+      setGwMode(GwMode.WEB);
+    }
   };
 
-  //Toggle Between Web & 3D Content
   return (
-    <div>
+    <>
+      {gwMode === GwMode.WEB ? (
+        <GWWebView url={basicProfile?.url ?? null} />
+      ) : (
+        <GWCanvas mediaGallery={mediaGallery} gwContent={gwContent} />
+      )}
       <div className={styles["switch-div"]}>
-        <Typography className={styles["switch-left"]}>
-          {"Web Content"}
-        </Typography>
-        <Switch
+        <Typography>{isWebAr ? "WebAR" : "Web Content"}</Typography>
+        <StyledSwitch
           color="default"
           inputProps={{ "aria-label": "checkbox with default color" }}
-          style={{ position: "absolute", top: "0px" }}
+          checked={gwMode === GwMode.GALLERY}
           onChange={switchMode}
+          className={isWebAr ? "" : styles["switch-web"]}
         />
-        <Typography className={styles["switch-right"]}>
-          {"3D Gallery"}
+        <Typography
+          className={isWebAr ? "" : styles["gallery-web"]}
+        >
+          {"Gallery"}
         </Typography>
       </div>
-
-      <div
-        style={{
-          position: "absolute",
-          width: "99%",
-          visibility: gwMode === "web" ? "visible" : "hidden",
-        }}
-      >
-        <GWWebView url={basicProfile?.url ?? null} />
-      </div>
-
-      <div style={{ visibility: gwMode === "3d" ? "visible" : "hidden" }}>
-        <GWCanvas mediaGallery={mediaGallery} gwContent={gwContent} />
-      </div>
-    </div>
+    </>
   );
-};
-
-export default GWContentView;
+}

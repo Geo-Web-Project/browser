@@ -1,13 +1,18 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: calc(100vh - 135px);
+  height: calc(100svh - 135px);
+}
+
+.wrapper a {
+  color: #ffffff;
 }
 
 .avail-img {
-  width: 400px;
-  height: 400px;
-  background: url("/assets/available-land.png");
+  width: 300px;
 }
 
 .rect-box {
@@ -18,15 +23,18 @@
 }
 
 .empty-txt {
-  width: 353px;
-  font-family: "Abel";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
+  width: 300px;
+  font-size: 1.5rem;
   line-height: 32px;
   color: #ffffff;
+  text-align: center;
 }
 
-.txt2 {
-  color: #ffffff;
+@media (min-width: 600px) {
+  .avail-img {
+    width: 400px;
+  }
+  .empty-txt {
+    width: 353px;
+  }
 }

@@ -22,11 +22,8 @@ code {
 }
 
 model-viewer {
-  position: relative;
   width: 100%;
-  height: calc(100vh - 170px);
-  height: calc(100svh - 170px);
-  background-color: lightgrey;
+  height: 100%;
 }
 
 model-viewer > #ar-prompt {

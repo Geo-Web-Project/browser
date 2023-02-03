@@ -50,7 +50,7 @@ const ModelViewer = (props: any) => {
         </div>
       ) : (
         <img
-          className={styles["model-loading"]}
+          className={styles["loading"]}
           src="/assets/spinner.svg"
           alt="loading"
           slot="poster"
@@ -67,6 +67,7 @@ const GWCanvas = (props: GWCanvasProps) => {
   const [modelIndex, setModelIndex] = useState(0);
   const [modelUrl, setModelUrl] = useState<string | undefined>(undefined);
   const [modelName, setModelName] = useState<string | undefined>(undefined);
+  const [isGlbModel, setIsGlbModel] = useState<boolean>(false);
   const [isUsdzModel, setIsUsdzModel] = useState<boolean>(false);
 
   const modelRef = useRef();
@@ -85,6 +86,7 @@ const GWCanvas = (props: GWCanvasProps) => {
       );
 
       if (mediaObject) {
+        const _isGlbModel = mediaObject.encodingFormat === "model/gltf-binary";
         const _isUsdzModel =
           mediaObject.encodingFormat === "model/vnd.usdz+zip";
         const fileName = _isUsdzModel
@@ -92,6 +94,7 @@ const GWCanvas = (props: GWCanvasProps) => {
           : "";
         const contentUrl = `${gwGateway}/ipfs/${mediaObject.content.toString()}/${fileName}`;
 
+        setIsGlbModel(_isGlbModel);
         setIsUsdzModel(_isUsdzModel);
         setModelUrl(contentUrl);
         setModelName(mediaObject.name);
@@ -133,11 +136,23 @@ const GWCanvas = (props: GWCanvasProps) => {
         {mediaGallery.length > 1 && (
           <button className={styles["clk-left"]} onClick={() => clickLeft()} />
         )}
-        <ModelViewer
-          modelRef={modelRef}
-          url={modelUrl}
-          isUsdzModel={isUsdzModel}
-        />
+        <div className={styles["gallery"]}>
+          {isGlbModel || isUsdzModel ? (
+            <ModelViewer
+              modelRef={modelRef}
+              url={modelUrl}
+              isUsdzModel={isUsdzModel}
+            />
+          ) : (
+            <span className={styles["image-wrapper"]}>
+              <img
+                src={modelUrl ?? "/assets/spinner.svg"}
+                alt={modelUrl ? "image content" : "loading"}
+                className={styles[modelUrl ? "image-content" : "loading"]}
+              />
+            </span>
+          )}
+        </div>
         {mediaGallery.length > 1 && (
           <button
             className={styles["clk-right"]}

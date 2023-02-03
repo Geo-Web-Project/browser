@@ -1,30 +1,33 @@
-@keyframes circle {
-  from {
-    transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
-  }
-  to {
-    transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg);
-  }
+.gallery {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 170px);
+  height: calc(100svh - 170px);
+  background-color: lightgrey;
 }
 
-@keyframes elongate {
-  from {
-    transform: translateX(100px);
-  }
-  to {
-    transform: translateX(-100px);
-  }
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.image-content {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .clk-left {
-  background-image: url("/assets/chevron-left.png");
+  background-image: url("/assets/chevron-left.svg");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center;
   background-color: rgba(255, 255, 255, 0);
   position: absolute;
   left: 2%;
-  bottom: 40%;
+  bottom: 50%;
   height: 64px;
   width: 64px;
   border: none;
@@ -33,21 +36,21 @@
 }
 
 .clk-right {
-  background-image: url("/assets/chevron-right.png");
+  background-image: url("/assets/chevron-right.svg");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center;
   background-color: rgba(255, 255, 255, 0);
   position: absolute;
   right: 2%;
-  bottom: 40%;
+  bottom: 50%;
   height: 64px;
   width: 64px;
   border: none;
   cursor: pointer;
 }
 
-.model-loading {
+.loading {
   width: 128px;
   position: absolute;
   top: 50%;

@@ -51,14 +51,14 @@ export default function GWS(props: GWSProps) {
           address: licenseOwner,
         });
 
+        let rootCid = null;
+
         try {
-          const _rootCid = (
-            await gwContent.raw.resolveRoot({
-              parcelId: assetId,
-              ownerId: accountId,
-            })
-          ).toString();
-          const _parcelInfo = await getParcelInfo(parcelId, _rootCid); //get parcel info and meta-data
+          rootCid = await gwContent.raw.resolveRoot({
+            parcelId: assetId,
+            ownerId: accountId,
+          });
+          const _parcelInfo = await getParcelInfo(parcelId, rootCid.toString()); //get parcel info and meta-data
 
           setGwInfo(_parcelInfo);
         } catch (e) {
@@ -70,9 +70,7 @@ export default function GWS(props: GWSProps) {
         }
 
         try {
-          const _parcelRoot = await gwContent.raw.getPath("/", {
-            parcelId: assetId,
-            ownerId: accountId,
+          const _parcelRoot = await gwContent.raw.get(rootCid!, "/", {
             schema: "ParcelRoot",
           });
           setParcelRoot(_parcelRoot);
@@ -82,11 +80,13 @@ export default function GWS(props: GWSProps) {
         }
 
         try {
-          const _mediaGallery = await gwContent.raw.getPath("/mediaGallery", {
-            parcelId: assetId,
-            ownerId: accountId,
-            schema: "MediaGallery",
-          });
+          const _mediaGallery = await gwContent.raw.get(
+            rootCid!,
+            "/mediaGallery",
+            {
+              schema: "MediaGallery",
+            }
+          );
 
           setMediaGallery(_mediaGallery);
         } catch (e) {
@@ -95,11 +95,13 @@ export default function GWS(props: GWSProps) {
         }
 
         try {
-          const _basicProfile = await gwContent.raw.getPath("/basicProfile", {
-            parcelId: assetId,
-            ownerId: accountId,
-            schema: "BasicProfile",
-          });
+          const _basicProfile = await gwContent.raw.get(
+            rootCid!,
+            "/basicProfile",
+            {
+              schema: "BasicProfile",
+            }
+          );
 
           setBasicProfile(_basicProfile);
         } catch (e) {

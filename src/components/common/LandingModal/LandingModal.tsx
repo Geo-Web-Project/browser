@@ -35,8 +35,7 @@ export default function LandingModal(props: LandingModalProps) {
           The spatial browser uses device location (& sometimes your camera) to
           show you 3D objects, NFTs, data, websites, & more that a{" "}
           <a
-            href="https://docs.geoweb.network/concepts/
-partial-common-ownership"
+            href="https://docs.geoweb.network/concepts/digital-land"
             target="_blank"
             rel="noreferrer"
           >

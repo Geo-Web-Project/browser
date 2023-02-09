@@ -21,6 +21,16 @@ code {
     monospace;
 }
 
+a {
+  color: #2fc1c1;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 0.1rem;
+}
+
 model-viewer {
   width: 100%;
   height: 100%;
@@ -100,10 +110,6 @@ model-viewer::part(default-ar-button) {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes App-logo-spin {

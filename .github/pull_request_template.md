@@ -13,8 +13,8 @@ fixes #ISSUE
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have tested my code
 - [ ] My changes generate no new warnings
-- [ ] My PR is rebased off the most recent `main` or appropriate feature branch
-- [ ] My PR is opened against the `main` or appropriate feature branch
+- [ ] My PR is rebased off the most recent `develop` or appropriate feature branch
+- [ ] My PR is opened against the `develop` or appropriate feature branch
 
 # Additional comments
 

@@ -1,0 +1,43 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.modal-content {
+  width: 80%;
+  padding: 2rem;
+  margin: 2% auto;
+  border-radius: 8px;
+  background: #000;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.header {
+  text-align: center;
+  font-size: 1.7rem;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.footer button {
+  background: #2fc1c1;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}

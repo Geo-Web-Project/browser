@@ -69,7 +69,7 @@ export default function GWWebView(props: GWWebViewProps) {
       <iframe
         className={styles[isFullScreen ? "full-screen" : "gwIframe"]}
         src={url}
-        allow="geolocation;camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;"
+        allow="geolocation;camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;clipboard-write;"
       />
       <button
         className={`${styles["full-screen-btn"]} ${

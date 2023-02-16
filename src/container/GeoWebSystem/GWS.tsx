@@ -14,6 +14,7 @@ import { ChatBox } from "@orbisclub/modules";
 import "@orbisclub/modules/dist/index.modern.css";
 import { ParcelRoot, MediaGallery, BasicProfile } from "@geo-web/types";
 import { GeoWebContent } from "@geo-web/content";
+import { ethers } from "ethers";
 
 export type GWSProps = {
   gwContent: GeoWebContent | null;
@@ -46,9 +47,9 @@ export default function GWS(props: GWSProps) {
           tokenId: new BN(parcelId.slice(2), "hex").toString(10),
         });
 
-        const accountId = new AccountId({
+        const ownerId = new AccountId({
           chainId: `eip155:${NETWORK_ID}`,
-          address: licenseOwner,
+          address: ethers.utils.getAddress(licenseOwner),
         });
 
         let rootCid = null;
@@ -56,7 +57,7 @@ export default function GWS(props: GWSProps) {
         try {
           rootCid = await gwContent.raw.resolveRoot({
             parcelId: assetId,
-            ownerId: accountId,
+            ownerDID: `did:pkh:${ownerId}`,
           });
           const _parcelInfo = await getParcelInfo(parcelId, rootCid.toString()); //get parcel info and meta-data
 

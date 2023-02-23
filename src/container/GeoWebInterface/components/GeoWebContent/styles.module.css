@@ -1,20 +1,41 @@
-.switch-div {
+.tabs {
   position: fixed;
   bottom: 0;
   width: 100%;
   display: flex;
-  justify-content: center;
-  gap: 2rem;
+  justify-content: space-around;
   color: white;
   background: rgba(32, 35, 51, 0.7);
-  padding: 16px 0 16px 0;
 }
 
-.switch-web {
-  transform: translateX(-50%);
-  margin: 0 16px 0 16px;
+.tab {
+  padding: 16px 2px 16px 2px;
+  flex: 1 1 0;
+  text-align: center;
+  font-size: 1.3rem;
 }
 
-.gallery-web {
-  transform: translateX(-80%);
+.tab:nth-child(2) {
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+}
+
+.tab:hover {
+  cursor: pointer;
+  background: rgba(32, 35, 51, 0.8);
+}
+
+.selected {
+  background: rgba(47, 193, 193, 0.7);
+}
+
+.selected:hover {
+  background: rgba(47, 193, 193, 0.8);
+}
+
+.chat-wrapper {
+  width: 100%;
+  height: calc(100vh - 73px);
+  height: calc(100svh - 73px);
+  background: #202333;
 }

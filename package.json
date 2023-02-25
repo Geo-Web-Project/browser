@@ -8,7 +8,7 @@
     "@ceramicnetwork/common": "^2.4.1",
     "@ceramicnetwork/http-client": "^1.0.0",
     "@ceramicnetwork/stream-tile": "^2.1.3",
-    "@geo-web/content": "^0.5.2",
+    "@geo-web/content": "^0.5.3",
     "@geo-web/sdk": "^4.2.0",
     "@geo-web/types": "^0.1.3",
     "@glazed/datamodel": "^0.3.1",

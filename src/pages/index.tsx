@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { CeramicClient } from "@ceramicnetwork/http-client";
-import { CERAMIC_URL } from "../lib/constants";
+import { CERAMIC_URL, IPFS_DELEGATE } from "../lib/constants";
 import { getIpfs, providers } from "ipfs-provider";
 import * as IPFSCore from "ipfs-core";
 import * as IPFSHttpClient from "ipfs-http-client";
@@ -36,6 +36,11 @@ export default function Index() {
           jsIpfs({
             loadJsIpfsModule: () => IPFSCore,
             options: {
+              config: {
+                Addresses: {
+                  Delegates: [IPFS_DELEGATE],
+                },
+              },
               preload: {
                 enabled: false,
               },

@@ -71,9 +71,7 @@ export default function GWContentView(props: GWContentViewProps) {
           onChange={switchMode}
           className={isWebAr ? "" : styles["switch-web"]}
         />
-        <Typography
-          className={isWebAr ? "" : styles["gallery-web"]}
-        >
+        <Typography className={isWebAr ? "" : styles["gallery-web"]}>
           {"Gallery"}
         </Typography>
       </div>

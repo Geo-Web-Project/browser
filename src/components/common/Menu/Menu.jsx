@@ -112,7 +112,7 @@ export default function Menu({ accessGps, showPosition, coordinate }) {
             disableRipple
             aria-label="open drawer"
             onClick={() => toggleDrawer(true)}
-            style={{ color: "white", marginTop: 6}}
+            style={{ color: "white", marginTop: 6 }}
           >
             <MenuIcon fontSize="large" />
           </IconButton>

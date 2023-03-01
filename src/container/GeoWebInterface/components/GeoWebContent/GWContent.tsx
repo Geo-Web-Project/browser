@@ -59,7 +59,7 @@ export default function GWContentView(props: GWContentViewProps) {
       {gwMode === GwMode.CHAT ? (
         <div className={styles["chat-wrapper"]}>
           <Discussion
-            context={`${CONTEXT_STREAM}:${parcelId}${ownerDID}`}
+            context={`${CONTEXT_STREAM}:${parcelId}/${ownerDID}`}
             theme={THEME_STREAM}
           />
         </div>

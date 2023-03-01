@@ -10,8 +10,6 @@ import GWContentView from "../GeoWebInterface/components/GeoWebContent/GWContent
 import { NETWORK_ID } from "../../lib/constants";
 import { getGeoId, getParcelInfo } from "../../lib/api";
 import styles from "./styles.module.css";
-import { ChatBox } from "@orbisclub/modules";
-import "@orbisclub/modules/dist/index.modern.css";
 import { ParcelRoot, MediaGallery, BasicProfile } from "@geo-web/types";
 import { GeoWebContent } from "@geo-web/content";
 import { ethers } from "ethers";
@@ -31,6 +29,7 @@ export default function GWS(props: GWSProps) {
   const [parcelRoot, setParcelRoot] = useState<ParcelRoot | null>(null);
   const [basicProfile, setBasicProfile] = useState<BasicProfile | null>(null);
   const [mediaGallery, setMediaGallery] = useState<MediaGallery | null>(null);
+  const [ownerDID, setOwnerDID] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -51,13 +50,16 @@ export default function GWS(props: GWSProps) {
           chainId: `eip155:${NETWORK_ID}`,
           address: ethers.utils.getAddress(licenseOwner),
         });
+        const ownerDID = `did:pkh:${ownerId}`;
+
+        setOwnerDID(ownerDID);
 
         let rootCid = null;
 
         try {
           rootCid = await gwContent.raw.resolveRoot({
             parcelId: assetId,
-            ownerDID: `did:pkh:${ownerId}`,
+            ownerDID,
           });
           const _parcelInfo = await getParcelInfo(parcelId, rootCid.toString()); //get parcel info and meta-data
 
@@ -164,29 +166,17 @@ export default function GWS(props: GWSProps) {
       />
       {loading ? (
         <GWLoader />
-      ) : parcelId && gwContent ? (
+      ) : parcelId && gwContent && ownerDID ? (
         <GWContentView
           gwContent={gwContent}
           basicProfile={basicProfile}
           mediaGallery={mediaGallery}
+          parcelId={parcelId}
+          ownerDID={ownerDID}
         />
       ) : (
         <GWAvail />
       )}
-      {parcelId ? (
-        <ChatBox
-          context={`Geo Web Parcel - ${parcelId.toString()}`}
-          theme={{
-            mainCta: {
-              position: "fixed",
-              right: "36px",
-              bottom: "84px",
-            },
-          }}
-          title={"Leave a comment on this parcel"}
-          poweredByOrbis="black"
-        />
-      ) : null}
     </>
   );
 }

@@ -1,2 +1,2 @@
 declare module "ipfs-provider";
-declare module "@orbisclub/modules";
+declare module "@orbisclub/components";

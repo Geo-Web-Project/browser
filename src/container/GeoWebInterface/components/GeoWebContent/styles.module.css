@@ -38,4 +38,5 @@
   height: calc(100vh - 73px);
   height: calc(100svh - 73px);
   background: #202333;
+  overflow-x: hidden;
 }

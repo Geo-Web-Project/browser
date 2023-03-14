@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { Discussion } from "@orbisclub/components";
+import dynamic from "next/dynamic";
 import Typography from "@material-ui/core/Typography";
 import { GeoWebContent } from "@geo-web/content";
 import { MediaGallery, BasicProfile } from "@geo-web/types";
@@ -8,10 +8,9 @@ import GWCanvas from "../GeoWebCanvas/GWCanvas";
 import "@orbisclub/components/dist/index.modern.css";
 import styles from "./styles.module.css";
 
-const CONTEXT_STREAM =
-  "kjzl6cwe1jw145l33v3vbl5171apg9n413hdn0yf8eo0m95qi0iq3wdkqa71fjx";
-const THEME_STREAM =
-  "kjzl6cwe1jw146bq6o1175c6f0aagjtwe4t8t5csuk8onwga63k4377tpbz5ggz";
+const Chat = dynamic(() => import("../../../../components/common/Chat/Chat"), {
+  ssr: false,
+});
 
 export type GWContentViewProps = {
   basicProfile: BasicProfile | null;
@@ -28,7 +27,7 @@ enum GwMode {
 }
 
 export default function GWContentView(props: GWContentViewProps) {
-  const { basicProfile, mediaGallery, gwContent, parcelId, ownerDID } = props;
+  const { basicProfile, mediaGallery, gwContent } = props;
 
   const [gwMode, setGwMode] = useState<GwMode>(GwMode.WEB);
 
@@ -57,12 +56,7 @@ export default function GWContentView(props: GWContentViewProps) {
   return (
     <>
       {gwMode === GwMode.CHAT ? (
-        <div className={styles["chat-wrapper"]}>
-          <Discussion
-            context={`${CONTEXT_STREAM}:${parcelId};${ownerDID}`}
-            theme={THEME_STREAM}
-          />
-        </div>
+        <Chat {...props} />
       ) : gwMode === GwMode.WEB ? (
         <GWWebView url={basicProfile?.url ?? null} />
       ) : (

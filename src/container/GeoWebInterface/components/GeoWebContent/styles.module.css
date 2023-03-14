@@ -32,11 +32,3 @@
 .selected:hover {
   background: rgba(47, 193, 193, 0.8);
 }
-
-.chat-wrapper {
-  width: 100%;
-  height: calc(100vh - 73px);
-  height: calc(100svh - 73px);
-  background: #202333;
-  overflow-x: hidden;
-}

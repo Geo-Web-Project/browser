@@ -14,25 +14,40 @@
   height: 126px;
   width: 126px;
   margin: auto;
+  margin-bottom: 20px;
 }
 
-.empty-txt {
+.ar-unavailable-icon {
+  background-image: url("/assets/ar-unavailable.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 126px;
+  width: 126px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.ar-txt {
   width: 300px;
   line-height: 32px;
   color: #ffffff;
   text-align: center;
 }
 
-.empty-txt > p {
+.ar-txt > h1 {
+  font-weight: bold;
+}
+
+.ar-txt > p {
   font-size: 1.25rem;
 }
 
-.empty-txt > ul {
+.ar-txt > ul {
   margin: 0;
   padding: 0;
   list-style-position: inside;
 }
 
-.empty-txt > a {
+.ar-txt > a {
   color: #2fc1c1;
 }

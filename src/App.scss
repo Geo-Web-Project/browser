@@ -1,0 +1,31 @@
+$primary: #2fc1c1;
+$secondary: #4b5588;
+$dark: #202333;
+$purple: rgba(75, 85, 136, 0.25);
+$info: #707179;
+$gray: #e6e7ee;
+$danger: #dc3545;
+$light: #f8f9fa;
+$success: #28a745;
+$warning: #f7bdbd;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "dark": $dark,
+  "purple": $purple,
+  "info": $info,
+  "gray": $gray,
+  "danger": $danger,
+  "light": $light,
+  "success": $success,
+  "warning": $warning,
+);
+
+$font-family-base: "Abel";
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  background: #202333;
+}

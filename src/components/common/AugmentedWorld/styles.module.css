@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 135px);
+  height: calc(100svh - 135px);
+}
+
+.ar-icon {
+  background-image: url("/assets/ar.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 126px;
+  width: 126px;
+  margin: auto;
+}
+
+.empty-txt {
+  width: 300px;
+  line-height: 32px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.empty-txt > p {
+  font-size: 1.25rem;
+}
+
+.empty-txt > ul {
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+}
+
+.empty-txt > a {
+  color: #2fc1c1;
+}

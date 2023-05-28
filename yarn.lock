@@ -77,6 +77,18 @@
   resolved "https://registry.yarnpkg.com/@assemblyscript/loader/-/loader-0.9.4.tgz#a483c54c1253656bb33babd464e3154a173e1577"
   integrity sha512-HazVq9zwTVwGmqdwYzu7WyQ6FQVZ7SwET0KKQuKm55jD0IfUpZgN0OPIiZG3zV1iSrVYcN0bdwLRXI/VNCYsUA==
 
+"@augmented-worlds/system-babylonjs@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@augmented-worlds/system-babylonjs/-/system-babylonjs-0.1.6.tgz#b7f74e24075d79c73fee38cfc6c4f7ec936f9ae0"
+  integrity sha512-cbhCmpAyRwfhVEWT/nr7fE4CEuoEHtPIxVQ8fAuiLDycJRA2j5R2DOXK74rrSGuo0qCQ4ov/3BPFFBCBd+6QhQ==
+  dependencies:
+    "@babylonjs/core" "^6.3.1"
+    "@babylonjs/loaders" "^6.3.1"
+    augmented-worlds "^0.1.3"
+    multiformats "^11.0.2"
+    swiper "^9.3.2"
+    typescript "^5.0.4"
+
 "@babel/code-frame@7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
@@ -1164,6 +1176,16 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@babylonjs/core@^6.3.1":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-6.5.0.tgz#f3c83666e9122492dd4c7de3d07c555a845c6afb"
+  integrity sha512-JfecUPoCNrP9vOFzhENZhDJ2PgXs+wViVJtOfrxNZwbS+BZ15z2UkWKnAGQsBwZPn0D/ty8ZxzTCPQbJAsRT/A==
+
+"@babylonjs/loaders@^6.3.1":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/loaders/-/loaders-6.5.0.tgz#76bf69c75047bde1792349931e3d10cefe818c7c"
+  integrity sha512-aY0EQUa6VwtUVhvO5fAuSFz2ZGHUkJtPjIZxAHw60vPxMCYi2uAlMZ1aS8WWsnj+RyEJ7EJj4joWArcVjNpzMg==
+
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
@@ -1947,20 +1969,46 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+"@fortawesome/fontawesome-common-types@6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.0.tgz#88da2b70d6ca18aaa6ed3687832e11f39e80624b"
+  integrity sha512-HNii132xfomg5QVZw0HwXXpN22s7VBHQBv9CeOu9tfJnhsWQNd2lmTNi8CSrnw5B+5YOmzu1UoPAyxaXsJ6RgQ==
+
+"@fortawesome/fontawesome-svg-core@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.4.0.tgz#3727552eff9179506e9203d72feb5b1063c11a21"
+  integrity sha512-Bertv8xOiVELz5raB2FlXDPKt+m94MQ3JgDfsVbrqNpLU9+UE2E18GKjLKw+d3XbeYPqg1pzyQKGsrzbw+pPaw==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
+
+"@fortawesome/free-solid-svg-icons@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.4.0.tgz#48c0e790847fa56299e2f26b82b39663b8ad7119"
+  integrity sha512-kutPeRGWm8V5dltFP1zGjQOEAzaLZj4StdQhWVZnfGFCvAPVvHh8qk5bRrU4KXnRRRNni5tKQI9PBAdI6MP8nQ==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
+
+"@fortawesome/react-fontawesome@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.2.0.tgz#d90dd8a9211830b4e3c08e94b63a0ba7291ddcf4"
+  integrity sha512-uHg75Rb/XORTtVt7OS9WoK8uM276Ufi7gCzshVWkUJbHhh3svsUUeqXerrM96Wm7fRiDzfKRwSoahhMIkGAYHw==
+  dependencies:
+    prop-types "^15.8.1"
+
 "@gar/promisify@^1.0.1":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@geo-web/content@^0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@geo-web/content/-/content-0.5.3.tgz#b666036117d0f06faa1071e34b6ba087a933588e"
-  integrity sha512-mn/6UxvMwL6iOTSA9HhVzI/pRB4PvO3P+haJb7GguGhzJAkPoTa4sD3qWZ8QnTIrcZzS30D5g6ahj5dXP4rYbg==
+"@geo-web/content@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@geo-web/content/-/content-0.6.1.tgz#9b86dd173207fb9dec81848d3f419d180c638830"
+  integrity sha512-15iktfvH+xb7gwpMq5OdWpSNOm9AD0cApuEU1Sjr047EcfBmxdVlehKFBd8WYKEHsujSEKplasFYpgXCSL1t/A==
   dependencies:
     "@ceramicnetwork/common" "^2.18.0"
     "@ceramicnetwork/http-client" "^2.15.0"
     "@ceramicnetwork/stream-tile" "^2.13.0"
-    "@geo-web/types" "^0.1.3"
+    "@geo-web/types" "^0.2.0"
     "@glazed/tile-loader" "^0.2.1"
     "@ipld/car" "^5.0.1"
     "@ipld/dag-cbor" "^8.0.0"
@@ -1996,10 +2044,10 @@
     ethers ">=5.0.0"
     typescript "^4.6.3"
 
-"@geo-web/types@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@geo-web/types/-/types-0.1.3.tgz#85403496101389fcaaca176658c230a6375ae304"
-  integrity sha512-d1vtE8333eFY6kufibi8UwK3gbhAQIfYY0cFmcZ8BYA13r3ohODTVBKF6gGMBxQbLdBfMh7SOB477g8HBwyzHA==
+"@geo-web/types@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@geo-web/types/-/types-0.2.0.tgz#16e91f101759fddd76de53855b935e6c684a8222"
+  integrity sha512-dqkebh/T+UQtD9e/i7QObkWgpf2paNR1+Xk1O94gkojLMB+SA0xOaJQyLRR2LUPOEe9bBAeuULtUwbleJOWZvg==
   dependencies:
     multiformats "^10.0.2"
 
@@ -6241,6 +6289,11 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+augmented-worlds@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/augmented-worlds/-/augmented-worlds-0.1.3.tgz#0ef221ffd334a5e54f681aabb091e8f895f03158"
+  integrity sha512-e59g73/BGV9JsdAOmQNQRLFVutGc69GodgeT3W/52IuejUw8zZ9xT9pmJjFBcvcukxOsUJ0bxaOZGELEZOz0Hw==
 
 auto-bind@^4.0.0:
   version "4.0.0"
@@ -16072,6 +16125,11 @@ multiformats@^11.0.0, multiformats@^11.0.1:
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-11.0.1.tgz#ba58c3f69f032ab67dab4b48cc70f01ac2ca07fe"
   integrity sha512-atWruyH34YiknSdL5yeIir00EDlJRpHzELYQxG7Iy29eCyL+VrZHpPrX5yqlik3jnuqpLpRKVZ0SGVb9UzKaSA==
 
+multiformats@^11.0.2:
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-11.0.2.tgz#b14735efc42cd8581e73895e66bebb9752151b60"
+  integrity sha512-b5mYMkOkARIuVZCpvijFj9a6m5wMVLC7cf/jIPd5D/ARDOfLC5+IFkbgDXQgcU2goIsTD/O9NY4DI/Mt4OGvlg==
+
 multiformats@^9.0.0, multiformats@^9.0.2, multiformats@^9.0.4, multiformats@^9.1.0, multiformats@^9.1.2, multiformats@^9.4.10, multiformats@^9.4.2, multiformats@^9.4.5, multiformats@^9.4.7, multiformats@^9.5.1, multiformats@^9.5.2, multiformats@^9.5.4, multiformats@^9.5.8, multiformats@^9.6.3, multiformats@^9.6.4, multiformats@^9.6.5:
   version "9.9.0"
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-9.9.0.tgz#c68354e7d21037a8f1f8833c8ccd68618e8f1d37"
@@ -20012,6 +20070,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssr-window@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-4.0.2.tgz#dc6b3ee37be86ac0e3ddc60030f7b3bc9b8553be"
+  integrity sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==
+
 ssri@^6.0.1:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
@@ -20463,6 +20526,13 @@ swarm-js@^0.1.40:
     setimmediate "^1.0.5"
     tar "^4.0.2"
     xhr-request "^1.0.1"
+
+swiper@^9.3.2:
+  version "9.3.2"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-9.3.2.tgz#f29eddb17f231221c7727372637c44279174a4e1"
+  integrity sha512-Kj9Z4kXRmJR3YT/Wj+XLWj8P6IcRt+WG38uL8M3/Wny7+6sV0TlP9vnE1X+Co9c7VzNooojWGnFa+Wf/9+CUMA==
+  dependencies:
+    ssr-window "^4.0.2"
 
 symbol-observable@^4.0.0:
   version "4.0.0"
@@ -21054,6 +21124,11 @@ typescript@^4.6.3, typescript@^4.7.4, typescript@^4.9.3:
   version "4.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+
+typescript@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
+  integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
 
 u3@^0.1.1:
   version "0.1.1"

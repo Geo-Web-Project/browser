@@ -5,8 +5,10 @@ import { GeoWebContent } from "@geo-web/content";
 import { MediaGallery, BasicProfile } from "@geo-web/types";
 import GWWebView from "../GeoWebView/GWWebView";
 import GWCanvas from "../GeoWebCanvas/GWCanvas";
+import AugmentedWorld from "../../../../components/common/AugmentedWorld/AugmentedWorld";
 import "@orbisclub/components/dist/index.modern.css";
 import styles from "./styles.module.css";
+import { CID } from "multiformats/cid";
 
 const Chat = dynamic(() => import("../../../../components/common/Chat/Chat"), {
   ssr: false,
@@ -15,6 +17,7 @@ const Chat = dynamic(() => import("../../../../components/common/Chat/Chat"), {
 export type GWContentViewProps = {
   basicProfile: BasicProfile | null;
   mediaGallery: MediaGallery | null;
+  augmentedWorld: CID | null;
   gwContent: GeoWebContent;
   parcelId: string;
   ownerDID: string;
@@ -23,6 +26,7 @@ export type GWContentViewProps = {
 enum GwMode {
   CHAT,
   WEB,
+  AR,
   GALLERY,
 }
 
@@ -59,6 +63,8 @@ export default function GWContentView(props: GWContentViewProps) {
         <Chat {...props} />
       ) : gwMode === GwMode.WEB ? (
         <GWWebView url={basicProfile?.url ?? null} />
+      ) : gwMode === GwMode.AR ? (
+        <AugmentedWorld />
       ) : (
         <GWCanvas mediaGallery={mediaGallery} gwContent={gwContent} />
       )}
@@ -69,7 +75,7 @@ export default function GWContentView(props: GWContentViewProps) {
           }`}
           onClick={() => setGwMode(GwMode.CHAT)}
         >
-          Parcel Chat
+          Chat
         </div>
         <div
           className={`${styles["tab"]} ${
@@ -77,7 +83,15 @@ export default function GWContentView(props: GWContentViewProps) {
           }`}
           onClick={() => setGwMode(GwMode.WEB)}
         >
-          {isWebAr ? "WebAR" : "Web Content"}
+          {isWebAr ? "WebAR" : "Web"}
+        </div>
+        <div
+          className={`${styles["tab"]} ${
+            gwMode === GwMode.AR ? styles["selected"] : ""
+          }`}
+          onClick={() => setGwMode(GwMode.AR)}
+        >
+          AR
         </div>
         <div
           className={`${styles["tab"]} ${

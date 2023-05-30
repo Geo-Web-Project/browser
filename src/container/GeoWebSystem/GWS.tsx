@@ -171,7 +171,7 @@ export default function GWS(props: GWSProps) {
           gwContent={gwContent}
           basicProfile={basicProfile}
           mediaGallery={mediaGallery}
-          augmentedWorld={parcelRoot?.augmentedWorld ?? null}
+          augmentedWorld={(parcelRoot?.augmentedWorld as any) ?? null}
           parcelId={parcelId}
           ownerDID={ownerDID}
         />

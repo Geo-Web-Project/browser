@@ -31,7 +31,7 @@ enum GwMode {
 }
 
 export default function GWContentView(props: GWContentViewProps) {
-  const { basicProfile, mediaGallery, gwContent } = props;
+  const { basicProfile, mediaGallery, gwContent, augmentedWorld } = props;
 
   const [gwMode, setGwMode] = useState<GwMode>(GwMode.WEB);
 
@@ -63,8 +63,11 @@ export default function GWContentView(props: GWContentViewProps) {
         <Chat {...props} />
       ) : gwMode === GwMode.WEB ? (
         <GWWebView url={basicProfile?.url ?? null} />
-      ) : gwMode === GwMode.AR ? (
-        <AugmentedWorld />
+      ) : gwMode === GwMode.AR && augmentedWorld ? (
+        <AugmentedWorld
+          augmentedWorldCid={augmentedWorld}
+          gwContent={gwContent}
+        />
       ) : (
         <GWCanvas mediaGallery={mediaGallery} gwContent={gwContent} />
       )}

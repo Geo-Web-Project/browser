@@ -27,6 +27,10 @@ import CopyTooltip from "../CopyTooltip";
 import Image from "react-bootstrap/Image";
 import { UAParser } from "ua-parser-js";
 import { Close } from "@material-ui/icons";
+import { CID } from "multiformats";
+import { GeoWebContent } from "@geo-web/content";
+import { encode as encodeDagJson } from "@ipld/dag-json";
+import { decode as decodeJson } from "multiformats/codecs/json";
 
 import "@augmented-worlds/system-babylonjs/styles.css";
 import "swiper/css";
@@ -156,9 +160,16 @@ function NotAvailableView({ incubationsUri }: { incubationsUri: string }) {
   );
 }
 
-export default function AugmentedWorld() {
+export default function AugmentedWorld({
+  augmentedWorldCid,
+  gwContent,
+}: {
+  augmentedWorldCid: CID;
+  gwContent: GeoWebContent;
+}) {
   const [state, setState] = useState(State.Ready);
   const [world, setWorld] = useState<World | null>(null);
+  const [isWorldReady, setIsWorldReady] = useState(false);
   const [webXRSystem, setWebXRSystem] = useState<WebXRSystem | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -189,7 +200,132 @@ export default function AugmentedWorld() {
       await init();
 
       // Create World
-      setWorld(new World());
+      const world = new World();
+      setWorld(world);
+
+      // Download world
+      const entities = (await gwContent.raw.get(
+        augmentedWorldCid as any,
+        "/",
+        {}
+      )) as CID[];
+
+      const localEntityMap: Record<string, number> = {};
+      const trackedImages: number[] = [];
+      const worldEntities: number[] = [];
+
+      // Add all entities locally
+      for (const entityCid of entities) {
+        const worldEntity = world.create_entity();
+        worldEntities.push(worldEntity);
+        localEntityMap[entityCid.toString()] = worldEntity;
+      }
+
+      // Add components
+      for (const entityCid of entities) {
+        const entity = await gwContent.raw.get(entityCid as any, "/", {});
+
+        const worldEntity = localEntityMap[entityCid.toString()];
+        world.add_component_to_entity(worldEntity, ComponentType.Component, {});
+
+        if (entity.position) {
+          world.add_component_to_entity(worldEntity, ComponentType.Position, {
+            startPosition: {
+              x: entity.position.x ?? 0,
+              y: entity.position.y ?? 0,
+              z: entity.position.z ?? 0,
+            },
+          } as Position);
+        } else {
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Position,
+            {} as Position
+          );
+        }
+
+        if (entity.scale) {
+          world.add_component_to_entity(worldEntity, ComponentType.Scale, {
+            startScale: {
+              x: entity.scale.x ?? 0,
+              y: entity.scale.y ?? 0,
+              z: entity.scale.z ?? 0,
+            },
+          } as Scale);
+        } else {
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Scale,
+            {} as Scale
+          );
+        }
+
+        if (entity.orientation) {
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Orientation,
+            {
+              startOrientation: {
+                x: entity.orientation.x ?? 0,
+                y: entity.orientation.y ?? 0,
+                z: entity.orientation.z ?? 0,
+                w: entity.orientation.w ?? 1,
+              },
+            } as Orientation
+          );
+        } else {
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Orientation,
+            {} as Orientation
+          );
+        }
+
+        if (entity.isAnchor !== undefined) {
+          world.add_component_to_entity(worldEntity, ComponentType.IsAnchor, {
+            isAnchor: entity.isAnchor,
+          } as IsAnchor);
+        }
+
+        if (entity.glTFModel) {
+          world.add_component_to_entity(worldEntity, ComponentType.GLTFModel, {
+            glTFModel: { "/": entity.glTFModel.toString() },
+          } as GLTFModel);
+        }
+
+        if (entity.anchor) {
+          // Replace CID with local entity
+          // TODO: Support nested anchors
+          world.add_component_to_entity(worldEntity, ComponentType.Anchor, {
+            anchor: localEntityMap[entity.anchor.toString()],
+          } as Anchor);
+        }
+
+        if (entity.trackedImage) {
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.TrackedImage,
+            decodeJson(encodeDagJson(entity.trackedImage)) as TrackedImage
+          );
+          trackedImages.push(worldEntity);
+        }
+      }
+
+      if (trackedImages.length > 0) {
+        const coachingOverlayEntity = world.create_entity();
+        world.add_component_to_entity(
+          coachingOverlayEntity,
+          ComponentType.CoachingOverlay,
+          {
+            trackedImages: trackedImages.map((v) => {
+              return { "/": localEntityMap[v] };
+            }),
+            text: "Point and hold the camera on the image target to enter AR.",
+          } as CoachingOverlay
+        );
+      }
+
+      setIsWorldReady(true);
     })();
   }, []);
 
@@ -197,69 +333,6 @@ export default function AugmentedWorld() {
     if (!world || !canvasRef.current || !overlayRef.current) return;
 
     setState(State.Loading);
-
-    const testImageAnchor = world.create_entity();
-    world.add_component_to_entity(testImageAnchor, ComponentType.Component, {});
-    world.add_component_to_entity(
-      testImageAnchor,
-      ComponentType.Position,
-      {} as Position
-    );
-    world.add_component_to_entity(
-      testImageAnchor,
-      ComponentType.Orientation,
-      {} as Orientation
-    );
-    world.add_component_to_entity(testImageAnchor, ComponentType.TrackedImage, {
-      imageAsset: {
-        "/": "QmZsDopGXAGPtToWSi8bxYjsrZkiraX7wqMZ9K8LgW2tyE",
-      },
-      physicalWidthInMeters: 0.165,
-    } as TrackedImage);
-    world.add_component_to_entity(testImageAnchor, ComponentType.IsAnchor, {
-      isAnchor: true,
-    } as IsAnchor);
-
-    const testEntity = world.create_entity();
-    world.add_component_to_entity(testEntity, ComponentType.Component, {});
-    world.add_component_to_entity(testEntity, ComponentType.GLTFModel, {
-      glTFModel: { "/": "QmdPXtkGThsWvR1YKg4QVSR9n8oHMPmpBEnyyV8Tk638o9" },
-    } as GLTFModel);
-    world.add_component_to_entity(testEntity, ComponentType.Position, {
-      startPosition: {
-        x: 0,
-        y: 0,
-        z: 0,
-      },
-    } as Position);
-    world.add_component_to_entity(testEntity, ComponentType.Orientation, {
-      startOrientation: {
-        x: 0,
-        y: 0,
-        z: 0,
-        w: 1,
-      },
-    } as Orientation);
-    world.add_component_to_entity(testEntity, ComponentType.Scale, {
-      startScale: {
-        x: 1,
-        y: 1,
-        z: 1,
-      },
-    } as Scale);
-    world.add_component_to_entity(testEntity, ComponentType.Anchor, {
-      anchor: testImageAnchor,
-    } as Anchor);
-
-    const coachingOverlayEntity = world.create_entity();
-    world.add_component_to_entity(
-      coachingOverlayEntity,
-      ComponentType.CoachingOverlay,
-      {
-        trackedImages: [{ "/": testImageAnchor }],
-        text: "Point and hold the camera on the image target to enter AR.",
-      } as CoachingOverlay
-    );
 
     // Create host systems
     const graphicsSystem = new GraphicsSystem(
@@ -328,7 +401,7 @@ export default function AugmentedWorld() {
           <Close style={{ color: "#fff" }} />
         </button>
       </div>
-      {state === State.Loading ? (
+      {!world || state === State.Loading || !isWorldReady ? (
         <GWLoader />
       ) : state === State.Ready ? (
         <EnterView enterWorld={enterWorld} incubationsUri={incubationsUri} />

@@ -13,6 +13,7 @@ import styles from "./styles.module.css";
 import { ParcelRoot, MediaGallery, BasicProfile } from "@geo-web/types";
 import { GeoWebContent } from "@geo-web/content";
 import { ethers } from "ethers";
+import { CID } from "multiformats/cid";
 
 export type GWSProps = {
   gwContent: GeoWebContent | null;
@@ -171,7 +172,9 @@ export default function GWS(props: GWSProps) {
           gwContent={gwContent}
           basicProfile={basicProfile}
           mediaGallery={mediaGallery}
-          augmentedWorld={(parcelRoot?.augmentedWorld as any) ?? null}
+          augmentedWorld={CID.parse(
+            "bafyreietptw7udedbdpro6fje5bzsqdhsktktqdl4273pmvbpjrc2odi3q"
+          )}
           parcelId={parcelId}
           ownerDID={ownerDID}
         />

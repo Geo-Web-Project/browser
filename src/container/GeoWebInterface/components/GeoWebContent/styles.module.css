@@ -15,8 +15,7 @@
   font-size: 1.3rem;
 }
 
-.tab:nth-child(2) {
-  border-left: 2px solid white;
+.tab:nth-child(-n + 3) {
   border-right: 2px solid white;
 }
 

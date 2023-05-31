@@ -228,58 +228,30 @@ export default function AugmentedWorld({
         const worldEntity = localEntityMap[entityCid.toString()];
         world.add_component_to_entity(worldEntity, ComponentType.Component, {});
 
-        if (entity.position) {
-          world.add_component_to_entity(worldEntity, ComponentType.Position, {
-            startPosition: {
-              x: entity.position.x ?? 0,
-              y: entity.position.y ?? 0,
-              z: entity.position.z ?? 0,
-            },
-          } as Position);
-        } else {
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Position,
-            {} as Position
-          );
-        }
+        world.add_component_to_entity(worldEntity, ComponentType.Position, {
+          startPosition: {
+            x: entity.position?.x ?? 0,
+            y: entity.position?.y ?? 0,
+            z: entity.position?.z ?? 0,
+          },
+        } as Position);
 
-        if (entity.scale) {
-          world.add_component_to_entity(worldEntity, ComponentType.Scale, {
-            startScale: {
-              x: entity.scale.x ?? 0,
-              y: entity.scale.y ?? 0,
-              z: entity.scale.z ?? 0,
-            },
-          } as Scale);
-        } else {
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Scale,
-            {} as Scale
-          );
-        }
+        world.add_component_to_entity(worldEntity, ComponentType.Scale, {
+          startScale: {
+            x: entity.scale?.x ?? 1,
+            y: entity.scale?.y ?? 1,
+            z: entity.scale?.z ?? 1,
+          },
+        } as Scale);
 
-        if (entity.orientation) {
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Orientation,
-            {
-              startOrientation: {
-                x: entity.orientation.x ?? 0,
-                y: entity.orientation.y ?? 0,
-                z: entity.orientation.z ?? 0,
-                w: entity.orientation.w ?? 1,
-              },
-            } as Orientation
-          );
-        } else {
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Orientation,
-            {} as Orientation
-          );
-        }
+        world.add_component_to_entity(worldEntity, ComponentType.Orientation, {
+          startOrientation: {
+            x: entity.orientation?.x ?? 0,
+            y: entity.orientation?.y ?? 0,
+            z: entity.orientation?.z ?? 0,
+            w: entity.orientation?.w ?? 1,
+          },
+        } as Orientation);
 
         if (entity.isAnchor !== undefined) {
           world.add_component_to_entity(worldEntity, ComponentType.IsAnchor, {
@@ -296,9 +268,15 @@ export default function AugmentedWorld({
         if (entity.anchor) {
           // Replace CID with local entity
           // TODO: Support nested anchors
-          world.add_component_to_entity(worldEntity, ComponentType.Anchor, {
+          const anchor = {
             anchor: localEntityMap[entity.anchor.toString()],
-          } as Anchor);
+          } as Anchor;
+          console.log(anchor);
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Anchor,
+            anchor
+          );
         }
 
         if (entity.trackedImage) {

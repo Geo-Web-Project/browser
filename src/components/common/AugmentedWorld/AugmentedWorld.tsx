@@ -162,6 +162,7 @@ export default function AugmentedWorld() {
   const [webXRSystem, setWebXRSystem] = useState<WebXRSystem | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const parser = new UAParser();
   const { browser } = parser.getResult();
@@ -293,8 +294,9 @@ export default function AugmentedWorld() {
 
       (await webXRSystem.getXRSessionManager()).onXRSessionEnded.add(() => {
         if (canvasRef.current) canvasRef.current.hidden = true;
-        if (overlayRef.current) {
+        if (overlayRef.current && closeButtonRef.current) {
           overlayRef.current.innerHTML = "";
+          overlayRef.current.appendChild(closeButtonRef.current);
           overlayRef.current.hidden = true;
         }
         graphicsSystem.getScene().getEngine().dispose();
@@ -316,6 +318,7 @@ export default function AugmentedWorld() {
       <canvas ref={canvasRef} hidden />
       <div ref={overlayRef} hidden>
         <button
+          ref={closeButtonRef}
           className={`${styles["close-btn"]}`}
           onClick={async () => {
             const sessionManager = await webXRSystem?.getXRSessionManager();

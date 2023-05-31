@@ -13,7 +13,6 @@ import init, {
   TrackedImage,
   CoachingOverlay,
   Scale,
-  System,
 } from "augmented-worlds";
 import {
   GraphicsSystem,
@@ -27,6 +26,11 @@ import GWLoader from "../Loader/Loader";
 import CopyTooltip from "../CopyTooltip";
 import Image from "react-bootstrap/Image";
 import { UAParser } from "ua-parser-js";
+import { Close } from "@material-ui/icons";
+
+import "@augmented-worlds/system-babylonjs/styles.css";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const useStyles = makeStyles(() => ({
   btn: {
@@ -52,6 +56,7 @@ function EnterView({
   enterWorld: () => Promise<void>;
 }) {
   const classes = useStyles();
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const copyUri = useCallback(() => {
     navigator.clipboard.writeText(incubationsUri);
   }, [incubationsUri]);
@@ -88,8 +93,12 @@ function EnterView({
         </li>
       </ul>
       <Button
+        ref={buttonRef}
         className={classes.btn}
-        onClick={enterWorld}
+        onClick={() => {
+          buttonRef.current?.blur();
+          enterWorld();
+        }}
         style={{ marginTop: "20px" }}
       >
         Start AR Session
@@ -150,6 +159,7 @@ function NotAvailableView({ incubationsUri }: { incubationsUri: string }) {
 export default function AugmentedWorld() {
   const [state, setState] = useState(State.Ready);
   const [world, setWorld] = useState<World | null>(null);
+  const [webXRSystem, setWebXRSystem] = useState<WebXRSystem | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -182,73 +192,73 @@ export default function AugmentedWorld() {
     })();
   }, []);
 
-  const enterWorld = useCallback(async () => {
+  const enterWorld = async () => {
     if (!world || !canvasRef.current || !overlayRef.current) return;
 
-    // setState(State.Loading);
+    setState(State.Loading);
 
-    //     const testImageAnchor = world.create_entity();
-    //     world.add_component_to_entity(testImageAnchor, ComponentType.Component, {});
-    //     world.add_component_to_entity(
-    //       testImageAnchor,
-    //       ComponentType.Position,
-    //       {} as Position
-    //     );
-    //     world.add_component_to_entity(
-    //       testImageAnchor,
-    //       ComponentType.Orientation,
-    //       {} as Orientation
-    //     );
-    //     world.add_component_to_entity(testImageAnchor, ComponentType.TrackedImage, {
-    //       imageAsset: {
-    //         "/": "QmZsDopGXAGPtToWSi8bxYjsrZkiraX7wqMZ9K8LgW2tyE",
-    //       },
-    //       physicalWidthInMeters: 0.165,
-    //     } as TrackedImage);
-    //     world.add_component_to_entity(testImageAnchor, ComponentType.IsAnchor, {
-    //       isAnchor: true,
-    //     } as IsAnchor);
-    //
-    //     const testEntity = world.create_entity();
-    //     world.add_component_to_entity(testEntity, ComponentType.Component, {});
-    //     world.add_component_to_entity(testEntity, ComponentType.GLTFModel, {
-    //       glTFModel: { "/": "QmdPXtkGThsWvR1YKg4QVSR9n8oHMPmpBEnyyV8Tk638o9" },
-    //     } as GLTFModel);
-    //     world.add_component_to_entity(testEntity, ComponentType.Position, {
-    //       startPosition: {
-    //         x: 0,
-    //         y: 0,
-    //         z: 0,
-    //       },
-    //     } as Position);
-    //     world.add_component_to_entity(testEntity, ComponentType.Orientation, {
-    //       startOrientation: {
-    //         x: 0,
-    //         y: 0,
-    //         z: 0,
-    //         w: 1,
-    //       },
-    //     } as Orientation);
-    //     world.add_component_to_entity(testEntity, ComponentType.Scale, {
-    //       startScale: {
-    //         x: 1,
-    //         y: 1,
-    //         z: 1,
-    //       },
-    //     } as Scale);
-    //     world.add_component_to_entity(testEntity, ComponentType.Anchor, {
-    //       anchor: testImageAnchor,
-    //     } as Anchor);
-    //
-    //     const coachingOverlayEntity = world.create_entity();
-    //     world.add_component_to_entity(
-    //       coachingOverlayEntity,
-    //       ComponentType.CoachingOverlay,
-    //       {
-    //         trackedImages: [{ "/": testImageAnchor }],
-    //         text: "Point and hold the camera on the image target to enter AR.",
-    //       } as CoachingOverlay
-    //     );
+    const testImageAnchor = world.create_entity();
+    world.add_component_to_entity(testImageAnchor, ComponentType.Component, {});
+    world.add_component_to_entity(
+      testImageAnchor,
+      ComponentType.Position,
+      {} as Position
+    );
+    world.add_component_to_entity(
+      testImageAnchor,
+      ComponentType.Orientation,
+      {} as Orientation
+    );
+    world.add_component_to_entity(testImageAnchor, ComponentType.TrackedImage, {
+      imageAsset: {
+        "/": "QmZsDopGXAGPtToWSi8bxYjsrZkiraX7wqMZ9K8LgW2tyE",
+      },
+      physicalWidthInMeters: 0.165,
+    } as TrackedImage);
+    world.add_component_to_entity(testImageAnchor, ComponentType.IsAnchor, {
+      isAnchor: true,
+    } as IsAnchor);
+
+    const testEntity = world.create_entity();
+    world.add_component_to_entity(testEntity, ComponentType.Component, {});
+    world.add_component_to_entity(testEntity, ComponentType.GLTFModel, {
+      glTFModel: { "/": "QmdPXtkGThsWvR1YKg4QVSR9n8oHMPmpBEnyyV8Tk638o9" },
+    } as GLTFModel);
+    world.add_component_to_entity(testEntity, ComponentType.Position, {
+      startPosition: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
+    } as Position);
+    world.add_component_to_entity(testEntity, ComponentType.Orientation, {
+      startOrientation: {
+        x: 0,
+        y: 0,
+        z: 0,
+        w: 1,
+      },
+    } as Orientation);
+    world.add_component_to_entity(testEntity, ComponentType.Scale, {
+      startScale: {
+        x: 1,
+        y: 1,
+        z: 1,
+      },
+    } as Scale);
+    world.add_component_to_entity(testEntity, ComponentType.Anchor, {
+      anchor: testImageAnchor,
+    } as Anchor);
+
+    const coachingOverlayEntity = world.create_entity();
+    world.add_component_to_entity(
+      coachingOverlayEntity,
+      ComponentType.CoachingOverlay,
+      {
+        trackedImages: [{ "/": testImageAnchor }],
+        text: "Point and hold the camera on the image target to enter AR.",
+      } as CoachingOverlay
+    );
 
     // Create host systems
     const graphicsSystem = new GraphicsSystem(
@@ -257,6 +267,7 @@ export default function AugmentedWorld() {
       "https://w3s.link"
     );
     const webXRSystem = new WebXRSystem(graphicsSystem.getScene());
+    setWebXRSystem(webXRSystem);
     const webXRAnchorSystem = new AnchorSystem(webXRSystem);
     const anchorTransformSystem = new AnchorTransformSystem();
     const imageTrackingSystem = new ImageTrackingSystem(
@@ -277,21 +288,43 @@ export default function AugmentedWorld() {
     world.add_system(coachingOverlaySystem);
 
     try {
-      await webXRSystem.startXRSession();
       graphicsSystem.start();
+      await webXRSystem.startXRSession();
+
+      (await webXRSystem.getXRSessionManager()).onXRSessionEnded.add(() => {
+        if (canvasRef.current) canvasRef.current.hidden = true;
+        if (overlayRef.current) {
+          overlayRef.current.innerHTML = "";
+          overlayRef.current.hidden = true;
+        }
+        graphicsSystem.getScene().getEngine().dispose();
+        setWorld(new World());
+      });
 
       canvasRef.current.hidden = false;
       overlayRef.current.hidden = false;
+
+      setState(State.Ready);
     } catch (e) {
       console.log(e);
       setState(State.NotSupported);
     }
-  }, [world, canvasRef, overlayRef]);
+  };
 
   return (
     <div className={styles["wrapper"]}>
       <canvas ref={canvasRef} hidden />
-      <div ref={overlayRef} hidden />
+      <div ref={overlayRef} hidden>
+        <button
+          className={`${styles["close-btn"]}`}
+          onClick={async () => {
+            const sessionManager = await webXRSystem?.getXRSessionManager();
+            await sessionManager?.exitXRAsync();
+          }}
+        >
+          <Close style={{ color: "#fff" }} />
+        </button>
+      </div>
       {state === State.Loading ? (
         <GWLoader />
       ) : state === State.Ready ? (

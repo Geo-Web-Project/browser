@@ -47,3 +47,17 @@
 .ar-txt > a {
   color: #2fc1c1;
 }
+
+.close-btn {
+  position: fixed;
+  z-index: 1001;
+  right: 30px;
+  top: 16px;
+  display: flex;
+  align-items: center;
+  background: rgba(32, 35, 51, 0.6);
+  padding: 5px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}

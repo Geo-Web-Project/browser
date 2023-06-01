@@ -1,6 +1,9 @@
 import Head from "next/head";
 import "../App.css";
 import "../App.scss";
+import "@augmented-worlds/system-babylonjs/styles.css";
+import "swiper/css";
+import "swiper/css/navigation";
 
 export default function App({ Component, pageProps }) {
   return (

@@ -32,10 +32,6 @@ import { GeoWebContent } from "@geo-web/content";
 import { encode as encodeDagJson } from "@ipld/dag-json";
 import { decode as decodeJson } from "multiformats/codecs/json";
 
-import "@augmented-worlds/system-babylonjs/styles.css";
-import "swiper/css";
-import "swiper/css/navigation";
-
 const useStyles = makeStyles(() => ({
   btn: {
     alignSelf: "flex-end",
@@ -228,31 +224,6 @@ export default function AugmentedWorld({
         const worldEntity = localEntityMap[entityCid.toString()];
         world.add_component_to_entity(worldEntity, ComponentType.Component, {});
 
-        world.add_component_to_entity(worldEntity, ComponentType.Position, {
-          startPosition: {
-            x: entity.position?.x ?? 0,
-            y: entity.position?.y ?? 0,
-            z: entity.position?.z ?? 0,
-          },
-        } as Position);
-
-        world.add_component_to_entity(worldEntity, ComponentType.Scale, {
-          startScale: {
-            x: entity.scale?.x ?? 1,
-            y: entity.scale?.y ?? 1,
-            z: entity.scale?.z ?? 1,
-          },
-        } as Scale);
-
-        world.add_component_to_entity(worldEntity, ComponentType.Orientation, {
-          startOrientation: {
-            x: entity.orientation?.x ?? 0,
-            y: entity.orientation?.y ?? 0,
-            z: entity.orientation?.z ?? 0,
-            w: entity.orientation?.w ?? 1,
-          },
-        } as Orientation);
-
         if (entity.isAnchor !== undefined) {
           world.add_component_to_entity(worldEntity, ComponentType.IsAnchor, {
             isAnchor: entity.isAnchor,
@@ -263,6 +234,78 @@ export default function AugmentedWorld({
           world.add_component_to_entity(worldEntity, ComponentType.GLTFModel, {
             glTFModel: { "/": entity.glTFModel.toString() },
           } as GLTFModel);
+
+          world.add_component_to_entity(worldEntity, ComponentType.Position, {
+            startPosition: {
+              x: entity.position?.x ?? 0,
+              y: entity.position?.y ?? 0,
+              z: entity.position?.z ?? 0,
+            },
+          } as Position);
+
+          world.add_component_to_entity(worldEntity, ComponentType.Scale, {
+            startScale: {
+              x: entity.scale?.x ?? 1,
+              y: entity.scale?.y ?? 1,
+              z: entity.scale?.z ?? 1,
+            },
+          } as Scale);
+
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Orientation,
+            {
+              startOrientation: {
+                x: entity.orientation?.x ?? 0,
+                y: entity.orientation?.y ?? 0,
+                z: entity.orientation?.z ?? 0,
+                w: entity.orientation?.w ?? 1,
+              },
+            } as Orientation
+          );
+        } else {
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Position,
+            entity.position
+              ? ({
+                  startPosition: {
+                    x: entity.position?.x ?? 0,
+                    y: entity.position?.y ?? 0,
+                    z: entity.position?.z ?? 0,
+                  },
+                } as Position)
+              : {}
+          );
+
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Scale,
+            entity.scale
+              ? ({
+                  startScale: {
+                    x: entity.scale?.x ?? 1,
+                    y: entity.scale?.y ?? 1,
+                    z: entity.scale?.z ?? 1,
+                  },
+                } as Scale)
+              : {}
+          );
+
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Orientation,
+            entity.orientation
+              ? ({
+                  startOrientation: {
+                    x: entity.orientation?.x ?? 0,
+                    y: entity.orientation?.y ?? 0,
+                    z: entity.orientation?.z ?? 0,
+                    w: entity.orientation?.w ?? 1,
+                  },
+                } as Orientation)
+              : {}
+          );
         }
 
         if (entity.anchor) {
@@ -271,7 +314,6 @@ export default function AugmentedWorld({
           const anchor = {
             anchor: localEntityMap[entity.anchor.toString()],
           } as Anchor;
-          console.log(anchor);
           world.add_component_to_entity(
             worldEntity,
             ComponentType.Anchor,

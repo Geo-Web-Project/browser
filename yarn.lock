@@ -2182,6 +2182,14 @@
     cborg "^1.10.0"
     multiformats "^11.0.0"
 
+"@ipld/dag-json@^10.1.0":
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/@ipld/dag-json/-/dag-json-10.1.0.tgz#9cad1628d9ef6df0d732d2d468adb53987d1111d"
+  integrity sha512-2rSvzDyGxx1NC24IsqKFTSXzAfUBlniZQRT15PEN+i177KEBsCXPfxuN/DweGIfmj3YceNyR8XOJT47pRZu7Cg==
+  dependencies:
+    cborg "^1.10.0"
+    multiformats "^11.0.0"
+
 "@ipld/dag-json@^8.0.1":
   version "8.0.11"
   resolved "https://registry.yarnpkg.com/@ipld/dag-json/-/dag-json-8.0.11.tgz#8d30cc2dfacb0aef04d327465d3df91e79e8b6ce"

@@ -71,7 +71,7 @@ function EnterView({
       </p>
       <ul>
         <li>
-          Paste the following into your URL bar & enable the WebXR Incubations
+          Paste the following into a new tab & enable the WebXR Incubations
           flag:{" "}
           <span style={{ textDecoration: "underline" }}>{incubationsUri}</span>{" "}
           <CopyTooltip
@@ -131,7 +131,7 @@ function NotAvailableView({ incubationsUri }: { incubationsUri: string }) {
           <a href="https://play.google.com/store/apps/details?id=com.google.ar.core">
             latest version of ARCore
           </a>
-          . Then paste the following into your URL bar & enable the WebXR
+          . Then paste the following into a new tab & enable the WebXR
           Incubations flag:{" "}
           <span style={{ textDecoration: "underline" }}>{incubationsUri}</span>{" "}
           <CopyTooltip
@@ -163,7 +163,7 @@ export default function AugmentedWorld({
   augmentedWorldCid: CID;
   gwContent: GeoWebContent;
 }) {
-  const [state, setState] = useState(State.Ready);
+  const [state, setState] = useState(State.Loading);
   const [world, setWorld] = useState<World | null>(null);
   const [isWorldReady, setIsWorldReady] = useState(false);
   const [graphicsSystem, setGraphicsSystem] = useState<GraphicsSystem | null>(
@@ -190,9 +190,7 @@ export default function AugmentedWorld({
     (async () => {
       const isSupported = await WebXRSystem.isSupported();
 
-      if (isSupported) {
-        setState(State.Ready);
-      } else {
+      if (!isSupported) {
         setState(State.NotSupported);
       }
 
@@ -390,6 +388,12 @@ export default function AugmentedWorld({
       setIsWorldReady(true);
     })();
   }, [world]);
+
+  useEffect(() => {
+    if (isWorldReady && state === State.Loading) {
+      enterWorld();
+    }
+  }, [world, canvasRef, overlayRef, webXRSystem, graphicsSystem]);
 
   const enterWorld = async () => {
     if (

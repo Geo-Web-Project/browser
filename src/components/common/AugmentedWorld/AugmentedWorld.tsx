@@ -166,6 +166,9 @@ export default function AugmentedWorld({
   const [state, setState] = useState(State.Ready);
   const [world, setWorld] = useState<World | null>(null);
   const [isWorldReady, setIsWorldReady] = useState(false);
+  const [graphicsSystem, setGraphicsSystem] = useState<GraphicsSystem | null>(
+    null
+  );
   const [webXRSystem, setWebXRSystem] = useState<WebXRSystem | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -203,7 +206,7 @@ export default function AugmentedWorld({
 
   useEffect(() => {
     (async () => {
-      if (!world) return;
+      if (!world || !canvasRef.current || !overlayRef.current) return;
 
       setIsWorldReady(false);
 
@@ -353,44 +356,54 @@ export default function AugmentedWorld({
         );
       }
 
+      // Create host systems
+      const graphicsSystem = new GraphicsSystem(
+        world,
+        canvasRef.current,
+        "https://w3s.link"
+      );
+      setGraphicsSystem(graphicsSystem);
+
+      const webXRSystem = new WebXRSystem(graphicsSystem.getScene());
+      setWebXRSystem(webXRSystem);
+      const webXRAnchorSystem = new AnchorSystem(webXRSystem);
+      const anchorTransformSystem = new AnchorTransformSystem();
+      const imageTrackingSystem = new ImageTrackingSystem(
+        webXRSystem,
+        "https://w3s.link"
+      );
+      const coachingOverlaySystem = new CoachingOverlaySystem(
+        webXRSystem,
+        "https://w3s.link",
+        overlayRef.current
+      );
+
+      world.add_system(graphicsSystem);
+      world.add_system(webXRSystem);
+      world.add_system(webXRAnchorSystem);
+      world.add_system(anchorTransformSystem);
+      world.add_system(imageTrackingSystem);
+      world.add_system(coachingOverlaySystem);
+
+      graphicsSystem.start();
+
       setIsWorldReady(true);
     })();
   }, [world]);
 
   const enterWorld = async () => {
-    if (!world || !canvasRef.current || !overlayRef.current) return;
+    if (
+      !world ||
+      !canvasRef.current ||
+      !overlayRef.current ||
+      !webXRSystem ||
+      !graphicsSystem
+    )
+      return;
 
     setState(State.Loading);
 
-    // Create host systems
-    const graphicsSystem = new GraphicsSystem(
-      world,
-      canvasRef.current,
-      "https://w3s.link"
-    );
-    const webXRSystem = new WebXRSystem(graphicsSystem.getScene());
-    setWebXRSystem(webXRSystem);
-    const webXRAnchorSystem = new AnchorSystem(webXRSystem);
-    const anchorTransformSystem = new AnchorTransformSystem();
-    const imageTrackingSystem = new ImageTrackingSystem(
-      webXRSystem,
-      "https://w3s.link"
-    );
-    const coachingOverlaySystem = new CoachingOverlaySystem(
-      webXRSystem,
-      "https://w3s.link",
-      overlayRef.current
-    );
-
-    world.add_system(graphicsSystem);
-    world.add_system(webXRSystem);
-    world.add_system(webXRAnchorSystem);
-    world.add_system(anchorTransformSystem);
-    world.add_system(imageTrackingSystem);
-    world.add_system(coachingOverlaySystem);
-
     try {
-      graphicsSystem.start();
       await webXRSystem.startXRSession();
 
       (await webXRSystem.getXRSessionManager()).onXRSessionEnded.add(() => {

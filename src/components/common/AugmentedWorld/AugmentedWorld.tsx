@@ -198,6 +198,14 @@ export default function AugmentedWorld({
       // Create World
       const world = new World();
       setWorld(world);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (!world) return;
+
+      setIsWorldReady(false);
 
       // Download world
       const entities = (await gwContent.raw.get(
@@ -347,7 +355,7 @@ export default function AugmentedWorld({
 
       setIsWorldReady(true);
     })();
-  }, []);
+  }, [world]);
 
   const enterWorld = async () => {
     if (!world || !canvasRef.current || !overlayRef.current) return;

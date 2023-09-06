@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.16",
+    "@augmented-worlds/system-babylonjs": "^0.1.15",
     "@ceramicnetwork/blockchain-utils-linking": "^2.0.7",
     "@ceramicnetwork/common": "^2.4.1",
     "@ceramicnetwork/http-client": "^1.0.0",

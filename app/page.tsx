@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import GWLoader from "../src/components/common/Loader/Loader";
-// import GWS from "../container/GeoWebSystem/GWS";
+import GWS from "../src/container/GeoWebSystem/GWS";
 import LandingModal from "../src/components/common/LandingModal/LandingModal";
 import {
   MUDProvider,
@@ -13,6 +13,9 @@ import worldsJson from "../src/mud/worlds.json";
 import { optimismGoerli } from "viem/chains";
 import { MUDChain } from "@latticexyz/common/chains";
 import { WS_RPC_URL } from "../src/lib/constants";
+
+import "../src/App.css";
+import "../src/App.scss";
 
 const chainId = 420;
 const worlds = worldsJson as Partial<
@@ -51,7 +54,7 @@ export default function Index() {
   } else if (hasAgreedModal && mudSetup) {
     return (
       <MUDProvider value={mudSetup}>
-        {/* <GWS gwContent={gwContent} /> */}
+        <GWS />
       </MUDProvider>
     );
   } else {

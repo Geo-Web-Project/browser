@@ -100,15 +100,7 @@ export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }: any) {
             For Sale Price: {gwInfo.value}
           </Typography>
           <Typography noWrap className={classes.typography}>
-            {"Root CID: "}
-            <a
-              className={classes.link}
-              href={`https://explore.ipld.io/#/explore/${gwInfo.rootCid}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {gwInfo.rootCid}
-            </a>
+            World Address: {gwInfo.worldAddress}
           </Typography>
         </AccordionDetails>
       )}

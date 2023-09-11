@@ -60,13 +60,13 @@ const getGeoId = async (lat, lon) => {
 //  Get Parcel Info
 //  input: parcelId (Eg: '0x2D')
 //  output: {  id: , licensee: , value: , ceramicId: , ceramicUri:}
-const getParcelInfo = async (id, rootCid) => {
+const getParcelInfo = async (id) => {
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
     variables: { id: id },
   });
 
-  let parcelInfo = parseInfo(info, rootCid);
+  let parcelInfo = parseInfo(info);
 
   return parcelInfo;
 };

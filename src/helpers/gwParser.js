@@ -21,12 +21,12 @@ const parseGeo = (msg) => {
 };
 
 //parse parcel info document
-const parseInfo = (msg, rootCid) => {
+const parseInfo = (msg) => {
   let _parcelInfo = {
     id: null,
     licensee: null,
     value: null,
-    rootCid: null,
+    worldAddress: null
   };
 
   try {
@@ -37,7 +37,7 @@ const parseInfo = (msg, rootCid) => {
     _parcelInfo.value = formatValue(
       _parcel["currentBid"]["forSalePrice"]
     );
-    _parcelInfo.rootCid = rootCid;
+    _parcelInfo.worldAddress = truncateStr("0x1", 11);
   } catch (e) {
     console.log(e);
   }

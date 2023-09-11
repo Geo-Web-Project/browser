@@ -10,34 +10,38 @@ import GWContentView from "../GeoWebInterface/components/GeoWebContent/GWContent
 import { NETWORK_ID } from "../../lib/constants";
 import { getGeoId, getParcelInfo } from "../../lib/api";
 import styles from "./styles.module.css";
-import { ParcelRoot, MediaGallery, BasicProfile } from "@geo-web/types";
-import { GeoWebContent } from "@geo-web/content";
 import { ethers } from "ethers";
 import { CID } from "multiformats/cid";
+import { useMUD } from "@geo-web/mud-world-base-client";
+import { useComponentValue } from "@latticexyz/react";
+import { singletonEntity } from "@latticexyz/store-sync/recs";
 
-export type GWSProps = {
-  gwContent: GeoWebContent | null;
-};
-
-export default function GWS(props: GWSProps) {
-  const { gwContent } = props;
+export default function GWS() {
   const initCoordinate = { lat: 0, lon: 0 }; //default lat, lon
   const [coordinate, setCoordinate] = useState(initCoordinate); //gps coordinates {lat, lon}
   const [gwInfo, setGwInfo] = useState<any>(null);
   const [parcelId, setParcelId] = useState("");
   const [licenseOwner, setLicenseOwner] = useState("");
   const [loading, setLoading] = useState(true);
-  const [parcelRoot, setParcelRoot] = useState<ParcelRoot | null>(null);
-  const [basicProfile, setBasicProfile] = useState<BasicProfile | null>(null);
-  const [mediaGallery, setMediaGallery] = useState<MediaGallery | null>(null);
   const [ownerDID, setOwnerDID] = useState("");
+
+  const {
+    components: { Name, Url },
+  } = useMUD();
+
+  const name = useComponentValue(Name, singletonEntity);
+  const url = useComponentValue(Url, singletonEntity);
+  const basicProfile = {
+    name: name?.value,
+    url: url?.value,
+  };
 
   useEffect(() => {
     (async () => {
       const { registryDiamondContract } =
         getContractsForChainOrThrow(NETWORK_ID);
 
-      if (parcelId && licenseOwner && gwContent) {
+      if (parcelId && licenseOwner) {
         const assetId = new AssetId({
           chainId: `eip155:${NETWORK_ID}`,
           assetName: {
@@ -53,70 +57,14 @@ export default function GWS(props: GWSProps) {
         });
         const ownerDID = `did:pkh:${ownerId}`;
 
+        const _parcelInfo = await getParcelInfo(parcelId);
+        setGwInfo(_parcelInfo);
+
         setOwnerDID(ownerDID);
-
-        let rootCid = null;
-
-        try {
-          rootCid = await gwContent.raw.resolveRoot({
-            parcelId: assetId,
-            ownerDID,
-          });
-          const _parcelInfo = await getParcelInfo(parcelId, rootCid.toString()); //get parcel info and meta-data
-
-          setGwInfo(_parcelInfo);
-        } catch (e) {
-          console.info(e);
-          setGwInfo(null);
-          setParcelRoot(null);
-          setBasicProfile(null);
-          setMediaGallery(null);
-        }
-
-        try {
-          const _parcelRoot = await gwContent.raw.get(rootCid!, "/", {
-            schema: "ParcelRoot",
-          });
-          setParcelRoot(_parcelRoot);
-        } catch (e) {
-          console.info(e);
-          setParcelRoot(null);
-        }
-
-        try {
-          const _mediaGallery = await gwContent.raw.get(
-            rootCid!,
-            "/mediaGallery",
-            {
-              schema: "MediaGallery",
-            }
-          );
-
-          setMediaGallery(_mediaGallery);
-        } catch (e) {
-          console.info(e);
-          setMediaGallery(null);
-        }
-
-        try {
-          const _basicProfile = await gwContent.raw.get(
-            rootCid!,
-            "/basicProfile",
-            {
-              schema: "BasicProfile",
-            }
-          );
-
-          setBasicProfile(_basicProfile);
-        } catch (e) {
-          console.info(e);
-          setBasicProfile(null);
-        }
-
         setLoading(false);
       }
     })();
-  }, [parcelId, licenseOwner, gwContent, coordinate]);
+  }, [parcelId, licenseOwner, coordinate]);
 
   const accessGps = () => {
     if (navigator.geolocation) {
@@ -150,8 +98,10 @@ export default function GWS(props: GWSProps) {
       setLoading(false);
     }
 
-    setParcelId(parcelId as any);
-    setLicenseOwner(licenseOwner as any);
+    // setParcelId(parcelId as any);
+    setParcelId("0x1");
+    // setLicenseOwner(licenseOwner as any);
+    setLicenseOwner("0xBA1231785A7b4AC0E8dC9a0403938C2182cE4A4e");
   };
 
   return (
@@ -167,17 +117,18 @@ export default function GWS(props: GWSProps) {
       />
       {loading ? (
         <GWLoader />
-      ) : parcelId && gwContent && ownerDID ? (
-        <GWContentView
-          gwContent={gwContent}
-          basicProfile={basicProfile}
-          mediaGallery={mediaGallery}
-          augmentedWorld={CID.parse(
-            "bafyreietptw7udedbdpro6fje5bzsqdhsktktqdl4273pmvbpjrc2odi3q"
-          )}
-          parcelId={parcelId}
-          ownerDID={ownerDID}
-        />
+      ) : parcelId && ownerDID ? (
+        // <GWContentView
+        //   gwContent={gwContent}
+        //   basicProfile={basicProfile}
+        //   mediaGallery={mediaGallery}
+        //   augmentedWorld={CID.parse(
+        //     "bafyreietptw7udedbdpro6fje5bzsqdhsktktqdl4273pmvbpjrc2odi3q"
+        //   )}
+        //   parcelId={parcelId}
+        //   ownerDID={ownerDID}
+        // />
+        <div></div>
       ) : (
         <GWAvail />
       )}

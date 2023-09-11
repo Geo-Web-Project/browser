@@ -118,17 +118,11 @@ export default function GWS() {
       {loading ? (
         <GWLoader />
       ) : parcelId && ownerDID ? (
-        // <GWContentView
-        //   gwContent={gwContent}
-        //   basicProfile={basicProfile}
-        //   mediaGallery={mediaGallery}
-        //   augmentedWorld={CID.parse(
-        //     "bafyreietptw7udedbdpro6fje5bzsqdhsktktqdl4273pmvbpjrc2odi3q"
-        //   )}
-        //   parcelId={parcelId}
-        //   ownerDID={ownerDID}
-        // />
-        <div></div>
+        <GWContentView
+          url={url?.value as string}
+          parcelId={parcelId}
+          ownerDID={ownerDID}
+        />
       ) : (
         <GWAvail />
       )}

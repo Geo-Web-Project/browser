@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }) {
+export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }: any) {
   const classes = useStyles();
 
   return (

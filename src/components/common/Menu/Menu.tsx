@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Menu({ accessGps, showPosition, coordinate }) {
+export default function Menu({ accessGps, showPosition, coordinate }: any) {
   const [open, setState] = useState(false);
   const [longitude, setLongitude] = useState(coordinate.lon);
   const [latitude, setLatitude] = useState(coordinate.lat);
@@ -59,7 +59,7 @@ export default function Menu({ accessGps, showPosition, coordinate }) {
   }, [isManual, coordinate]);
 
   useEffect(() => {
-    const params = parseQueryVariables(window.location.search);
+    const params = parseQueryVariables(window.location.search) as any;
     if (Object.keys(params).length === 2) {
       setSwitchState(true);
       setLatitude(params.latitude);
@@ -77,19 +77,19 @@ export default function Menu({ accessGps, showPosition, coordinate }) {
     }
   }, []);
 
-  const toggleDrawer = (open) => {
+  const toggleDrawer = (open: boolean) => {
     setState(open);
   };
 
-  const handleChange = (checked) => {
+  const handleChange = (checked: boolean) => {
     setSwitchState(checked);
   };
 
-  const handleLatChange = (event) => {
+  const handleLatChange = (event: any) => {
     setLatitude(event.target.value);
   };
 
-  const handleLonChange = (event) => {
+  const handleLonChange = (event: any) => {
     setLongitude(event.target.value);
   };
 

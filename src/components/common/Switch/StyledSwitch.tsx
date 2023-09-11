@@ -1,6 +1,6 @@
 import { Switch, styled } from "@material-ui/core";
 
-const StyledSwitch = styled(Switch)(({ theme }) => ({
+const StyledSwitch = styled(Switch)(({ theme }: any) => ({
   width: 42,
   height: 24,
   padding: 0,

@@ -7,5 +7,7 @@ export const CONNECT_NETWORK = process.env.NEXT_PUBLIC_CERAMIC_CONNECT_NETWORK;
 export const CERAMIC_EXPLORER = `https://cerscan.com/${CONNECT_NETWORK}/stream`;
 export const IPFS_DELEGATE = process.env.NEXT_PUBLIC_IPFS_DELEGATE;
 export const PINATA_API_ENDPOINT = "https://api.pinata.cloud/psa";
-export const STORAGE_WORKER_ENDPOINT = "https://storage-workers.geo-web.workers.dev";
+export const STORAGE_WORKER_ENDPOINT =
+  "https://storage-workers.geo-web.workers.dev";
 export const SECONDS_IN_YEAR = 60 * 60 * 24 * 365;
+export const WS_RPC_URL = process.env.NEXT_PUBLIC_WS_RPC_URL!;

@@ -11,7 +11,7 @@ export default function TitleBar({
   parcelId,
   gwInfo,
   basicProfile,
-}) {
+}: any) {
   return (
     <header className={styles["title-bar"]}>
       {loading ? null : parcelId ? (

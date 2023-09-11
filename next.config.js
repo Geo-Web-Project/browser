@@ -11,4 +11,5 @@ module.exports = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  transpilePackages: ['@geo-web/mud-world-base-client', '@geo-web/mud-world-base-contracts'],
 };

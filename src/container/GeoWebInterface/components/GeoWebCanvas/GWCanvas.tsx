@@ -7,6 +7,7 @@ import { getComponentValueStrict } from "@latticexyz/recs";
 import { useMUD } from "@geo-web/mud-world-base-client";
 import contentHash from "@ensdomains/content-hash";
 import { CID } from "multiformats";
+import { Player } from "@livepeer/react";
 import "@google/model-viewer";
 
 const gwGateway = process.env.NEXT_PUBLIC_MODEL_VIEWER_IPFS_GATEWAY;
@@ -134,13 +135,13 @@ const GWCanvas = (props: GWCanvasProps) => {
           <button className={styles["clk-left"]} onClick={() => clickLeft()} />
         )}
         <div className={styles["gallery"]}>
-          {isGlbModel || isUsdzModel ? (
+          {mediaObject.mediaType === MediaObjectType.Model ? (
             <ModelViewer
               modelRef={modelRef}
               url={contentUrl}
               isUsdzModel={isUsdzModel}
             />
-          ) : (
+          ) : mediaObject.mediaType === MediaObjectType.Image ? (
             <span className={styles["image-wrapper"]}>
               <img
                 src={contentUrl ?? "/assets/spinner.svg"}
@@ -148,6 +149,19 @@ const GWCanvas = (props: GWCanvasProps) => {
                 className={styles[contentUrl ? "image-content" : "loading"]}
               />
             </span>
+          ) : mediaObject.mediaType === MediaObjectType.Video ||
+            mediaObject.mediaType === MediaObjectType.Audio ? (
+            <div className={styles["player-wrapper"]}>
+              <Player
+                playbackId={contentCid.toString()}
+                showTitle={false}
+                muted
+              />
+            </div>
+          ) : (
+            <div className={styles["player-wrapper"]}>
+              <h1>Unknown Media Type</h1>
+            </div>
           )}
         </div>
         {mediaObjects.length > 1 && (

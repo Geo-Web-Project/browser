@@ -12,10 +12,26 @@ import {
 import worldsJson from "../src/mud/worlds.json";
 import { optimismGoerli } from "viem/chains";
 import { MUDChain } from "@latticexyz/common/chains";
-import { WS_RPC_URL } from "../src/lib/constants";
+import { WS_RPC_URL, LIVEPEER_API_KEY } from "../src/lib/constants";
+import {
+  LivepeerConfig,
+  ThemeConfig,
+  createReactClient,
+  studioProvider,
+} from "@livepeer/react";
 
 import "../src/App.css";
 import "../src/App.scss";
+
+const livepeerTheme: ThemeConfig = {
+  colors: {
+    accent: "#2fc1c1",
+    containerBorderColor: "rgba(0, 145, 255, 0.9)",
+  },
+  fonts: {
+    display: "Abel",
+  },
+};
 
 const chainId = 420;
 const worlds = worldsJson as Partial<
@@ -33,6 +49,10 @@ const supportedChains: MUDChain[] = [
     },
   },
 ];
+
+const client = createReactClient({
+  provider: studioProvider({ apiKey: LIVEPEER_API_KEY }),
+});
 
 export default function Index() {
   const [mudSetup, setMUDSetup] = useState<SetupResult | null>(null);
@@ -54,7 +74,9 @@ export default function Index() {
   } else if (hasAgreedModal && mudSetup) {
     return (
       <MUDProvider value={mudSetup}>
-        <GWS />
+        <LivepeerConfig client={client} theme={livepeerTheme}>
+          <GWS />
+        </LivepeerConfig>
       </MUDProvider>
     );
   } else {

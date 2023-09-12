@@ -1,27 +1,48 @@
 import { useEffect, useState, useRef } from "react";
-import { GeoWebContent } from "@geo-web/content";
-import { MediaGallery, MediaObject } from "@geo-web/types";
 import GWEmpty from "../../../../components/common/ContentFiller/Empty";
 import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
 import styles from "./styles.module.css";
+import { Entity } from "@latticexyz/recs";
+import { getComponentValueStrict } from "@latticexyz/recs";
+import { useMUD } from "@geo-web/mud-world-base-client";
+import contentHash from "@ensdomains/content-hash";
+import { CID } from "multiformats";
+import "@google/model-viewer";
 
 const gwGateway = process.env.NEXT_PUBLIC_MODEL_VIEWER_IPFS_GATEWAY;
 
+export enum MediaObjectType {
+  Image,
+  Audio,
+  Video,
+  Model,
+}
+export enum MediaObjectEncodingFormat {
+  Glb,
+  Usdz,
+  Gif,
+  Jpeg,
+  Png,
+  Svg,
+  Mpeg,
+  Mp4,
+  Mp3,
+}
+
+export type MediaObject = {
+  contentSize: Number;
+  mediaType: MediaObjectType;
+  encodingFormat: MediaObjectEncodingFormat;
+  name: string;
+  contentHash: string;
+};
+
 export type GWCanvasProps = {
-  mediaGallery: MediaGallery | null;
-  gwContent: GeoWebContent;
+  mediaObjects: Entity[];
 };
 
 const ModelViewer = (props: any) => {
   const { url, modelRef, isUsdzModel } = props;
-
-  useEffect(() => {
-    if (url && !isUsdzModel) {
-      modelRef.current.dismissPoster();
-    } else {
-      modelRef.current.showPoster();
-    }
-  }, [url, isUsdzModel]);
 
   return (
     /* @ts-ignore */
@@ -30,7 +51,6 @@ const ModelViewer = (props: any) => {
       className={styles["gwCanvas"]}
       src={url}
       ios-src={isUsdzModel ? url : ""}
-      reveal="manual"
       environment-image="neutral"
       shadow-intensity="1"
       ar
@@ -62,105 +82,82 @@ const ModelViewer = (props: any) => {
 };
 
 const GWCanvas = (props: GWCanvasProps) => {
-  const { mediaGallery, gwContent } = props;
+  const {
+    components: { MediaObject },
+  } = useMUD();
+
+  const { mediaObjects } = props;
 
   const [modelIndex, setModelIndex] = useState(0);
-  const [modelUrl, setModelUrl] = useState<string | undefined>(undefined);
-  const [modelName, setModelName] = useState<string | undefined>(undefined);
-  const [isGlbModel, setIsGlbModel] = useState<boolean>(false);
-  const [isUsdzModel, setIsUsdzModel] = useState<boolean>(false);
+
+  const mediaObject = getComponentValueStrict(
+    MediaObject,
+    mediaObjects[modelIndex]
+  ) as MediaObject;
+
+  const isGlbModel =
+    mediaObject.encodingFormat === MediaObjectEncodingFormat.Glb;
+  const isUsdzModel =
+    mediaObject.encodingFormat === MediaObjectEncodingFormat.Usdz;
+  const fileName = isUsdzModel
+    ? `?filename=${mediaObject.name}.usdz`
+    : isGlbModel
+    ? `?filename=${mediaObject.name}.glb`
+    : "";
+  const contentCid = CID.parse(
+    contentHash.decode(mediaObject.contentHash)
+  ).toV1();
+  const contentUrl = `${gwGateway}/ipfs/${contentCid.toString()}/${fileName}`;
 
   const modelRef = useRef();
 
-  useEffect(() => {
-    const loadObj = async () => {
-      if (!mediaGallery) {
-        setModelUrl(undefined);
-        setModelName(undefined);
-        return;
-      }
-      const mediaObject = await gwContent.raw.get(
-        mediaGallery[modelIndex],
-        "/",
-        {}
-      );
-
-      if (mediaObject) {
-        const _isGlbModel = mediaObject.encodingFormat === "model/gltf-binary";
-        const _isUsdzModel =
-          mediaObject.encodingFormat === "model/vnd.usdz+zip";
-        const fileName = _isUsdzModel
-          ? `?filename=${mediaObject.name}.usdz`
-          : "";
-        const contentUrl = `${gwGateway}/ipfs/${mediaObject.content.toString()}/${fileName}`;
-
-        setIsGlbModel(_isGlbModel);
-        setIsUsdzModel(_isUsdzModel);
-        setModelUrl(contentUrl);
-        setModelName(mediaObject.name);
-      }
-    };
-
-    loadObj();
-  }, [modelIndex]);
-
   const clickLeft = () => {
-    if (!mediaGallery) return;
-
-    setModelUrl(undefined);
-    setModelName(undefined);
-
     let _modelIndex = modelIndex - 1;
 
-    if (_modelIndex < 0) _modelIndex = mediaGallery.length - 1;
+    if (_modelIndex < 0) _modelIndex = mediaObjects.length - 1;
 
     setModelIndex(_modelIndex);
   };
 
   const clickRight = () => {
-    if (!mediaGallery) return;
-
-    setModelUrl(undefined);
-    setModelName(undefined);
-
     let _modelIndex = modelIndex + 1;
 
-    if (_modelIndex > mediaGallery.length - 1) _modelIndex = 0;
+    if (_modelIndex > mediaObjects.length - 1) _modelIndex = 0;
 
     setModelIndex(_modelIndex);
   };
 
-  if (mediaGallery && mediaGallery.length > 0) {
+  if (mediaObjects.length > 0) {
     return (
       <div>
-        {mediaGallery.length > 1 && (
+        {mediaObjects.length > 1 && (
           <button className={styles["clk-left"]} onClick={() => clickLeft()} />
         )}
         <div className={styles["gallery"]}>
           {isGlbModel || isUsdzModel ? (
             <ModelViewer
               modelRef={modelRef}
-              url={modelUrl}
+              url={contentUrl}
               isUsdzModel={isUsdzModel}
             />
           ) : (
             <span className={styles["image-wrapper"]}>
               <img
-                src={modelUrl ?? "/assets/spinner.svg"}
-                alt={modelUrl ? "image content" : "loading"}
-                className={styles[modelUrl ? "image-content" : "loading"]}
+                src={contentUrl ?? "/assets/spinner.svg"}
+                alt={contentUrl ? "image content" : "loading"}
+                className={styles[contentUrl ? "image-content" : "loading"]}
               />
             </span>
           )}
         </div>
-        {mediaGallery.length > 1 && (
+        {mediaObjects.length > 1 && (
           <button
             className={styles["clk-right"]}
             onClick={() => clickRight()}
           />
         )}
 
-        <ContentLabel label={modelName ?? ""} />
+        <ContentLabel label={mediaObject.name ?? ""} />
       </div>
     );
   } else {

@@ -3,12 +3,14 @@ import dynamic from "next/dynamic";
 import Typography from "@material-ui/core/Typography";
 import GWWebView from "../GeoWebView/GWWebView";
 import GWCanvas from "../GeoWebCanvas/GWCanvas";
+import { MediaGallery } from "../GeoWebCanvas/GWCanvas";
 import AugmentedWorld from "../../../../components/common/AugmentedWorld/AugmentedWorld";
 import styles from "./styles.module.css";
+import { Entity } from "@latticexyz/recs";
 
 export type GWContentViewProps = {
   url: string | null;
-  // mediaGallery: MediaGallery | null;
+  mediaObjects: Entity[];
   // augmentedWorld: CID | null;
   parcelId: string;
   ownerDID: string;
@@ -21,7 +23,7 @@ enum GwMode {
 }
 
 export default function GWContentView(props: GWContentViewProps) {
-  const { url } = props;
+  const { url, mediaObjects } = props;
 
   const [gwMode, setGwMode] = useState<GwMode>(GwMode.WEB);
 
@@ -58,8 +60,7 @@ export default function GWContentView(props: GWContentViewProps) {
         //   augmentedWorldCid={augmentedWorld}
         //   gwContent={gwContent}
         // />
-        <div></div>
-        // <GWCanvas mediaGallery={mediaGallery} gwContent={gwContent} />
+        <GWCanvas mediaObjects={mediaObjects} />
       )}
       <div className={styles["tabs"]}>
         <div

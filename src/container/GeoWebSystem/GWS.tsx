@@ -13,8 +13,9 @@ import styles from "./styles.module.css";
 import { ethers } from "ethers";
 import { CID } from "multiformats/cid";
 import { useMUD } from "@geo-web/mud-world-base-client";
-import { useComponentValue } from "@latticexyz/react";
+import { useComponentValue, useEntityQuery } from "@latticexyz/react";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
+import { Has } from "@latticexyz/recs";
 
 export default function GWS() {
   const initCoordinate = { lat: 0, lon: 0 }; //default lat, lon
@@ -26,11 +27,13 @@ export default function GWS() {
   const [ownerDID, setOwnerDID] = useState("");
 
   const {
-    components: { Name, Url },
+    components: { Name, Url, MediaObject },
   } = useMUD();
 
   const name = useComponentValue(Name, singletonEntity);
   const url = useComponentValue(Url, singletonEntity);
+  const mediaObjects = useEntityQuery([Has(MediaObject)]);
+
   const basicProfile = {
     name: name?.value,
     url: url?.value,
@@ -120,6 +123,7 @@ export default function GWS() {
       ) : parcelId && ownerDID ? (
         <GWContentView
           url={url?.value as string}
+          mediaObjects={mediaObjects}
           parcelId={parcelId}
           ownerDID={ownerDID}
         />

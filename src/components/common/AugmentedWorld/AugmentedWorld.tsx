@@ -346,9 +346,7 @@ export default function AugmentedWorld() {
           coachingOverlayEntity,
           ComponentType.CoachingOverlay,
           {
-            trackedImages: trackedImages.map((v) => {
-              return localEntityMap[v];
-            }),
+            trackedImages,
             text: "Point and hold the camera on the image target to enter AR.",
           } as CoachingOverlay
         );
@@ -381,13 +379,13 @@ export default function AugmentedWorld() {
       world.add_system(webXRAnchorSystem);
       world.add_system(anchorTransformSystem);
       world.add_system(imageTrackingSystem);
-      // world.add_system(coachingOverlaySystem);
+      world.add_system(coachingOverlaySystem);
 
       graphicsSystem.start();
 
       setIsWorldReady(true);
     })();
-  }, [world, anchoredEntities, trackedImageEntities]);
+  }, [world]);
 
   useEffect(() => {
     if (isWorldReady && state === State.Loading) {

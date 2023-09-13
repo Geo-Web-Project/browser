@@ -36,10 +36,10 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
-"@augmented-worlds/system-babylonjs@^0.1.15":
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/@augmented-worlds/system-babylonjs/-/system-babylonjs-0.1.15.tgz#d4b7b60f07cfa505b470ca050599164c6c4acb75"
-  integrity sha512-B4Xv/u///p0Qokgb5hSdf3PU9IWRmdalj4nOamrSINI+mRSvFQCc6qyc/Alnvm3OX5clgGDOZcQRfPjgbZH2Hw==
+"@augmented-worlds/system-babylonjs@^0.1.16":
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/@augmented-worlds/system-babylonjs/-/system-babylonjs-0.1.16.tgz#73e961adfdd4924799a1ff618343d83314471f88"
+  integrity sha512-0lP3rkAqLqft5feqr/uCuhypRGgWa0GP2zYRL4AMC8vRh0W4H697rBSC+HHakdy5LspPrrETGI6koIHV0y/0SQ==
   dependencies:
     "@babylonjs/core" "^6.3.1"
     "@babylonjs/loaders" "^6.3.1"
@@ -10510,6 +10510,11 @@ swarm-js@^0.1.40:
     setimmediate "^1.0.5"
     tar "^4.0.2"
     xhr-request "^1.0.1"
+
+swiper@^10.2.0:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-10.2.0.tgz#e7369ff56f4e10069f2244a4436f732b8925deb0"
+  integrity sha512-nktQsOtBInJjr3f5DicxC8eHYGcLXDVIGPSon0QoXRaO6NjKnATCbQ8SZsD3dN1Ph1RH4EhVPwSYCcuDRFWHGQ==
 
 swiper@^9.3.2:
   version "9.3.2"

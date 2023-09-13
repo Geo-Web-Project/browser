@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.16",
-    "@augmented-worlds/system-babylonjs": "^0.1.15",
+    "@augmented-worlds/system-babylonjs": "^0.1.16",
     "@ensdomains/content-hash": "2.5.7",
     "@geo-web/mud-world-base-client": "^0.0.10",
     "@geo-web/sdk": "^4.2.0",
@@ -35,6 +35,7 @@
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
     "sass": "^1.62.1",
+    "swiper": "^10.2.0",
     "three": "^0.156.1",
     "typescript": "5.1.6",
     "ua-parser-js": "^1.0.35"

@@ -27,10 +27,13 @@ import CopyTooltip from "../CopyTooltip";
 import Image from "react-bootstrap/Image";
 import { UAParser } from "ua-parser-js";
 import { Close } from "@material-ui/icons";
-import { CID } from "multiformats";
-import { GeoWebContent } from "@geo-web/content";
 import { encode as encodeDagJson } from "@ipld/dag-json";
 import { decode as decodeJson } from "multiformats/codecs/json";
+import { useMUD } from "@geo-web/mud-world-base-client";
+import { useEntityQuery } from "@latticexyz/react";
+import { Has, getComponentValue } from "@latticexyz/recs";
+import contentHash from "@ensdomains/content-hash";
+import { CID } from "multiformats";
 
 const useStyles = makeStyles(() => ({
   btn: {
@@ -46,6 +49,17 @@ enum State {
   Loading,
   Ready,
   NotSupported,
+}
+
+enum ImageEncodingFormat {
+  Jpeg,
+  Png,
+  Svg,
+}
+
+enum ModelEncodingFormat {
+  Glb,
+  Usdz,
 }
 
 function EnterView({
@@ -156,13 +170,21 @@ function NotAvailableView({ incubationsUri }: { incubationsUri: string }) {
   );
 }
 
-export default function AugmentedWorld({
-  augmentedWorldCid,
-  gwContent,
-}: {
-  augmentedWorldCid: CID;
-  gwContent: GeoWebContent;
-}) {
+export default function AugmentedWorld() {
+  const {
+    components: {
+      ModelComponent,
+      PositionComponent,
+      ScaleComponent,
+      OrientationComponent,
+      AnchorComponent,
+      TrackedImageComponent,
+    },
+  } = useMUD();
+
+  const anchoredEntities = useEntityQuery([Has(AnchorComponent)]);
+  const trackedImageEntities = useEntityQuery([Has(TrackedImageComponent)]);
+
   const [state, setState] = useState(State.Loading);
   const [world, setWorld] = useState<World | null>(null);
   const [isWorldReady, setIsWorldReady] = useState(false);
@@ -208,134 +230,112 @@ export default function AugmentedWorld({
 
       setIsWorldReady(false);
 
-      // Download world
-      const entities = (await gwContent.raw.get(
-        augmentedWorldCid as any,
-        "/",
-        {}
-      )) as CID[];
-
       const localEntityMap: Record<string, number> = {};
       const trackedImages: number[] = [];
       const worldEntities: number[] = [];
 
       // Add all entities locally
-      for (const entityCid of entities) {
+      for (const entityCid of [...anchoredEntities, ...trackedImageEntities]) {
         const worldEntity = world.create_entity();
+        world.add_component_to_entity(worldEntity, ComponentType.Component, {});
+
         worldEntities.push(worldEntity);
-        localEntityMap[entityCid.toString()] = worldEntity;
+        localEntityMap[entityCid] = worldEntity;
       }
 
       // Add components
-      for (const entityCid of entities) {
-        const entity = await gwContent.raw.get(entityCid as any, "/", {});
+      for (const entityCid of anchoredEntities) {
+        const worldEntity = localEntityMap[entityCid];
 
-        const worldEntity = localEntityMap[entityCid.toString()];
-        world.add_component_to_entity(worldEntity, ComponentType.Component, {});
+        const model = getComponentValue(ModelComponent, entityCid);
+        const position = getComponentValue(PositionComponent, entityCid);
+        const scale = getComponentValue(ScaleComponent, entityCid);
+        const orientation = getComponentValue(OrientationComponent, entityCid);
+        const anchor = getComponentValue(AnchorComponent, entityCid);
 
-        if (entity.isAnchor !== undefined) {
-          world.add_component_to_entity(worldEntity, ComponentType.IsAnchor, {
-            isAnchor: entity.isAnchor,
-          } as IsAnchor);
-        }
+        if (model?.encodingFormat === ModelEncodingFormat.Glb) {
+          const contentCid = CID.parse(
+            contentHash.decode(model!.contentHash)
+          ).toV1();
 
-        if (entity.glTFModel) {
           world.add_component_to_entity(worldEntity, ComponentType.GLTFModel, {
-            glTFModel: { "/": entity.glTFModel.toString() },
+            glTFModel: { "/": contentCid.toString() },
           } as GLTFModel);
-
-          world.add_component_to_entity(worldEntity, ComponentType.Position, {
-            startPosition: {
-              x: entity.position?.x ?? 0,
-              y: entity.position?.y ?? 0,
-              z: entity.position?.z ?? 0,
-            },
-          } as Position);
-
-          world.add_component_to_entity(worldEntity, ComponentType.Scale, {
-            startScale: {
-              x: entity.scale?.x ?? 1,
-              y: entity.scale?.y ?? 1,
-              z: entity.scale?.z ?? 1,
-            },
-          } as Scale);
-
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Orientation,
-            {
-              startOrientation: {
-                x: entity.orientation?.x ?? 0,
-                y: entity.orientation?.y ?? 0,
-                z: entity.orientation?.z ?? 0,
-                w: entity.orientation?.w ?? 1,
-              },
-            } as Orientation
-          );
-        } else {
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Position,
-            entity.position
-              ? ({
-                  startPosition: {
-                    x: entity.position?.x ?? 0,
-                    y: entity.position?.y ?? 0,
-                    z: entity.position?.z ?? 0,
-                  },
-                } as Position)
-              : {}
-          );
-
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Scale,
-            entity.scale
-              ? ({
-                  startScale: {
-                    x: entity.scale?.x ?? 1,
-                    y: entity.scale?.y ?? 1,
-                    z: entity.scale?.z ?? 1,
-                  },
-                } as Scale)
-              : {}
-          );
-
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Orientation,
-            entity.orientation
-              ? ({
-                  startOrientation: {
-                    x: entity.orientation?.x ?? 0,
-                    y: entity.orientation?.y ?? 0,
-                    z: entity.orientation?.z ?? 0,
-                    w: entity.orientation?.w ?? 1,
-                  },
-                } as Orientation)
-              : {}
-          );
         }
 
-        if (entity.anchor) {
+        world.add_component_to_entity(worldEntity, ComponentType.Position, {
+          startPosition: {
+            x: position?.x ?? 0,
+            y: position?.y ?? 0,
+            z: position?.z ?? 0,
+          },
+        } as Position);
+
+        world.add_component_to_entity(worldEntity, ComponentType.Scale, {
+          startScale: {
+            x: scale?.x ?? 1,
+            y: scale?.y ?? 1,
+            z: scale?.z ?? 1,
+          },
+        } as Scale);
+
+        world.add_component_to_entity(worldEntity, ComponentType.Orientation, {
+          startOrientation: {
+            x: orientation?.x ?? 0,
+            y: orientation?.y ?? 0,
+            z: orientation?.z ?? 0,
+            w: orientation?.w ?? 1,
+          },
+        } as Orientation);
+
+        if (anchor != null) {
           // Replace CID with local entity
           // TODO: Support nested anchors
-          const anchor = {
-            anchor: localEntityMap[entity.anchor.toString()],
-          } as Anchor;
-          world.add_component_to_entity(
-            worldEntity,
-            ComponentType.Anchor,
-            anchor
-          );
+          world.add_component_to_entity(worldEntity, ComponentType.Anchor, {
+            anchor: localEntityMap[anchor!.anchor!.toString()],
+          } as Anchor);
         }
+      }
 
-        if (entity.trackedImage) {
+      for (const entityCid of trackedImageEntities) {
+        const trackedImage = getComponentValue(
+          TrackedImageComponent,
+          entityCid
+        );
+
+        const worldEntity = localEntityMap[entityCid];
+
+        if (trackedImage) {
+          const contentCid = CID.parse(
+            contentHash.decode(trackedImage!.imageAsset)
+          ).toV1();
+
           world.add_component_to_entity(
             worldEntity,
             ComponentType.TrackedImage,
-            decodeJson(encodeDagJson(entity.trackedImage)) as TrackedImage
+            {
+              imageAsset: { "/": contentCid.toString() },
+              physicalWidthInMeters:
+                Number(trackedImage!.physicalWidthInMillimeters!) / 1000,
+            } as TrackedImage
           );
+
+          world.add_component_to_entity(worldEntity, ComponentType.IsAnchor, {
+            isAnchor: true,
+          } as IsAnchor);
+
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Position,
+            {} as Position
+          );
+
+          world.add_component_to_entity(
+            worldEntity,
+            ComponentType.Orientation,
+            {} as Orientation
+          );
+
           trackedImages.push(worldEntity);
         }
       }
@@ -347,7 +347,7 @@ export default function AugmentedWorld({
           ComponentType.CoachingOverlay,
           {
             trackedImages: trackedImages.map((v) => {
-              return { "/": localEntityMap[v] };
+              return localEntityMap[v];
             }),
             text: "Point and hold the camera on the image target to enter AR.",
           } as CoachingOverlay
@@ -381,13 +381,13 @@ export default function AugmentedWorld({
       world.add_system(webXRAnchorSystem);
       world.add_system(anchorTransformSystem);
       world.add_system(imageTrackingSystem);
-      world.add_system(coachingOverlaySystem);
+      // world.add_system(coachingOverlaySystem);
 
       graphicsSystem.start();
 
       setIsWorldReady(true);
     })();
-  }, [world]);
+  }, [world, anchoredEntities, trackedImageEntities]);
 
   useEffect(() => {
     if (isWorldReady && state === State.Loading) {

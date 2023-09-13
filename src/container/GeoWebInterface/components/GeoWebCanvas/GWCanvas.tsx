@@ -3,7 +3,7 @@ import GWEmpty from "../../../../components/common/ContentFiller/Empty";
 import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
 import styles from "./styles.module.css";
 import { Entity } from "@latticexyz/recs";
-import { getComponentValueStrict } from "@latticexyz/recs";
+import { getComponentValue } from "@latticexyz/recs";
 import { useMUD } from "@geo-web/mud-world-base-client";
 import contentHash from "@ensdomains/content-hash";
 import { CID } from "multiformats";
@@ -91,10 +91,20 @@ const GWCanvas = (props: GWCanvasProps) => {
 
   const [modelIndex, setModelIndex] = useState(0);
 
-  const mediaObject = getComponentValueStrict(
+  const modelRef = useRef();
+
+  if (mediaObjects.length == 0) {
+    return <GWEmpty promptType="gallery" />;
+  }
+
+  const mediaObject = getComponentValue(
     MediaObject,
     mediaObjects[modelIndex]
-  ) as MediaObject;
+  ) as MediaObject | undefined;
+
+  if (!mediaObject) {
+    return <GWEmpty promptType="gallery" />;
+  }
 
   const isGlbModel =
     mediaObject.encodingFormat === MediaObjectEncodingFormat.Glb;
@@ -109,8 +119,6 @@ const GWCanvas = (props: GWCanvasProps) => {
     contentHash.decode(mediaObject.contentHash)
   ).toV1();
   const contentUrl = `${gwGateway}/ipfs/${contentCid.toString()}/${fileName}`;
-
-  const modelRef = useRef();
 
   const clickLeft = () => {
     let _modelIndex = modelIndex - 1;

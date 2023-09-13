@@ -22,6 +22,9 @@ import {
 
 import "../src/App.css";
 import "../src/App.scss";
+import "@augmented-worlds/system-babylonjs/styles.css";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const livepeerTheme: ThemeConfig = {
   colors: {

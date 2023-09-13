@@ -15,14 +15,10 @@ export default function TitleBar({
 }: any) {
   return (
     <header className={styles["title-bar"]}>
-      {loading ? null : parcelId | world ? (
+      {loading ? null : parcelId || world ? (
         <GWInfo
           gwInfo={gwInfo}
-          gwContentName={
-            basicProfile?.name
-              ? basicProfile.name
-              : world ?? `Parcel ${parcelId}`
-          }
+          gwContentName={basicProfile?.name ?? world ?? `Parcel ${parcelId}`}
           gwContentUrl={basicProfile?.url ? basicProfile.url : ""}
           world={world}
         />

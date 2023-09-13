@@ -4,6 +4,7 @@ import GWInfo from "../../../container/GeoWebInterface/components/GeoWebInfo/GWI
 import styles from "./styles.module.css";
 
 export default function TitleBar({
+  world,
   accessGps,
   coordinate,
   showPosition,
@@ -14,13 +15,16 @@ export default function TitleBar({
 }: any) {
   return (
     <header className={styles["title-bar"]}>
-      {loading ? null : parcelId ? (
+      {loading ? null : parcelId | world ? (
         <GWInfo
           gwInfo={gwInfo}
           gwContentName={
-            basicProfile?.name ? basicProfile.name : `Parcel ${parcelId}`
+            basicProfile?.name
+              ? basicProfile.name
+              : world ?? `Parcel ${parcelId}`
           }
           gwContentUrl={basicProfile?.url ? basicProfile.url : ""}
+          world={world}
         />
       ) : (
         <GWInfo gwInfo={null} gwContentName={"No Parcel Found"} />

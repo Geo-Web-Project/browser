@@ -1,24 +1,30 @@
 import { useState, useEffect } from "react";
-import { getContractsForChainOrThrow } from "@geo-web/sdk";
-import { AccountId, AssetId } from "caip";
-import BN from "bn.js";
+import { AccountId } from "caip";
 import TitleBar from "../../components/common/TitleBar/TitleBar";
 import GWLoader from "../../components/common/Loader/Loader";
 import GWAvail from "../../components/common/ContentFiller/Avail";
-import GWInfo from "../GeoWebInterface/components/GeoWebInfo/GWInfo";
 import GWContentView from "../GeoWebInterface/components/GeoWebContent/GWContent";
 import { NETWORK_ID } from "../../lib/constants";
 import { getGeoId, getParcelInfo } from "../../lib/api";
-import styles from "./styles.module.css";
 import { ethers } from "ethers";
-import { CID } from "multiformats/cid";
 import { useMUD } from "@geo-web/mud-world-base-client";
 import { useComponentValue, useEntityQuery } from "@latticexyz/react";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { Has } from "@latticexyz/recs";
+import { useSearchParams } from "next/navigation";
 
 export default function GWS() {
-  const initCoordinate = { lat: 0, lon: 0 }; //default lat, lon
+  const params = useSearchParams();
+  const lat = params.get("latitude");
+  const lon = params.get("longitude");
+  const world = params.get("world");
+  const initCoordinate =
+    lat && lon && !isNaN(Number(lat)) && !isNaN(Number(lon))
+      ? {
+          lat: Number(lat),
+          lon: Number(lon),
+        }
+      : null;
   const [coordinate, setCoordinate] = useState(initCoordinate); //gps coordinates {lat, lon}
   const [gwInfo, setGwInfo] = useState<any>(null);
   const [parcelId, setParcelId] = useState("");
@@ -40,20 +46,28 @@ export default function GWS() {
   };
 
   useEffect(() => {
-    (async () => {
-      const { registryDiamondContract } =
-        getContractsForChainOrThrow(NETWORK_ID);
-
-      if (parcelId && licenseOwner) {
-        const assetId = new AssetId({
-          chainId: `eip155:${NETWORK_ID}`,
-          assetName: {
-            namespace: "erc721",
-            reference: registryDiamondContract.address.toLowerCase(),
+    if (world !== null) {
+      setGwInfo({
+        worldAddress: world,
+      });
+      setLoading(false);
+    } else {
+      if (initCoordinate !== null) {
+        showPosition({
+          coords: {
+            latitude: initCoordinate.lat,
+            longitude: initCoordinate.lon,
           },
-          tokenId: new BN(parcelId.slice(2), "hex").toString(10),
         });
+      } else {
+        accessGps();
+      }
+    }
+  }, [world]);
 
+  useEffect(() => {
+    (async () => {
+      if (parcelId && licenseOwner) {
         const ownerId = new AccountId({
           chainId: `eip155:${NETWORK_ID}`,
           address: ethers.utils.getAddress(licenseOwner),
@@ -101,10 +115,8 @@ export default function GWS() {
       setLoading(false);
     }
 
-    // setParcelId(parcelId as any);
-    setParcelId("0x1");
-    // setLicenseOwner(licenseOwner as any);
-    setLicenseOwner("0xBA1231785A7b4AC0E8dC9a0403938C2182cE4A4e");
+    setParcelId(parcelId as any);
+    setLicenseOwner(licenseOwner as any);
   };
 
   return (
@@ -117,10 +129,11 @@ export default function GWS() {
         parcelId={parcelId}
         gwInfo={gwInfo}
         basicProfile={basicProfile}
+        world={world}
       />
       {loading ? (
         <GWLoader />
-      ) : parcelId && ownerDID ? (
+      ) : world || (parcelId && ownerDID) ? (
         <GWContentView
           url={url?.value as string}
           mediaObjects={mediaObjects}

@@ -62,7 +62,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }: any) {
+export default function GWInfo({
+  gwInfo,
+  gwContentName,
+  gwContentUrl,
+  world,
+}: any) {
   const classes = useStyles();
 
   return (
@@ -90,15 +95,19 @@ export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }: any) {
               </a>
             )}
           </Typography>
-          <Typography noWrap className={classes.typography}>
-            Parcel ID: {gwInfo.id}
-          </Typography>
-          <Typography noWrap className={classes.typography}>
-            Licensee: {gwInfo.licensee}
-          </Typography>
-          <Typography noWrap className={classes.typography}>
-            For Sale Price: {gwInfo.value}
-          </Typography>
+          {world === null ? (
+            <>
+              <Typography noWrap className={classes.typography}>
+                Parcel ID: {gwInfo.id}
+              </Typography>
+              <Typography noWrap className={classes.typography}>
+                Licensee: {gwInfo.licensee}
+              </Typography>
+              <Typography noWrap className={classes.typography}>
+                For Sale Price: {gwInfo.value}
+              </Typography>
+            </>
+          ) : null}
           <Typography noWrap className={classes.typography}>
             World Address: {gwInfo.worldAddress}
           </Typography>

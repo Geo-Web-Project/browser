@@ -11,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Close as CloseIcon, Menu as MenuIcon } from "@material-ui/icons";
 import StyledSwitch from "../Switch/StyledSwitch";
-import parseQueryVariables from "../../../helpers/queryParser";
 import styles from "./styles.module.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,37 +44,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Menu({ accessGps, showPosition, coordinate }: any) {
   const [open, setState] = useState(false);
-  const [longitude, setLongitude] = useState(coordinate.lon);
-  const [latitude, setLatitude] = useState(coordinate.lat);
+  const [longitude, setLongitude] = useState(coordinate?.lon);
+  const [latitude, setLatitude] = useState(coordinate?.lat);
   const [isManual, setSwitchState] = useState(false);
 
   const classes = useStyles();
 
   useEffect(() => {
     if (!isManual) {
-      setLongitude(coordinate.lon);
-      setLatitude(coordinate.lat);
+      setLongitude(coordinate?.lon);
+      setLatitude(coordinate?.lat);
     }
   }, [isManual, coordinate]);
-
-  useEffect(() => {
-    const params = parseQueryVariables(window.location.search) as any;
-    if (Object.keys(params).length === 2) {
-      setSwitchState(true);
-      setLatitude(params.latitude);
-      setLongitude(params.longitude);
-
-      const position = {
-        coords: {
-          latitude: Number(params.latitude),
-          longitude: Number(params.longitude),
-        },
-      };
-      showPosition(position);
-    } else {
-      accessGps();
-    }
-  }, []);
 
   const toggleDrawer = (open: boolean) => {
     setState(open);

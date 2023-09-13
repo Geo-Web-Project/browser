@@ -28,12 +28,12 @@ const livepeerTheme: ThemeConfig = {
   },
 };
 
-const client = createReactClient({
-  provider: studioProvider({ apiKey: LIVEPEER_API_KEY }),
-});
-
 export default function Index() {
   const [hasAgreedModal, setHasAgreedModal] = useState<boolean | null>(null);
+
+  const client = createReactClient({
+    provider: studioProvider({ apiKey: LIVEPEER_API_KEY }),
+  });
 
   useEffect(() => {
     (async () => {

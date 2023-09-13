@@ -8,7 +8,6 @@ import { useMUD } from "@geo-web/mud-world-base-client";
 import contentHash from "@ensdomains/content-hash";
 import { CID } from "multiformats";
 import { Player } from "@livepeer/react";
-import "@google/model-viewer";
 
 const gwGateway = process.env.NEXT_PUBLIC_MODEL_VIEWER_IPFS_GATEWAY;
 
@@ -44,6 +43,10 @@ export type GWCanvasProps = {
 
 const ModelViewer = (props: any) => {
   const { url, modelRef, isUsdzModel } = props;
+
+  useEffect(() => {
+    import("@google/model-viewer").catch(console.error);
+  }, []);
 
   return (
     /* @ts-ignore */

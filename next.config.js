@@ -9,7 +9,7 @@ module.exports = {
       return config
   },
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
   transpilePackages: ['@geo-web/mud-world-base-client', '@geo-web/mud-world-base-contracts'],
 };

@@ -19,6 +19,7 @@ import {
 } from "@geo-web/mud-world-base-client";
 import { optimismGoerli } from "viem/chains";
 import { MUDChain } from "@latticexyz/common/chains";
+import storeConfig from "@latticexyz/store/mud.config.mjs";
 
 const chainId = 420;
 const supportedChains: MUDChain[] = [

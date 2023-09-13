@@ -1160,6 +1160,11 @@
     ethers "^5.7.2"
     zod "^3.21.4"
 
+"@latticexyz/store@^1.42.0":
+  version "1.42.0"
+  resolved "https://registry.yarnpkg.com/@latticexyz/store/-/store-1.42.0.tgz#ad6abc2683260a3f6c152086d239102edcda2ed7"
+  integrity sha512-yNaF/LTuq6sTn3MYJ4/3MSV7p3mgr1eUe+i+dfGKfVs+Hx/OJzMO7atcKvsyUEBqOWDofUaPl9VwAI0q3Kid0w==
+
 "@latticexyz/utils@2.0.0-next.5":
   version "2.0.0-next.5"
   resolved "https://registry.yarnpkg.com/@latticexyz/utils/-/utils-2.0.0-next.5.tgz#1701c557982aa2ae51cfea6a38d4c9a68f1696a1"

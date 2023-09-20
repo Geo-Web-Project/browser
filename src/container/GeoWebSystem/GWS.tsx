@@ -7,19 +7,13 @@ import GWContentView from "../GeoWebInterface/components/GeoWebContent/GWContent
 import { WS_RPC_URL, NETWORK_ID } from "../../lib/constants";
 import { getGeoId, getParcelInfo } from "../../lib/api";
 import { ethers } from "ethers";
-import { useMUD } from "@geo-web/mud-world-base-client";
 import { useComponentValue, useEntityQuery } from "@latticexyz/react";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { Has } from "@latticexyz/recs";
-import { useSearchParams } from "next/navigation";
-import {
-  MUDProvider,
-  SetupResult,
-  setup,
-} from "@geo-web/mud-world-base-client";
+import { useMUD, MUDProvider, setup } from "@geo-web/mud-world-base-setup";
 import { optimismGoerli } from "viem/chains";
 import { MUDChain } from "@latticexyz/common/chains";
-import storeConfig from "@latticexyz/store/mud.config.mjs";
+import { useSearchParams } from "react-router-dom";
 
 const chainId = 420;
 const supportedChains: MUDChain[] = [
@@ -36,10 +30,10 @@ const supportedChains: MUDChain[] = [
 ];
 
 export default function GWS() {
-  const params = useSearchParams();
+  const [params] = useSearchParams();
   const world = params.get("world");
 
-  const [mudSetup, setMUDSetup] = useState<SetupResult | null>(null);
+  const [mudSetup, setMUDSetup] = useState<any | null>(null);
   useEffect(() => {
     (async () => {
       const mudSetup = await setup({
@@ -68,7 +62,7 @@ export default function GWS() {
 }
 
 function InnerGWS() {
-  const params = useSearchParams();
+  const [params] = useSearchParams();
   const lat = params.get("latitude");
   const lon = params.get("longitude");
   const world = params.get("world");

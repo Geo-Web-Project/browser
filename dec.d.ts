@@ -1,1 +1,2 @@
-declare module "@latticexyz/store/mud.config";
+declare module "@geo-web/mud-world-base-setup";
+declare module "@ensdomains/content-hash";

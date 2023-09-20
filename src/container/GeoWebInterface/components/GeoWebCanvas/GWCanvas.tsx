@@ -4,12 +4,12 @@ import ContentLabel from "../../../../components/common/ContentLabel/ContentLabe
 import styles from "./styles.module.css";
 import { Entity } from "@latticexyz/recs";
 import { getComponentValue } from "@latticexyz/recs";
-import { useMUD } from "@geo-web/mud-world-base-client";
+import { useMUD } from "@geo-web/mud-world-base-setup";
 import contentHash from "@ensdomains/content-hash";
 import { CID } from "multiformats";
 import { Player } from "@livepeer/react";
 
-const gwGateway = process.env.NEXT_PUBLIC_MODEL_VIEWER_IPFS_GATEWAY;
+const gwGateway = import.meta.env.NEXT_PUBLIC_MODEL_VIEWER_IPFS_GATEWAY;
 
 export enum MediaObjectType {
   Image,

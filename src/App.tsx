@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import GWLoader from "../src/components/common/Loader/Loader";
 import GWS from "../src/container/GeoWebSystem/GWS";
@@ -28,7 +26,7 @@ const livepeerTheme: ThemeConfig = {
   },
 };
 
-export default function Index() {
+export function App() {
   const [hasAgreedModal, setHasAgreedModal] = useState<boolean | null>(null);
 
   const client = createReactClient({

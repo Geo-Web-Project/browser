@@ -8,7 +8,7 @@ import {
 } from "../helpers/gwParser";
 
 //  Refer Environment Variables
-const GRAPH_URL = process.env.NEXT_PUBLIC_GRAPH_URI;
+const GRAPH_URL = import.meta.env.NEXT_PUBLIC_GRAPH_URI;
 
 //  Instantiate Apollo & Ceramic Clients
 const graphClient = new ApolloClient({

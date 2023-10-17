@@ -12,4 +12,5 @@ export const STORAGE_WORKER_ENDPOINT =
   "https://storage-workers.geo-web.workers.dev";
 export const SECONDS_IN_YEAR = 60 * 60 * 24 * 365;
 export const WS_RPC_URL = import.meta.env.VITE_PUBLIC_WS_RPC_URL!;
+export const HTTP_RPC_URL = import.meta.env.VITE_PUBLIC_HTTP_RPC_URL!;
 export const LIVEPEER_API_KEY = import.meta.env.VITE_PUBLIC_LIVEPEER_API_KEY!;

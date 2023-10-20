@@ -8,20 +8,16 @@ import { HTTP_RPC_URL, WS_RPC_URL, NETWORK_ID } from "../../lib/constants";
 import { getGeoId, getParcelInfo } from "../../lib/api";
 import { ethers } from "ethers";
 import { useComponentValue, useEntityQuery } from "@latticexyz/react";
-import { namespaceWorld } from "@latticexyz/recs";
+import { namespaceWorld, runQuery } from "@latticexyz/recs";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { Has } from "@latticexyz/recs";
 import { useMUD, MUDProvider, setup } from "@geo-web/mud-world-base-setup";
 import { optimismGoerli } from "viem/chains";
-import { getContractAddressesForChainOrThrow } from "@geo-web/sdk";
 import {
-  Address,
-  createPublicClient,
-  http,
-  encodePacked,
-  decodeAbiParameters,
-  parseAbiParameters,
-} from "viem";
+  IRegistryDiamondABI,
+  getContractAddressesForChainOrThrow,
+} from "@geo-web/sdk";
+import { createPublicClient, encodePacked, getContract } from "viem";
 import { MUDChain } from "@latticexyz/common/chains";
 import { useSearchParams } from "react-router-dom";
 
@@ -38,10 +34,6 @@ const supportedChains: MUDChain[] = [
     },
   },
 ];
-const publicClient = createPublicClient({
-  chain: optimismGoerli,
-  transport: http(HTTP_RPC_URL),
-});
 const worldAddress = "0x2f656242DE26118133F94991257A3B9c02d0831E";
 
 export default function GWS() {
@@ -100,17 +92,11 @@ function InnerGWS() {
   const [namespacedWorld, setNamespacedWorld] = useState<any>();
 
   const {
-    components: { Name, Url, MediaObject },
-    network: { world },
+    components: { ModelComponent },
+    network: { world, publicClient },
   } = useMUD();
 
-  const mediaObjects = namespacedWorld
-    ? Has(
-        namespacedWorld.components.filter(
-          (item: any) => item.metadata.componentName === "MediaObject"
-        )[0]
-      )
-    : (null as any);
+  const mediaObjects = runQuery([Has(ModelComponent)]);
 
   useEffect(() => {
     if (initCoordinate !== null) {
@@ -140,30 +126,26 @@ function InnerGWS() {
         setOwnerDID(ownerDID);
 
         try {
-          const registryDiamondAddress =
-            getContractAddressesForChainOrThrow(NETWORK_ID).registryDiamond;
-          // tokenURI(string tokenURI)
-          const { data: encodedTokenURI } = await publicClient.call({
-            to: registryDiamondAddress as Address,
-            data: `0xc87b56dd${encodePacked(
-              ["uint256"],
-              [BigInt(parcelId)]
-            ).slice(2)}`,
+          const registryContract = getContract({
+            address:
+              getContractAddressesForChainOrThrow(NETWORK_ID).registryDiamond,
+            abi: IRegistryDiamondABI,
+            publicClient,
           });
-
-          const [tokenURI] = decodeAbiParameters(
-            parseAbiParameters("string tokenURI"),
-            encodedTokenURI ?? "0x"
+          const tokenURI = await registryContract.read.tokenURI([
+            BigInt(parcelId),
+          ]);
+          const basicProfileRes = await fetch(
+            `https://ipfs.io/ipfs/${tokenURI.slice(7)}`
           );
-          const res = await fetch(`https://ipfs.io/ipfs/${tokenURI.slice(7)}`);
-          const basicProfile = await res.json();
+          const basicProfile = await basicProfileRes.json();
 
           setBasicProfile({
             name: basicProfile?.name,
             url: basicProfile?.url,
           });
         } catch (err) {
-          console.error(err);
+          console.warn(err);
         }
 
         try {

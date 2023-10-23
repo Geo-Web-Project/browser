@@ -142,7 +142,7 @@ function InnerGWS() {
 
           setBasicProfile({
             name: basicProfile?.name,
-            url: basicProfile?.url,
+            url: basicProfile?.external_url,
           });
         } catch (err) {
           console.warn(err);

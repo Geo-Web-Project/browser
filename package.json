@@ -6,13 +6,11 @@
     "@apollo/client": "^3.7.16",
     "@augmented-worlds/system-babylonjs": "^0.1.16",
     "@ensdomains/content-hash": "2.5.7",
-    "@geo-web/mud-world-base-contracts": "^0.0.12",
-    "@geo-web/mud-world-base-setup": "0.0.2",
-    "@geo-web/sdk": "^4.3.1",
+    "@geo-web/mud-world-base-contracts": "0.1.0",
+    "@geo-web/mud-world-base-setup": "0.1.0",
+    "@geo-web/sdk": "^4.3.3",
     "@geo-web/types": "^0.2.0",
     "@google/model-viewer": "^3.2.1",
-    "@latticexyz/react": "2.0.0-next.8",
-    "@latticexyz/recs": "2.0.0-next.8",
     "@livepeer/react": "^2.8.3",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
@@ -40,6 +38,7 @@
     "dev": "vite --mode $APP_ENV",
     "preview": "vite preview",
     "test": "tsc --noEmit",
+    "lint": "eslint src",
     "prettier": "prettier -w src/**"
   },
   "browserslist": {
@@ -58,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
@@ -69,10 +69,11 @@
     "@types/ua-parser-js": "^0.7.36",
     "@vitejs/plugin-react": "^4.0.4",
     "eslint": "^7.32.0",
-    "eslint-config-next": "12.2.5",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
     "local-ssl-proxy": "^1.3.0",
     "prettier": "^2.8.4",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vite-plugin-eslint": "^1.8.1"
   }
 }

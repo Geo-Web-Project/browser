@@ -3,8 +3,6 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import styles from "./styles.module.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,12 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GWInfo({
-  gwInfo,
-  gwContentName,
-  gwContentUrl,
-  world,
-}: any) {
+export default function GWInfo({ gwInfo, gwContentName, gwContentUrl }: any) {
   const classes = useStyles();
 
   return (
@@ -95,21 +88,14 @@ export default function GWInfo({
               </a>
             )}
           </Typography>
-          {world === null ? (
-            <>
-              <Typography noWrap className={classes.typography}>
-                Parcel ID: {gwInfo.id}
-              </Typography>
-              <Typography noWrap className={classes.typography}>
-                Licensee: {gwInfo.licensee}
-              </Typography>
-              <Typography noWrap className={classes.typography}>
-                For Sale Price: {gwInfo.value}
-              </Typography>
-            </>
-          ) : null}
           <Typography noWrap className={classes.typography}>
-            World Address: {gwInfo.worldAddress}
+            Parcel ID: {gwInfo.id}
+          </Typography>
+          <Typography noWrap className={classes.typography}>
+            Licensee: {gwInfo.licensee}
+          </Typography>
+          <Typography noWrap className={classes.typography}>
+            For Sale Price: {gwInfo.value}
           </Typography>
         </AccordionDetails>
       )}

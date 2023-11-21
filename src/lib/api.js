@@ -1,18 +1,15 @@
 //  Imports
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { gql } from "@apollo/client";
-
 import {
   parseGeo,
   parseInfo,
 } from "../helpers/gwParser";
-
-//  Refer Environment Variables
-const GRAPH_URL = import.meta.env.VITE_PUBLIC_GRAPH_URI;
+import {SUBGRAPH_URL } from "./constants";
 
 //  Instantiate Apollo & Ceramic Clients
 const graphClient = new ApolloClient({
-  uri: GRAPH_URL,
+  uri: SUBGRAPH_URL,
   cache: new InMemoryCache(),
 });
 

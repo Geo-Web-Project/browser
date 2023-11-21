@@ -1,73 +1,57 @@
 import { useState, useEffect } from "react";
-import { AccountId } from "caip";
 import TitleBar from "../../components/common/TitleBar/TitleBar";
 import GWLoader from "../../components/common/Loader/Loader";
 import GWAvail from "../../components/common/ContentFiller/Avail";
 import GWContentView from "../GeoWebInterface/components/GeoWebContent/GWContent";
-import { HTTP_RPC_URL, WS_RPC_URL, NETWORK_ID } from "../../lib/constants";
+import {
+  HTTP_RPC_URL,
+  WS_RPC_URL,
+  NETWORK_ID,
+  IPFS_GATEWAY,
+  WORLD,
+} from "../../lib/constants";
 import { getGeoId, getParcelInfo } from "../../lib/api";
-import { ethers } from "ethers";
-import { useComponentValue, useEntityQuery } from "@latticexyz/react";
-import { namespaceWorld, runQuery } from "@latticexyz/recs";
-import { singletonEntity } from "@latticexyz/store-sync/recs";
-import { Has } from "@latticexyz/recs";
-import { useMUD, MUDProvider, setup } from "@geo-web/mud-world-base-setup";
+import { useWorld } from "../../lib/world";
+import { MUDProvider } from "../../context/MUDContext";
+import { syncWorld, SyncWorldResult } from "@geo-web/mud-world-base-setup";
 import { optimismGoerli } from "viem/chains";
 import {
   IRegistryDiamondABI,
   getContractAddressesForChainOrThrow,
 } from "@geo-web/sdk";
-import { createPublicClient, encodePacked, getContract } from "viem";
+import { createPublicClient, getContract, http, Address } from "viem";
 import { MUDChain } from "@latticexyz/common/chains";
 import { useSearchParams } from "react-router-dom";
 
-const chainId = 420;
-const supportedChains: MUDChain[] = [
-  {
-    ...optimismGoerli,
-    rpcUrls: {
-      ...optimismGoerli.rpcUrls,
-      default: {
-        http: optimismGoerli.rpcUrls.default.http,
-        webSocket: [WS_RPC_URL],
-      },
+type BasicProfile = {
+  name: string;
+  url: string;
+};
+
+type Coords = {
+  lat: number;
+  lon: number;
+};
+
+const mudChain: MUDChain = {
+  ...optimismGoerli,
+  rpcUrls: {
+    ...optimismGoerli.rpcUrls,
+    default: {
+      http: optimismGoerli.rpcUrls.default.http,
+      webSocket: [WS_RPC_URL],
     },
   },
-];
-const worldAddress = "0x2f656242DE26118133F94991257A3B9c02d0831E";
+};
 
 export default function GWS() {
-  const [params] = useSearchParams();
-  const [mudSetup, setMUDSetup] = useState<any | null>(null);
+  const [parcelId, setParcelId] = useState("");
+  const [worldConfig, setWorldConfig] = useState<typeof SyncWorldResult>();
+  const [loading, setLoading] = useState(true);
+  const [gwInfo, setGwInfo] = useState<any>(null);
+  const [basicProfile, setBasicProfile] = useState<BasicProfile>();
+  const [coordinate, setCoordinate] = useState<Coords>();
 
-  useEffect(() => {
-    (async () => {
-      const mudSetup = await setup({
-        chainId,
-        worlds: {
-          [chainId]: {
-            address: worldAddress,
-            blockNumber: 15905323,
-          },
-        },
-        supportedChains,
-      });
-      setMUDSetup(mudSetup);
-    })();
-  }, []);
-
-  if (!mudSetup) {
-    return <GWLoader />;
-  }
-
-  return (
-    <MUDProvider value={mudSetup}>
-      <InnerGWS />
-    </MUDProvider>
-  );
-}
-
-function InnerGWS() {
   const [params] = useSearchParams();
 
   const lat = params.get("latitude");
@@ -79,24 +63,6 @@ function InnerGWS() {
           lon: Number(lon),
         }
       : null;
-  const [coordinate, setCoordinate] = useState(initCoordinate); //gps coordinates {lat, lon}
-  const [gwInfo, setGwInfo] = useState<any>(null);
-  const [parcelId, setParcelId] = useState("");
-  const [licenseOwner, setLicenseOwner] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [ownerDID, setOwnerDID] = useState("");
-  const [basicProfile, setBasicProfile] = useState<{
-    name: string;
-    url: string;
-  }>();
-  const [namespacedWorld, setNamespacedWorld] = useState<any>();
-
-  const {
-    components: { ModelComponent },
-    network: { world, publicClient },
-  } = useMUD();
-
-  const mediaObjects = runQuery([Has(ModelComponent)]);
 
   useEffect(() => {
     if (initCoordinate !== null) {
@@ -106,6 +72,7 @@ function InnerGWS() {
           longitude: initCoordinate.lon,
         },
       });
+      setCoordinate(initCoordinate);
     } else {
       accessGps();
     }
@@ -113,30 +80,39 @@ function InnerGWS() {
 
   useEffect(() => {
     (async () => {
-      if (parcelId && licenseOwner) {
-        const ownerId = new AccountId({
-          chainId: `eip155:${NETWORK_ID}`,
-          address: ethers.utils.getAddress(licenseOwner),
+      if (!parcelId) {
+        return;
+      }
+
+      const worldConfig = await syncWorld({
+        chainId: NETWORK_ID,
+        world: WORLD,
+        mudChain,
+        namespaces: [Number(parcelId).toString()],
+      });
+      const _parcelInfo = await getParcelInfo(parcelId);
+
+      setWorldConfig(worldConfig);
+      setGwInfo(_parcelInfo);
+
+      try {
+        const publicClient = createPublicClient({
+          chain: mudChain,
+          transport: http(HTTP_RPC_URL),
         });
-        const ownerDID = `did:pkh:${ownerId}`;
+        const registryContract = getContract({
+          address: getContractAddressesForChainOrThrow(NETWORK_ID)
+            .registryDiamond as Address,
+          abi: IRegistryDiamondABI,
+          publicClient,
+        });
+        const tokenURI = (await registryContract.read.tokenURI([
+          BigInt(parcelId),
+        ])) as string;
 
-        const _parcelInfo = await getParcelInfo(parcelId);
-        setGwInfo(_parcelInfo);
-
-        setOwnerDID(ownerDID);
-
-        try {
-          const registryContract = getContract({
-            address:
-              getContractAddressesForChainOrThrow(NETWORK_ID).registryDiamond,
-            abi: IRegistryDiamondABI,
-            publicClient,
-          });
-          const tokenURI = await registryContract.read.tokenURI([
-            BigInt(parcelId),
-          ]);
+        if (tokenURI) {
           const basicProfileRes = await fetch(
-            `https://ipfs.io/ipfs/${tokenURI.slice(7)}`
+            `${IPFS_GATEWAY}/ipfs/${tokenURI.slice(7)}`
           );
           const basicProfile = await basicProfileRes.json();
 
@@ -144,33 +120,14 @@ function InnerGWS() {
             name: basicProfile?.name,
             url: basicProfile?.external_url,
           });
-        } catch (err) {
-          console.warn(err);
         }
-
-        try {
-          // getNamespaceIdForParcel(uint256 parcelId)
-          const { data: namespaceId } = await publicClient.call({
-            to: worldAddress,
-            data: `0x7d1d9e14${encodePacked(
-              ["uint256"],
-              [BigInt(parcelId)]
-            ).slice(2)}`,
-          });
-
-          if (namespaceId) {
-            const namespacedWorld = namespaceWorld(world, namespaceId);
-
-            setNamespacedWorld(namespacedWorld);
-          }
-        } catch (err) {
-          console.error(err);
-        }
-
-        setLoading(false);
+      } catch (err) {
+        console.warn(err);
       }
+
+      setLoading(false);
     })();
-  }, [parcelId, licenseOwner, coordinate]);
+  }, [parcelId]);
 
   const accessGps = () => {
     if (navigator.geolocation) {
@@ -198,15 +155,52 @@ function InnerGWS() {
   };
 
   const getParcelId = async (latitude: any, longitude: any) => {
-    const { parcelId, licenseOwner } = await getGeoId(latitude, longitude);
+    const { parcelId } = await getGeoId(latitude, longitude);
 
-    if (!parcelId || !licenseOwner) {
+    if (!parcelId) {
       setLoading(false);
     }
 
-    setParcelId(parcelId as any);
-    setLicenseOwner(licenseOwner as any);
+    setParcelId(parcelId ?? "");
   };
+
+  if (!worldConfig || !coordinate) {
+    return <GWLoader />;
+  }
+
+  return (
+    <MUDProvider value={worldConfig}>
+      <InnerGWS
+        parcelId={parcelId}
+        loading={loading}
+        showPosition={showPosition}
+        accessGps={accessGps}
+        coordinate={coordinate}
+        gwInfo={gwInfo}
+        basicProfile={basicProfile}
+      />
+    </MUDProvider>
+  );
+}
+
+function InnerGWS({
+  parcelId,
+  accessGps,
+  showPosition,
+  loading,
+  coordinate,
+  gwInfo,
+  basicProfile,
+}: {
+  parcelId: string;
+  loading: boolean;
+  coordinate: Coords;
+  gwInfo: any;
+  basicProfile?: BasicProfile;
+  accessGps: () => void;
+  showPosition: (position: any) => void;
+}) {
+  const { mediaObjects } = useWorld();
 
   return (
     <>
@@ -218,16 +212,14 @@ function InnerGWS() {
         parcelId={parcelId}
         gwInfo={gwInfo}
         basicProfile={basicProfile}
-        world={worldAddress}
       />
       {loading ? (
         <GWLoader />
-      ) : parcelId && ownerDID ? (
+      ) : parcelId ? (
         <GWContentView
           url={basicProfile?.url ?? null}
           mediaObjects={mediaObjects}
           parcelId={parcelId}
-          ownerDID={ownerDID}
         />
       ) : (
         <GWAvail />

@@ -2,14 +2,13 @@ import { useState, useMemo, useEffect } from "react";
 import GWWebView from "../GeoWebView/GWWebView";
 import GWCanvas from "../GeoWebCanvas/GWCanvas";
 import AugmentedWorld from "../../../../components/common/AugmentedWorld/AugmentedWorld";
+import { MediaObject } from "../../../../lib/world";
 import styles from "./styles.module.css";
-import { Entity } from "@latticexyz/recs";
 
 export type GWContentViewProps = {
   url: string | null;
-  mediaObjects: Entity[];
+  mediaObjects: MediaObject[];
   parcelId: string;
-  ownerDID: string;
 };
 
 enum GwMode {

@@ -2,43 +2,16 @@ import { useEffect, useState, useRef } from "react";
 import GWEmpty from "../../../../components/common/ContentFiller/Empty";
 import ContentLabel from "../../../../components/common/ContentLabel/ContentLabel";
 import styles from "./styles.module.css";
-import { Entity } from "@latticexyz/recs";
-import { getComponentValue } from "@latticexyz/recs";
-import { useMUD } from "@geo-web/mud-world-base-setup";
-import contentHash from "@ensdomains/content-hash";
-import { CID } from "multiformats";
 import { Player } from "@livepeer/react";
-
-const gwGateway = import.meta.env.NEXT_PUBLIC_MODEL_VIEWER_IPFS_GATEWAY;
-
-export enum MediaObjectType {
-  Image,
-  Audio,
-  Video,
-  Model,
-}
-export enum MediaObjectEncodingFormat {
-  Glb,
-  Usdz,
-  Gif,
-  Jpeg,
-  Png,
-  Svg,
-  Mpeg,
-  Mp4,
-  Mp3,
-}
-
-export type MediaObject = {
-  contentSize: Number;
-  mediaType: MediaObjectType;
-  encodingFormat: MediaObjectEncodingFormat;
-  name: string;
-  contentHash: string;
-};
+import { IPFS_GATEWAY } from "../../../../lib/constants";
+import {
+  MediaObject,
+  MediaObjectType,
+  MediaObjectEncodingFormat,
+} from "../../../../lib/world";
 
 export type GWCanvasProps = {
-  mediaObjects: Entity[];
+  mediaObjects: MediaObject[];
 };
 
 const ModelViewer = (props: any) => {
@@ -86,57 +59,42 @@ const ModelViewer = (props: any) => {
 };
 
 const GWCanvas = (props: GWCanvasProps) => {
-  const {
-    components: { MediaObject },
-  } = useMUD();
-
   const { mediaObjects } = props;
 
-  const [modelIndex, setModelIndex] = useState(0);
+  const [objectIndex, setObjectIndex] = useState(0);
 
   const modelRef = useRef();
 
-  if (mediaObjects.length == 0) {
+  if (mediaObjects.length === 0) {
     return <GWEmpty promptType="gallery" />;
   }
 
-  const mediaObject = getComponentValue(
-    MediaObject,
-    mediaObjects[modelIndex]
-  ) as MediaObject | undefined;
+  const mediaObject = mediaObjects[objectIndex];
 
   if (!mediaObject) {
     return <GWEmpty promptType="gallery" />;
   }
 
-  const isGlbModel =
-    mediaObject.encodingFormat === MediaObjectEncodingFormat.Glb;
   const isUsdzModel =
     mediaObject.encodingFormat === MediaObjectEncodingFormat.Usdz;
-  const fileName = isUsdzModel
-    ? `?filename=${mediaObject.name}.usdz`
-    : isGlbModel
-    ? `?filename=${mediaObject.name}.glb`
-    : "";
-  const contentCid = CID.parse(
-    contentHash.decode(mediaObject.contentHash)
-  ).toV1();
-  const contentUrl = `${gwGateway}/ipfs/${contentCid.toString()}/${fileName}`;
+  const contentUrl = mediaObject.contentURI.startsWith("ipfs://")
+    ? `${IPFS_GATEWAY}/ipfs/${mediaObject.contentURI.slice(7)}`
+    : mediaObject.contentURI;
 
   const clickLeft = () => {
-    let _modelIndex = modelIndex - 1;
+    let _objectIndex = objectIndex - 1;
 
-    if (_modelIndex < 0) _modelIndex = mediaObjects.length - 1;
+    if (_objectIndex < 0) _objectIndex = mediaObjects.length - 1;
 
-    setModelIndex(_modelIndex);
+    setObjectIndex(_objectIndex);
   };
 
   const clickRight = () => {
-    let _modelIndex = modelIndex + 1;
+    let _objectIndex = objectIndex + 1;
 
-    if (_modelIndex > mediaObjects.length - 1) _modelIndex = 0;
+    if (_objectIndex > mediaObjects.length - 1) _objectIndex = 0;
 
-    setModelIndex(_modelIndex);
+    setObjectIndex(_objectIndex);
   };
 
   if (mediaObjects.length > 0) {
@@ -164,7 +122,7 @@ const GWCanvas = (props: GWCanvasProps) => {
             mediaObject.mediaType === MediaObjectType.Audio ? (
             <div className={styles["player-wrapper"]}>
               <Player
-                playbackId={contentCid.toString()}
+                playbackId={mediaObject.contentURI}
                 showTitle={false}
                 muted
               />

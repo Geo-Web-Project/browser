@@ -27,8 +27,6 @@ import CopyTooltip from "../CopyTooltip";
 import Image from "react-bootstrap/Image";
 import { UAParser } from "ua-parser-js";
 import { Close } from "@material-ui/icons";
-import { useMUD } from "@geo-web/mud-world-base-setup";
-import { useEntityQuery } from "@latticexyz/react";
 import { Has, getComponentValue } from "@latticexyz/recs";
 import contentHash from "@ensdomains/content-hash";
 import { CID } from "multiformats";
@@ -169,6 +167,8 @@ function NotAvailableView({ incubationsUri }: { incubationsUri: string }) {
 }
 
 export default function AugmentedWorld() {
+  return <></>;
+  /*
   const {
     components: {
       ModelComponent,
@@ -451,4 +451,5 @@ export default function AugmentedWorld() {
       )}
     </div>
   );
+  */
 }

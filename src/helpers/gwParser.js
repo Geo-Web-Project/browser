@@ -1,7 +1,5 @@
 import {
   formatValue,
-  convertTimestamp,
-  calcParcelBalance,
   truncateStr,
 } from "./gwUtils";
 
@@ -26,7 +24,6 @@ const parseInfo = (msg) => {
     id: null,
     licensee: null,
     value: null,
-    worldAddress: null
   };
 
   try {
@@ -37,7 +34,6 @@ const parseInfo = (msg) => {
     _parcelInfo.value = formatValue(
       _parcel["currentBid"]["forSalePrice"]
     );
-    _parcelInfo.worldAddress = truncateStr("0x1", 11);
   } catch (e) {
     console.log(e);
   }

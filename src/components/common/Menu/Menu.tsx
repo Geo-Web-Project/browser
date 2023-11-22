@@ -134,7 +134,9 @@ export default function Menu({ accessGps, showPosition, coordinate }: any) {
                 <Grid item>
                   <StyledSwitch
                     checked={isManual}
-                    onChange={(event: any) => handleChange(event.target.checked)}
+                    onChange={(event: any) =>
+                      handleChange(event.target.checked)
+                    }
                   />
                 </Grid>
                 <Grid item>

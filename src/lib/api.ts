@@ -1,10 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { gql } from "@apollo/client";
-import {
-  parseGeo,
-  parseInfo,
-} from "../helpers/gwParser";
-import {SUBGRAPH_URL } from "./constants";
+import { parseGeo, parseInfo } from "../helpers/gwParser";
+import { SUBGRAPH_URL } from "./constants";
 
 const graphClient = new ApolloClient({
   uri: SUBGRAPH_URL,
@@ -12,7 +9,7 @@ const graphClient = new ApolloClient({
 });
 
 const LOCATION_LOOKUP_QUERY = gql`
-  query GeoWebParcels($lat: String $lon: String) {
+  query GeoWebParcels($lat: String, $lon: String) {
     geoWebParcels(
       where: {
         bboxE_gte: $lon
@@ -39,7 +36,7 @@ const PARCEL_INFO_QUERY = gql`
   }
 `;
 
-const getGeoId = async (lat, lon) => {
+const getGeoId = async (lat: string, lon: string) => {
   let result = await graphClient.query({
     query: LOCATION_LOOKUP_QUERY,
     variables: { lat, lon },
@@ -50,10 +47,10 @@ const getGeoId = async (lat, lon) => {
   return geoId;
 };
 
-const getParcelInfo = async (id) => {
+const getParcelInfo = async (parcelId: string) => {
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
-    variables: { id: id },
+    variables: { id: parcelId },
   });
 
   let parcelInfo = parseInfo(info);

@@ -150,7 +150,7 @@ export default function GWS() {
     setLoading(true);
 
     const { latitude, longitude } = position.coords;
-    setCoordinate({ lat: latitude, lon: longitude }); //Set Lat and Lon state
+    setCoordinate({ lat: latitude, lon: longitude });
     getParcelId(latitude.toString(), longitude.toString());
   };
 
@@ -183,15 +183,7 @@ export default function GWS() {
   );
 }
 
-function InnerGWS({
-  parcelId,
-  accessGps,
-  showPosition,
-  loading,
-  coordinate,
-  gwInfo,
-  basicProfile,
-}: {
+function InnerGWS(props: {
   parcelId: string;
   loading: boolean;
   coordinate: Coords;
@@ -200,19 +192,13 @@ function InnerGWS({
   accessGps: () => void;
   showPosition: (position: any) => void;
 }) {
+  const { parcelId, loading, basicProfile } = props;
+
   const { mediaObjects } = useWorld();
 
   return (
     <>
-      <TitleBar
-        accessGps={accessGps}
-        coordinate={coordinate}
-        showPosition={showPosition}
-        loading={loading}
-        parcelId={parcelId}
-        gwInfo={gwInfo}
-        basicProfile={basicProfile}
-      />
+      <TitleBar {...props} />
       {loading ? (
         <GWLoader />
       ) : parcelId ? (

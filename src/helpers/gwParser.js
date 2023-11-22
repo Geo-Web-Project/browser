@@ -3,7 +3,6 @@ import {
   truncateStr,
 } from "./gwUtils";
 
-//parse root ceramic id and parcel id
 const parseGeo = (msg) => {
   let _geoId = { licenseOwner: null, parcelId: null };
 
@@ -18,7 +17,6 @@ const parseGeo = (msg) => {
   return _geoId;
 };
 
-//parse parcel info document
 const parseInfo = (msg) => {
   let _parcelInfo = {
     id: null,

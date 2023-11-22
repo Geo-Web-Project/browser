@@ -1,4 +1,3 @@
-//  Imports
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { gql } from "@apollo/client";
 import {
@@ -7,13 +6,11 @@ import {
 } from "../helpers/gwParser";
 import {SUBGRAPH_URL } from "./constants";
 
-//  Instantiate Apollo & Ceramic Clients
 const graphClient = new ApolloClient({
   uri: SUBGRAPH_URL,
   cache: new InMemoryCache(),
 });
 
-//  GraphQL Queries
 const LOCATION_LOOKUP_QUERY = gql`
   query GeoWebParcels($lat: String $lon: String) {
     geoWebParcels(
@@ -42,7 +39,6 @@ const PARCEL_INFO_QUERY = gql`
   }
 `;
 
-//  Get Ceramic, parcel IDs
 const getGeoId = async (lat, lon) => {
   let result = await graphClient.query({
     query: LOCATION_LOOKUP_QUERY,
@@ -54,9 +50,6 @@ const getGeoId = async (lat, lon) => {
   return geoId;
 };
 
-//  Get Parcel Info
-//  input: parcelId (Eg: '0x2D')
-//  output: {  id: , licensee: , value: , ceramicId: , ceramicUri:}
 const getParcelInfo = async (id) => {
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,

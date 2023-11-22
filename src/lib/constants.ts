@@ -6,11 +6,7 @@ export const WORLD = {
 };
 export const SUBGRAPH_URL = import.meta.env.VITE_GRAPH_URI;
 export const GRAPH_URL = import.meta.env.VITE_GRAPH_URI;
-export const CERAMIC_URL = import.meta.env.VITE_CERAMIC_URI;
 export const IPFS_GATEWAY = import.meta.env.VITE_IPFS_GATEWAY;
-export const CONNECT_NETWORK = import.meta.env
-  .VITE_CERAMIC_CONNECT_NETWORK;
-export const CERAMIC_EXPLORER = `https://cerscan.com/${CONNECT_NETWORK}/stream`;
 export const IPFS_DELEGATE = import.meta.env.VITE_IPFS_DELEGATE;
 export const PINATA_API_ENDPOINT = "https://api.pinata.cloud/psa";
 export const STORAGE_WORKER_ENDPOINT =

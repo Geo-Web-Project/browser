@@ -1,7 +1,6 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import GWWebView from "../GeoWebView/GWWebView";
 import GWCanvas from "../GeoWebCanvas/GWCanvas";
-import AugmentedWorld from "../../../../components/common/AugmentedWorld/AugmentedWorld";
 import { MediaObject } from "../../../../lib/world";
 import styles from "./styles.module.css";
 
@@ -13,7 +12,6 @@ export type GWContentViewProps = {
 
 enum GwMode {
   WEB,
-  AR,
   GALLERY,
 }
 
@@ -21,22 +19,6 @@ export default function GWContentView(props: GWContentViewProps) {
   const { url, mediaObjects } = props;
 
   const [gwMode, setGwMode] = useState<GwMode>(GwMode.WEB);
-
-  const isWebAr = useMemo(() => {
-    if (url) {
-      try {
-        const parsedUrl = new URL(url);
-
-        if (parsedUrl.hostname.endsWith(".8thwall.app")) {
-          return true;
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    return false;
-  }, [url]);
 
   useEffect(() => {
     if (!url) {
@@ -48,8 +30,6 @@ export default function GWContentView(props: GWContentViewProps) {
     <>
       {gwMode === GwMode.WEB ? (
         <GWWebView url={url ?? null} />
-      ) : gwMode === GwMode.AR ? (
-        <AugmentedWorld />
       ) : (
         <GWCanvas mediaObjects={mediaObjects} />
       )}
@@ -60,15 +40,7 @@ export default function GWContentView(props: GWContentViewProps) {
           }`}
           onClick={() => setGwMode(GwMode.WEB)}
         >
-          {isWebAr ? "WebAR" : "Web"}
-        </div>
-        <div
-          className={`${styles["tab"]} ${
-            gwMode === GwMode.AR ? styles["selected"] : ""
-          }`}
-          onClick={() => setGwMode(GwMode.AR)}
-        >
-          AR
+          Web
         </div>
         <div
           className={`${styles["tab"]} ${

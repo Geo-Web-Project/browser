@@ -1,3 +1,4 @@
+/*
 import { useState, useEffect, useCallback, useRef } from "react";
 import styles from "./styles.module.css";
 import Button from "@material-ui/core/Button";
@@ -168,7 +169,6 @@ function NotAvailableView({ incubationsUri }: { incubationsUri: string }) {
 
 export default function AugmentedWorld() {
   return <></>;
-  /*
   const {
     components: {
       ModelComponent,
@@ -451,5 +451,5 @@ export default function AugmentedWorld() {
       )}
     </div>
   );
-  */
 }
+*/

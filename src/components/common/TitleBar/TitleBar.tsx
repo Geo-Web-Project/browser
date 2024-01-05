@@ -11,15 +11,13 @@ export default function TitleBar({
   parcelId,
   gwInfo,
   basicProfile,
-}) {
+}: any) {
   return (
     <header className={styles["title-bar"]}>
       {loading ? null : parcelId ? (
         <GWInfo
           gwInfo={gwInfo}
-          gwContentName={
-            basicProfile?.name ? basicProfile.name : `Parcel ${parcelId}`
-          }
+          gwContentName={basicProfile?.name ?? `Parcel ${parcelId}`}
           gwContentUrl={basicProfile?.url ? basicProfile.url : ""}
         />
       ) : (

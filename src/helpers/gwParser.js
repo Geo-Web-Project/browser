@@ -6,6 +6,10 @@ import {
 const parseGeo = (msg) => {
   let _geoId = { licenseOwner: null, parcelId: null };
 
+  if (msg["data"]["geoWebParcels"].length == 0) {
+    return _geoId;
+  }
+
   try {
     _geoId.parcelId = msg["data"]["geoWebParcels"][0]["id"];
     _geoId.licenseOwner =

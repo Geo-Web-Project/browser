@@ -164,8 +164,37 @@ export default function GWS() {
     setParcelId(parcelId ?? "");
   };
 
-  if (!worldConfig || !coordinate) {
-    return <GWLoader />;
+  if (!loading && !worldConfig) {
+    return (
+      <>
+        <TitleBar
+          parcelId={parcelId}
+          loading={loading}
+          showPosition={showPosition}
+          accessGps={accessGps}
+          coordinate={coordinate}
+          gwInfo={gwInfo}
+          basicProfile={basicProfile}
+        />
+        <GWAvail />
+      </>
+    );
+  }
+  if (!coordinate || loading) {
+    return (
+      <>
+        <TitleBar
+          parcelId={parcelId}
+          loading={loading}
+          showPosition={showPosition}
+          accessGps={accessGps}
+          coordinate={coordinate}
+          gwInfo={gwInfo}
+          basicProfile={basicProfile}
+        />
+        <GWLoader />
+      </>
+    );
   }
 
   return (

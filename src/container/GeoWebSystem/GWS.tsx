@@ -89,6 +89,7 @@ export default function GWS() {
         world: WORLD,
         mudChain,
         namespaces: [Number(parcelId).toString()],
+        indexerUrl: "https://mud-testnet.geoweb.network/trpc",
       });
       const _parcelInfo = await getParcelInfo(parcelId);
 

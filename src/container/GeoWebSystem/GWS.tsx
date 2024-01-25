@@ -4,8 +4,8 @@ import GWLoader from "../../components/common/Loader/Loader";
 import GWAvail from "../../components/common/ContentFiller/Avail";
 import GWContentView from "../GeoWebInterface/components/GeoWebContent/GWContent";
 import {
-  HTTP_RPC_URL,
-  WS_RPC_URL,
+  RPC_URLS_HTTP,
+  RPC_URLS_WS,
   NETWORK_ID,
   IPFS_GATEWAY,
   WORLD,
@@ -39,7 +39,7 @@ const mudChain: MUDChain = {
     ...optimismGoerli.rpcUrls,
     default: {
       http: optimismGoerli.rpcUrls.default.http,
-      webSocket: [WS_RPC_URL],
+      webSocket: [RPC_URLS_WS[NETWORK_ID]],
     },
   },
 };
@@ -99,7 +99,7 @@ export default function GWS() {
       try {
         const publicClient = createPublicClient({
           chain: mudChain,
-          transport: http(HTTP_RPC_URL),
+          transport: http(RPC_URLS_HTTP[NETWORK_ID]),
         });
         const registryContract = getContract({
           address: getContractAddressesForChainOrThrow(NETWORK_ID)

@@ -8,7 +8,7 @@
     "@ensdomains/content-hash": "2.5.7",
     "@geo-web/mud-world-base-contracts": "0.1.0",
     "@geo-web/mud-world-base-setup": "0.1.2",
-    "@geo-web/sdk": "^4.3.3",
+    "@geo-web/sdk": "^4.4.0",
     "@geo-web/types": "^0.2.0",
     "@google/model-viewer": "^3.2.1",
     "@livepeer/react": "^2.8.3",

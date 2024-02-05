@@ -7,7 +7,6 @@ export const WORLD = {
 export const SUBGRAPH_URL = import.meta.env.VITE_GRAPH_URI;
 export const GRAPH_URL = import.meta.env.VITE_GRAPH_URI;
 export const IPFS_GATEWAY = import.meta.env.VITE_IPFS_GATEWAY;
-export const IPFS_DELEGATE = import.meta.env.VITE_IPFS_DELEGATE;
 export const PINATA_API_ENDPOINT = "https://api.pinata.cloud/psa";
 export const STORAGE_WORKER_ENDPOINT =
   "https://storage-workers.geo-web.workers.dev";

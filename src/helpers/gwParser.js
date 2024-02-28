@@ -6,7 +6,7 @@ import {
 const parseGeo = (msg) => {
   let _geoId = { licenseOwner: null, parcelId: null };
 
-  if (msg["data"]["geoWebParcels"].length == 0) {
+  if (msg["data"]["geoWebParcels"].length === 0) {
     return _geoId;
   }
 

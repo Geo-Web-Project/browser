@@ -35,18 +35,15 @@
   "scripts": {
     "dev-https": "local-ssl-proxy --key localhost-key.pem --cert localhost.pem --source 3001 --target 3000",
     "build": "vite build --mode $APP_ENV",
-    "dev": "vite --mode $APP_ENV",
+    "dev": "source .env && vite --mode $APP_ENV",
     "preview": "vite preview",
     "test": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "prettier": "prettier -w src/**"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       ">0.2%",
       "not dead",

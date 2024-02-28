@@ -14,14 +14,10 @@ export const SECONDS_IN_YEAR = 60 * 60 * 24 * 365;
 export const LIVEPEER_API_KEY = import.meta.env.VITE_LIVEPEER_API_KEY!;
 
 export const RPC_URLS_HTTP: Record<number, string> = {
-  10: `https://opt-mainnet.g.alchemy.com/v2/${import.meta.env
-    .VITE_ALCHEMY_MAINNET_API_KEY!}`,
-  11155420: `https://opt-sepolia.g.alchemy.com/v2/${import.meta.env
-    .VITE_ALCHEMY_TESTNET_API_KEY!}`,
+  10: import.meta.env.VITE_RPC_URL_HTTP_MAINNET,
+  11155420: import.meta.env.VITE_RPC_URL_HTTP_TESTNET,
 };
 export const RPC_URLS_WS: Record<number, string> = {
-  10: `wss://opt-goerli.g.alchemy.com/v2/${import.meta.env
-    .VITE_ALCHEMY_MAINNET_API_KEY!}`,
-  11155420: `wss://opt-sepolia.g.alchemy.com/v2/${import.meta.env
-    .VITE_ALCHEMY_TESTNET_API_KEY!}`,
+  10: import.meta.env.VITE_RPC_URL_WS_MAINNET,
+  11155420: import.meta.env.VITE_RPC_URL_WS_TESTNET,
 };

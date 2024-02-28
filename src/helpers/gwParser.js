@@ -1,13 +1,14 @@
 import {
   formatValue,
-  convertTimestamp,
-  calcParcelBalance,
   truncateStr,
 } from "./gwUtils";
 
-//parse root ceramic id and parcel id
 const parseGeo = (msg) => {
   let _geoId = { licenseOwner: null, parcelId: null };
+
+  if (msg["data"]["geoWebParcels"].length === 0) {
+    return _geoId;
+  }
 
   try {
     _geoId.parcelId = msg["data"]["geoWebParcels"][0]["id"];
@@ -20,13 +21,11 @@ const parseGeo = (msg) => {
   return _geoId;
 };
 
-//parse parcel info document
-const parseInfo = (msg, rootCid) => {
+const parseInfo = (msg) => {
   let _parcelInfo = {
     id: null,
     licensee: null,
     value: null,
-    rootCid: null,
   };
 
   try {
@@ -37,7 +36,6 @@ const parseInfo = (msg, rootCid) => {
     _parcelInfo.value = formatValue(
       _parcel["currentBid"]["forSalePrice"]
     );
-    _parcelInfo.rootCid = rootCid;
   } catch (e) {
     console.log(e);
   }

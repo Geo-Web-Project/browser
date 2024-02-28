@@ -1,24 +1,15 @@
-//  Imports
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { gql } from "@apollo/client";
+import { parseGeo, parseInfo } from "../helpers/gwParser";
+import { SUBGRAPH_URL } from "./constants";
 
-import {
-  parseGeo,
-  parseInfo,
-} from "../helpers/gwParser";
-
-//  Refer Environment Variables
-const GRAPH_URL = process.env.NEXT_PUBLIC_GRAPH_URI;
-
-//  Instantiate Apollo & Ceramic Clients
 const graphClient = new ApolloClient({
-  uri: GRAPH_URL,
+  uri: SUBGRAPH_URL,
   cache: new InMemoryCache(),
 });
 
-//  GraphQL Queries
 const LOCATION_LOOKUP_QUERY = gql`
-  query GeoWebParcels($lat: String $lon: String) {
+  query GeoWebParcels($lat: String, $lon: String) {
     geoWebParcels(
       where: {
         bboxE_gte: $lon
@@ -45,8 +36,7 @@ const PARCEL_INFO_QUERY = gql`
   }
 `;
 
-//  Get Ceramic, parcel IDs
-const getGeoId = async (lat, lon) => {
+const getGeoId = async (lat: string, lon: string) => {
   let result = await graphClient.query({
     query: LOCATION_LOOKUP_QUERY,
     variables: { lat, lon },
@@ -57,16 +47,13 @@ const getGeoId = async (lat, lon) => {
   return geoId;
 };
 
-//  Get Parcel Info
-//  input: parcelId (Eg: '0x2D')
-//  output: {  id: , licensee: , value: , ceramicId: , ceramicUri:}
-const getParcelInfo = async (id, rootCid) => {
+const getParcelInfo = async (parcelId: string) => {
   let info = await graphClient.query({
     query: PARCEL_INFO_QUERY,
-    variables: { id: id },
+    variables: { id: parcelId },
   });
 
-  let parcelInfo = parseInfo(info, rootCid);
+  let parcelInfo = parseInfo(info);
 
   return parcelInfo;
 };

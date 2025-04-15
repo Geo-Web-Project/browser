@@ -20,6 +20,5 @@ yarn-error.log*
 .envrc
 .direnv
 *.pem
-dist/
 tsconfig.tsbuildinfo
 .vercel

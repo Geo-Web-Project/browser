@@ -43,7 +43,11 @@
     "prettier": "prettier -w src/**"
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       ">0.2%",
       "not dead",
@@ -72,5 +76,6 @@
     "prettier": "^2.8.4",
     "vite": "^4.4.9",
     "vite-plugin-eslint": "^1.8.1"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }

@@ -6,7 +6,15 @@ export const WORLD = {
 };
 export const SUBGRAPH_URL = import.meta.env.VITE_GRAPH_URI;
 export const GRAPH_URL = import.meta.env.VITE_GRAPH_URI;
-export const IPFS_GATEWAY = import.meta.env.VITE_IPFS_GATEWAY;
+export const IPFS_GATEWAYS = [
+  "https://trustless-gateway.link",
+  "https://gateway.pinata.cloud",
+  "https://storry.tv",
+  "https://cloudflare-ipfs.com",
+  "https://4everland.io",
+  "https://ipfs.runfission.com",
+];
+export const IPFS_GATEWAY = "https://cloudflare-ipfs.com";
 export const PINATA_API_ENDPOINT = "https://api.pinata.cloud/psa";
 export const STORAGE_WORKER_ENDPOINT =
   "https://storage-workers.geo-web.workers.dev";

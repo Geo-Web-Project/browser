@@ -7,8 +7,8 @@ import {
   RPC_URLS_HTTP,
   RPC_URLS_WS,
   NETWORK_ID,
-  IPFS_GATEWAY,
   WORLD,
+  IPFS_GATEWAYS,
 } from "../../lib/constants";
 import { getGeoId, getParcelInfo } from "../../lib/api";
 import { useWorld } from "../../lib/world";
@@ -22,6 +22,7 @@ import {
 import { createPublicClient, getContract, http, Address } from "viem";
 import { MUDChain } from "@latticexyz/common/chains";
 import { useSearchParams } from "react-router-dom";
+import { createVerifiedFetch } from "@helia/verified-fetch";
 
 type BasicProfile = {
   name: string;
@@ -112,9 +113,10 @@ export default function GWS() {
         ])) as string;
 
         if (tokenURI) {
-          const basicProfileRes = await fetch(
-            `${IPFS_GATEWAY}/ipfs/${tokenURI.slice(7)}`
-          );
+          const verifiedFetch = await createVerifiedFetch({
+            gateways: IPFS_GATEWAYS,
+          });
+          const basicProfileRes = await verifiedFetch(tokenURI);
           const basicProfile = await basicProfileRes.json();
 
           setBasicProfile({
